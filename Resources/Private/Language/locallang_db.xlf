@@ -1,52 +1,97 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2013-06-28T14:15:54Z" product-name="tw_lucenesearch">
+	<file source-language="en" datatype="plaintext" original="messages" date="2013-12-21T16:06:03Z" product-name="tw_lucenesearch">
 		<header/>
 		<body>
-			<trans-unit id="feplugin">
-				<source>Lucene-Suche</source>
+			<trans-unit id="feplugin" xml:space="preserve">
+				<source>Lucene search</source>
 			</trans-unit>
-			<trans-unit id="feplugin.flex.behavior">
-				<source>Verhalten</source>
+			<trans-unit id="feplugin.flex.behavior" xml:space="preserve">
+				<source>Behavior</source>
 			</trans-unit>
-			<trans-unit id="feplugin.flex.display">
-				<source>Darstellung</source>
+			<trans-unit id="feplugin.flex.display" xml:space="preserve">
+				<source>Display</source>
 			</trans-unit>
-			<trans-unit id="feplugin.flex.search">
-				<source>Sucheingabe</source>
+			<trans-unit id="feplugin.flex.search" xml:space="preserve">
+				<source>Search box</source>
 			</trans-unit>
-			<trans-unit id="feplugin.flex.results">
-				<source>Suchergebnisse</source>
+			<trans-unit id="feplugin.flex.results" xml:space="preserve">
+				<source>Search results</source>
 			</trans-unit>
-			<trans-unit id="feplugin.flex.notfound">
-				<source>Fehlerseitensuche (404 Nicht gefunden)</source>
+			<trans-unit id="feplugin.flex.notfound" xml:space="preserve">
+				<source>Error page search (404 Not found)</source>
 			</trans-unit>
-			<trans-unit id="update.clear.description">
-				<source>Der Suchindex enthält aktuell %s Dokumente. Sie können den Suchindex komplett leeren, um alle derzeit indizierten Dokumente zu verwerfen.</source>
+			<trans-unit id="update.clear.description" xml:space="preserve">
+				<source>The search index currently contains %s documents. You can completely empty the search index in order remove all currently indexed document.</source>
 			</trans-unit>
-			<trans-unit id="update.clear.submit">
-				<source>Index jetzt leeren</source>
+			<trans-unit id="update.clear.submit" xml:space="preserve">
+				<source>Clear index now</source>
 			</trans-unit>
-			<trans-unit id="update.clear.success">
-				<source>Der Suchindex wurde erfolgreich geleert!</source>
+			<trans-unit id="update.clear.success" xml:space="preserve">
+				<source>The search index has been cleared successfully!</source>
 			</trans-unit>
-			<trans-unit id="update.clear.error">
-				<source>Der Suchindex konnte aus folgendem Grund nicht erfolgreich geleert werden:</source>
+			<trans-unit id="update.clear.error" xml:space="preserve">
+				<source>The search index could not be cleared due to the following error:</source>
 			</trans-unit>
-			<trans-unit id="update.clear.error.unknown">
-				<source>Unbekannter Fehler</source>
+			<trans-unit id="update.clear.error.unknown" xml:space="preserve">
+				<source>Unknown error</source>
 			</trans-unit>
-			<trans-unit id="update.clear.noindex">
-				<source>Der Suchindex konnte nicht gefunden werden.</source>
+			<trans-unit id="update.clear.noindex" xml:space="preserve">
+				<source>The search index could not be found.</source>
 			</trans-unit>
-			<trans-unit id="constants.javascript">
+			<trans-unit id="constants.file" xml:space="preserve">
+				<source>Files &amp; directories</source>
+			</trans-unit>
+			<trans-unit id="constants.file.templateRootPath" xml:space="preserve">
+				<source>Path to template root (FE):You can alter this in case you want to customize the tracking code output</source>
+			</trans-unit>
+			<trans-unit id="constants.file.partialRootPath" xml:space="preserve">
+				<source>Path to template partials (FE):You can alter this, though the standard plugin doesn't use partials ...</source>
+			</trans-unit>
+			<trans-unit id="constants.file.layoutRootPath" xml:space="preserve">
+				<source>Path to template layouts (FE):You can alter this, though the standard plugin doesn't use layouts ...</source>
+			</trans-unit>
+			<trans-unit id="constants.javascript" xml:space="preserve">
 				<source>JavaScript</source>
 			</trans-unit>
-			<trans-unit id="constants.indexing">
-				<source>Indizierung</source>
+			<trans-unit id="constants.javascript.jquery" xml:space="preserve">
+				<source>Include jQuery library:Convenience method for including the latest jQuery library of the version 1 branch into your source code (expects your main PAGE object being called "page", useless otherwise).</source>
 			</trans-unit>
-			<trans-unit id="constants.search">
-				<source>Suche</source>
+			<trans-unit id="constants.javascript.searchboxJS" xml:space="preserve">
+				<source>Include searchbox JavaScript:Includes a tiny JavaScript that prints "Your search terms ..." into the standard search box while it is not focused (please see manual for further information). The script relies on jQuery being present (so make sure to check the option above or include jQuery in any other suitable way) and your main PAGE object being called "page".</source>
+			</trans-unit>
+			<trans-unit id="constants.indexing" xml:space="preserve">
+				<source>Indexing</source>
+			</trans-unit>
+			<trans-unit id="constants.indexing.reference" xml:space="preserve">
+				<source>Document reference parameters:Comma separated list of GET variables that should be considered relevant for uniquely identifying and indexing your pages</source>
+			</trans-unit>
+			<trans-unit id="constants.indexing.timestamp" xml:space="preserve">
+				<source>Inject modification timestamps:Whether to inject modification timestamps into the HTML source code of your pages (several meta tags)</source>
+			</trans-unit>
+			<trans-unit id="constants.search" xml:space="preserve">
+				<source>Search</source>
+			</trans-unit>
+			<trans-unit id="constants.search.rootline" xml:space="preserve">
+				<source>Root pages:Enter comma separated list of page IDs that should be treated as root pages for search results (i.e. the search will only yield those pages or below as search results)</source>
+			</trans-unit>
+			<trans-unit id="constants.search.language" xml:space="preserve">
+				<source>Search results language:Whether to restrict the search results to the current frontend language</source>
+			</trans-unit>
+			<trans-unit id="constants.search.highlight" xml:space="preserve">
+				<source>Highlight search terms:Whether to highlight the search terms in the search result list</source>
+			</trans-unit>
+			<trans-unit id="constants.search.config" xml:space="preserve">
+				<source>Page properties configuration:Configures the importance / relevance of single page properties for indexing and searching as well as the usage of global wildcards (see manual for details)</source>
+			</trans-unit>
+			<trans-unit id="constants.search.limits.query" xml:space="preserve">
+				<source>Max. matched terms:Wildcard and fuzzy search queries may match too many terms, causing incredible search performance downgrade. Limiting the max. number of matches will help (0 means no limit)</source>
+			</trans-unit>
+			<trans-unit id="constants.search.limits.display" xml:space="preserve">
+				<source>Max. displayed results:Set the maximum of matching search results that are displayed at once</source>
+			</trans-unit>
+			<trans-unit id="constants.search.pid" xml:space="preserve">
+				<source>Default results PID:ID of the page displaying search results by default</source>
 			</trans-unit>
 		</body>
 	</file>

@@ -5,7 +5,7 @@ namespace Tollwerk\TwLucenesearch\Controller;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
+ *  © 2013 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
  *  
  *  All rights reserved
  *
@@ -30,7 +30,7 @@ namespace Tollwerk\TwLucenesearch\Controller;
  * Lucene search controller
  *
  * @package		tw_lucenesearch
- * @copyright	Copyright © 2012 tollwerk® GmbH (http://tollwerk.de)
+ * @copyright	Copyright © 2013 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
  * @author		Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
  */
 class LuceneController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {

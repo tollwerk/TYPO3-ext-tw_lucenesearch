@@ -5,7 +5,7 @@ namespace Tollwerk\TwLucenesearch\Domain\Model;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
+ *  © 2013 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
  *  
  *  All rights reserved
  *
@@ -33,7 +33,7 @@ require_once 'Zend/Search/Lucene/Search/QueryHit.php';
  * Single search result (query hit)
  *
  * @package		tw_lucenesearch
- * @copyright	Copyright © 2012 tollwerk® GmbH (http://tollwerk.de)
+ * @copyright	Copyright © 2013 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
  * @author		Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
  */
 class QueryHit extends \Zend_Search_Lucene_Search_QueryHit {
