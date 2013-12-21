@@ -1,0 +1,43 @@
+# customsubcategory=javascript=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.javascript
+# customsubcategory=indexing=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.indexing
+# customsubcategory=search=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search
+
+plugin.tx_twlucenesearch {
+	view {
+		# cat=plugin.tx_twlucenesearch/file; type=string; label=Path to template root (FE)
+		templateRootPath = EXT:tw_lucenesearch/Resources/Private/Templates/
+		# cat=plugin.tx_twlucenesearch/file; type=string; label=Path to template partials (FE)
+		partialRootPath = EXT:tw_lucenesearch/Resources/Private/Partials/
+		# cat=plugin.tx_twlucenesearch/file; type=string; label=Path to template layouts (FE)
+		layoutRootPath = EXT:tw_lucenesearch/Resources/Private/Layouts/
+
+		# cat=plugin.tx_twlucenesearch/javascript/a; type=boolean; label=Include jQuery library:Convenience method for including the latest jQuery library of the version 1 branch into your source code (expects your main PAGE object being called "page", useless otherwise).
+		jquery = 0		
+		# cat=plugin.tx_twlucenesearch/javascript/b; type=boolean; label=Include searchbox JavaScript:Includes a tiny JavaScript that prints "Your search terms ..." into the standard search box while it is not focused (please see manual for further information). The script relies on jQuery being present (so make sure to check the option above or include jQuery in any other suitable way) and your main PAGE object being called "page". 
+		searchboxJS = 0
+	}
+	
+	index {
+		# cat=plugin.tx_twlucenesearch/indexing/a; type=string; label=Document reference parameters:Comma separated list of GET variables that should be considered relevant for uniquely identifying and indexing your pages
+		reference = id
+		# cat=plugin.tx_twlucenesearch/indexing/b; type=boolean; label=Inject modification timestamps:Whether to inject modification timestamps into the HTML source code of your pages (several meta tags)
+		timestamp = 1
+	}
+	
+	search {
+		# cat=plugin.tx_twlucenesearch/search/a; type=string; label=Root pages:Enter comma separated list of page IDs that should be treated as root pages for search results (i.e. the search will only yield those pages or below as search results) 
+		rootline =
+		# cat=plugin.tx_twlucenesearch/search/b; type=boolean; label=Search results language:Whether to restrict the search results to the current frontend language
+		language = 1
+		# cat=plugin.tx_twlucenesearch/search/c; type=boolean; label=Highlight search terms:Whether to highlight the search terms in the search result list
+		highlight = 1
+		# cat=plugin.tx_twlucenesearch/search/d; type=string; label=Page properties configuration:Configures the importance / relevance of single page properties for indexing and searching as well as the usage of global wildcards (see manual for details) 
+		config = title:?*^2, keywords:?*^1.6, abstract:?*~^1.2, bodytext:?*~
+		# cat=plugin.tx_twlucenesearch/search/e; type=int+; label=Max. matched terms:Wildcard and fuzzy search queries may match too many terms, causing incredible search performance downgrade. Limiting the max. number of matches will help (0 means no limit)
+		limits.query = 100
+		# cat=plugin.tx_twlucenesearch/search/f; type=int+; label=Max. displayd results:Set the maximum of matching search results that are displayed at once  
+		limits.display = 20
+		# cat=plugin.tx_twlucenesearch/search/g; type=int+; label=Default results PID:ID of the page displaying search results by default
+		pid = 
+	}
+}

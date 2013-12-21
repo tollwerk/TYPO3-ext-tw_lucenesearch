@@ -1,0 +1,13 @@
+<!--TYPO3SEARCH_end-->
+<form class="tx-twlucenesearch-searchform" action="{f:if(condition: '{page}', then: '{f:uri.page(pageUid: \'{page}\')}', else: '{f:uri.page()}')}" method="POST">
+	<f:if condition="{searchterm}">
+		<f:then>
+			<input name="tx_twlucenesearch_lucene[searchterm]" class="tx-twlucenesearch-sword" type="text" value="{searchterm}" title="{f:translate(key: 'LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang.xlf:search.box.default')}">
+		</f:then>
+		<f:else>
+			<input name="tx_twlucenesearch_lucene[searchterm]" class="tx-twlucenesearch-sword default" type="text" value="{f:translate(key: 'LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang.xlf:search.box.default')}" title="{f:translate(key: 'LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang.xlf:search.box.default')}">
+		</f:else>
+	</f:if>
+	<input name="tx_twlucenesearch_lucene[search]" class="tx-twlucenesearch-search" type="submit" value="{f:translate(key: 'LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang.xlf:search.box.now')}">
+</form>
+<!--TYPO3SEARCH_begin-->

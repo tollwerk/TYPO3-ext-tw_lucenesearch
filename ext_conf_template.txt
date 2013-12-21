@@ -1,0 +1,8 @@
+  # cat=basic; type=string; label=Lucene index directory: The directory the lucene index resides in (you have to create this directory manually if you don't use the default directory /typo3temp/tw_lucenesearch)
+indexDirectory = /typo3temp/tw_lucenesearch
+
+  # cat=basic; type=string; label=Lucene index MergeFactor: Frequency of index optimization (smaller values = more frequent optimization / default is 10)
+mergeFactor = 10
+
+  # cat=basic; type=boolean; label=Enable developer tools: Activate this if you want to use the developer tools like the output of raw indexing contents or the forced reindexing of pages (should be turned off in production use)
+debug =

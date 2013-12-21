@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2013-06-28T14:15:54Z" product-name="tw_lucenesearch">
+		<header/>
+		<body>
+			<trans-unit id="wizicon.title">
+				<source>Lucene search</source>
+			</trans-unit>
+			<trans-unit id="wizicon.description">
+				<source>Add an Apache Lucene index based search box or results display to the page.</source>
+			</trans-unit>
+			<trans-unit id="search.searchfor">
+				<source>Search for: %s</source>
+			</trans-unit>
+			<trans-unit id="search.results.error">
+				<source>Your search could not be processed – please check your search terms. Every single search term has to consist of a least 3 chars, or you will have to mark it as a phrase by enclosing it in quotation marks. Dou you want to retry?</source>
+			</trans-unit>
+			<trans-unit id="search.results.segment">
+				<source>Displaying results %s - %s of %s</source>
+			</trans-unit>
+			<trans-unit id="search.results.none">
+				<source>Unfortunately your search yielded no results. Do you want to retry with other search terms?</source>
+			</trans-unit>
+			<trans-unit id="search.result.url">
+				<source>URL</source>
+			</trans-unit>
+			<trans-unit id="search.box.default">
+				<source>Your search terms ...</source>
+			</trans-unit>
+			<trans-unit id="search.box.now">
+				<source>Search</source>
+			</trans-unit>
+			<trans-unit id="search.paginate.next">
+				<source>next</source>
+			</trans-unit>
+			<trans-unit id="search.paginate.prev">
+				<source>previous</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

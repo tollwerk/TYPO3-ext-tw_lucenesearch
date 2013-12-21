@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2013-06-28T14:15:54Z" product-name="tw_lucenesearch">
+		<header/>
+		<body>
+			<trans-unit id="feplugin">
+				<source>Lucene-Suche</source>
+			</trans-unit>
+			<trans-unit id="feplugin.flex.behavior">
+				<source>Verhalten</source>
+			</trans-unit>
+			<trans-unit id="feplugin.flex.display">
+				<source>Darstellung</source>
+			</trans-unit>
+			<trans-unit id="feplugin.flex.search">
+				<source>Sucheingabe</source>
+			</trans-unit>
+			<trans-unit id="feplugin.flex.results">
+				<source>Suchergebnisse</source>
+			</trans-unit>
+			<trans-unit id="feplugin.flex.notfound">
+				<source>Fehlerseitensuche (404 Nicht gefunden)</source>
+			</trans-unit>
+			<trans-unit id="update.clear.description">
+				<source>Der Suchindex enthält aktuell %s Dokumente. Sie können den Suchindex komplett leeren, um alle derzeit indizierten Dokumente zu verwerfen.</source>
+			</trans-unit>
+			<trans-unit id="update.clear.submit">
+				<source>Index jetzt leeren</source>
+			</trans-unit>
+			<trans-unit id="update.clear.success">
+				<source>Der Suchindex wurde erfolgreich geleert!</source>
+			</trans-unit>
+			<trans-unit id="update.clear.error">
+				<source>Der Suchindex konnte aus folgendem Grund nicht erfolgreich geleert werden:</source>
+			</trans-unit>
+			<trans-unit id="update.clear.error.unknown">
+				<source>Unbekannter Fehler</source>
+			</trans-unit>
+			<trans-unit id="update.clear.noindex">
+				<source>Der Suchindex konnte nicht gefunden werden.</source>
+			</trans-unit>
+			<trans-unit id="constants.javascript">
+				<source>JavaScript</source>
+			</trans-unit>
+			<trans-unit id="constants.indexing">
+				<source>Indizierung</source>
+			</trans-unit>
+			<trans-unit id="constants.search">
+				<source>Suche</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

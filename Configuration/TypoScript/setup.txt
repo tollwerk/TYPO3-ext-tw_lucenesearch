@@ -1,0 +1,58 @@
+config {
+	index_reference						= {$plugin.tx_twlucenesearch.index.reference}
+	index_injectTimestamp				= {$plugin.tx_twlucenesearch.index.timestamp}
+	search_lucene {
+		restrictByRootlinePids			= {$plugin.tx_twlucenesearch.search.rootline}
+		restrictByLanguage				= {$plugin.tx_twlucenesearch.search.language}
+		searchConfig					= {$plugin.tx_twlucenesearch.search.config}
+		limits {
+			query						= {$plugin.tx_twlucenesearch.search.limits.query}
+			display						= {$plugin.tx_twlucenesearch.search.limits.display}
+		}
+		highlightMatches				= {$plugin.tx_twlucenesearch.search.highlight}
+	}
+}
+
+plugin.tx_twlucenesearch {
+	view {
+		templateRootPath				= {$plugin.tx_twlucenesearch.view.templateRootPath}
+		partialRootPath					= {$plugin.tx_twlucenesearch.view.partialRootPath}
+		layoutRootPath					= {$plugin.tx_twlucenesearch.view.layoutRootPath}
+		widget {
+			Tx_Fluid_ViewHelpers_Widget_PaginateViewHelper {
+				templateRootPath		= {$plugin.tx_twlucenesearch.view.templateRootPath}
+			}
+		}
+	}
+	settings {
+		defaultResultsPage				= {$plugin.tx_twlucenesearch.search.pid}
+	}
+}
+
+# INCLUDE JQUERY IF CONFIGURED
+[globalVar = LIT:1 = {$plugin.tx_twlucenesearch.view.jquery} ]
+
+	######################################################################################################
+	# PLEASE CHANGE THE OCCURENCES OF "page" IN THE FOLLOWING SECTION TO THE NAME OF YOUR MAIN PAGE OBJECT
+	# ----------------------------------------------------------------------------------------------------
+	page.includeJS {
+		jquery							= http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js
+		jquery {
+			external					= 1
+			disableCompression			= 1
+			forceOnTop					= 1
+		}
+	}
+	######################################################################################################
+[global]
+
+# INCLUDE THE SEARCH BOX JAVASCRIPT
+[globalVar = LIT:1 = {$plugin.tx_twlucenesearch.view.searchboxJS} ]
+
+	######################################################################################################
+	# PLEASE CHANGE THE OCCURENCES OF "page" IN THE FOLLOWING SECTION TO THE NAME OF YOUR MAIN PAGE OBJECT
+	# ----------------------------------------------------------------------------------------------------
+	page.includeJS.tx_twlucenesearch	= EXT:tw_lucenesearch/Resources/Public/Javascript/tw_lucenesearch.js
+	######################################################################################################
+	
+[global]

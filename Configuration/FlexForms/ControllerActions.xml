@@ -1,0 +1,35 @@
+<T3DataStructure>
+	<meta>
+		<langDisable>1</langDisable>
+	</meta>
+	<ROOT>
+		<TCEforms>
+			<sheetTitle>LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:feplugin.flex.behavior</sheetTitle>
+		</TCEforms>
+		<type>array</type>
+		<el>
+			<switchableControllerActions>
+				<TCEforms>
+					<label>LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:feplugin.flex.display</label>
+					<config>
+						<type>select</type>
+						<items>
+							<numIndex index="0">
+								<numIndex index="0">LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:feplugin.flex.search</numIndex>
+								<numIndex index="1">Lucene->search</numIndex>
+							</numIndex>
+							<numIndex index="1">
+								<numIndex index="0">LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:feplugin.flex.results</numIndex>
+								<numIndex index="1">Lucene->results</numIndex>
+							</numIndex>
+							<numIndex index="2">
+								<numIndex index="0">LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:feplugin.flex.notfound</numIndex>
+								<numIndex index="1">Lucene->notfound</numIndex>
+							</numIndex>
+						</items>
+					</config>
+				</TCEforms>
+			</switchableControllerActions>
+		</el>
+	</ROOT>
+</T3DataStructure>

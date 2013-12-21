@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2013-06-28T14:15:54Z" product-name="tw_lucenesearch">
+		<header/>
+		<body>
+			<trans-unit id="wizicon.title">
+				<source>Lucene search</source>
+				<target state="translated">Lucene-Suche</target>
+			</trans-unit>
+			<trans-unit id="wizicon.description">
+				<source>Add an Apache Lucene index based search box or results display to the page.</source>
+				<target state="translated">Fügt ein Apache Lucene-Index basiertes Suchfeld oder eine Suchergebnisliste zur Seite hinzu.</target>
+			</trans-unit>
+			<trans-unit id="search.searchfor">
+				<source>Search for: %s</source>
+				<target state="translated">Suche nach: %s</target>
+			</trans-unit>
+			<trans-unit id="search.results.error">
+				<source>Your search could not be processed – please check your search terms. Every single search term has to consist of a least 3 chars, or you will have to mark it as a phrase by enclosing it in quotation marks. Dou you want to retry?</source>
+				<target state="translated">Ihre Suche konnte nicht durchgeführt werden – bitte prüfen Sie Ihre Suchbegriffe. Jeder einzelne Suchbegriff muss mindestens 3 Zeichen lang sein, oder Sie müssen ihn als Phrase kennzeichnen, indem Sie in in doppelte Anführungszeichen einschließen. Möchten Sie es erneut versuchen?</target>
+			</trans-unit>
+			<trans-unit id="search.results.segment">
+				<source>Displaying results %s - %s of %s</source>
+				<target state="translated">Zeige Ergebnisse %s - %s von %s</target>
+			</trans-unit>
+			<trans-unit id="search.results.none">
+				<source>Unfortunately your search yielded no results. Do you want to retry with other search terms?</source>
+				<target state="translated">Ihre Suchanfrage ergab leider keine Ergebnisse. Möchten Sie es mit anderen Suchbegriffen erneut probieren?</target>
+			</trans-unit>
+			<trans-unit id="search.result.url">
+				<source>URL</source>
+				<target state="translated">URL</target>
+			</trans-unit>
+			<trans-unit id="search.box.default">
+				<source>Your search terms ...</source>
+				<target state="translated">Ihre Suchbegriffe ...</target>
+			</trans-unit>
+			<trans-unit id="search.box.now">
+				<source>Search</source>
+				<target state="translated">Suchen</target>
+			</trans-unit>
+			<trans-unit id="search.paginate.next">
+				<source>next</source>
+				<target state="translated">nächste</target>
+			</trans-unit>
+			<trans-unit id="search.paginate.prev">
+				<source>previous</source>
+				<target state="translated">vorherige</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
