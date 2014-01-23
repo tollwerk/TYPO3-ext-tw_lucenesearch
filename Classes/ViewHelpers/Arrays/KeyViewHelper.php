@@ -5,7 +5,7 @@ namespace Tollwerk\TwLucenesearch\ViewHelpers\Arrays;
 /***************************************************************
  *  Copyright notice
  *
- *  © 2013 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
+ *  © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
  *  
  *  All rights reserved
  *
@@ -41,7 +41,7 @@ namespace Tollwerk\TwLucenesearch\ViewHelpers\Arrays;
  * The key of the array element at position {position}
  *
  * @package		tw_lucenesearch
- * @copyright	Copyright © 2013 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
+ * @copyright	Copyright © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
  * @author		Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
  */
 class KeyViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {

@@ -5,7 +5,7 @@ namespace Tollwerk\TwLucenesearch\Utility;
 /***************************************************************
  *  Copyright notice
  *
- *  © 2013 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
+ *  © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
  *  
  *  All rights reserved
  *
@@ -30,7 +30,7 @@ namespace Tollwerk\TwLucenesearch\Utility;
  * Lucene indexer
  *
  * @package		tw_lucenesearch
- * @copyright	Copyright © 2013 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
+ * @copyright	Copyright © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
  * @author		Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
  */
 class Indexer implements \TYPO3\CMS\Core\SingletonInterface {
@@ -442,7 +442,7 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface {
 			if (array_key_exists($libxmlError->code, self::$_libxmlErrors)) {
 		
 				// Brute force approach: strip all tags and take the remaining text content
-				$texts					= trim(preg_replace("%\s+%", ' ', strip_tags($content)));
+				$texts					= trim(preg_replace(array("%\<[^\>]+\>%", "%\s+%"), ' ', $content));
 				break;
 			}
 		}

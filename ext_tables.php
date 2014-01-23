@@ -3,7 +3,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  © 2013 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
+ *  © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
  *  
  *  All rights reserved
  *
@@ -38,7 +38,7 @@ if (!defined('TYPO3_MODE')) {
 // Plugin integration into the backend forms
 $pluginSignature															= str_replace('_','',$_EXTKEY).'_lucene';
 $TCA['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature]	= 'pi_flexform';
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:'.$_EXTKEY.'/Configuration/FlexForms/ControllerActions.xlf');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:'.$_EXTKEY.'/Configuration/FlexForms/ControllerActions.xml');
 
 if (TYPO3_MODE=='BE')	{
 	$TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['Tollwerk\\TwLucenesearch\\Wizicon'] = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY, 'Classes'.DIRECTORY_SEPARATOR.'Utility'.DIRECTORY_SEPARATOR.'Wizicon.php');

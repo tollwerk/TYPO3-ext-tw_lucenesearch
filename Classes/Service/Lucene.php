@@ -5,7 +5,7 @@ namespace Tollwerk\TwLucenesearch\Service;
 /***************************************************************
  *  Copyright notice
  *
- *  © 2013 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
+ *  © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
  *  
  *  All rights reserved
  *
@@ -33,7 +33,7 @@ require_once 'Zend/Search/Lucene/Document.php';
  * Lucene index service
  *
  * @package		tw_lucenesearch
- * @copyright	Copyright © 2013 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
+ * @copyright	Copyright © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
  * @author		Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
  */
 class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\CMS\Core\SingletonInterface {

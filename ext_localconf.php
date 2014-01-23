@@ -3,7 +3,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  © 2013 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
+ *  © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
  *  
  *  All rights reserved
  *
