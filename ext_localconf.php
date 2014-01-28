@@ -58,6 +58,18 @@ $GLOBALS['TYPO3_CONF_VARS']['EXT']['extParams'][$_EXTKEY] = unserialize($_EXTCON
 		)
 );
 
+// Autosuggest plugin configuration 
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+		'Tollwerk.' . $_EXTKEY,
+		'LuceneAutosuggest', 
+		array( 
+				'Lucene' => 'autosuggest
+		'), 
+		array(
+				'Lucene' => 'autosuggest'
+		)
+);
+
 // Adding the "Classes" directory to the include path
 set_include_path(implode(PATH_SEPARATOR, array_unique(array_merge(array(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY, 'Classes')), explode(PATH_SEPARATOR, get_include_path())))));
 
@@ -78,5 +90,8 @@ if (!array_key_exists('search-rewrite-hooks', $GLOBALS['TYPO3_CONF_VARS']['EXTCO
 if (!array_key_exists('term-rewrite-hooks', $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['tw_lucenesearch']) || !is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['tw_lucenesearch']['term-rewrite-hooks'])) {
 	$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['tw_lucenesearch']['term-rewrite-hooks']		= array();
 }
+
+// enables call like /index.php?eID=eidautosuggest  
+$GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['eidautosuggest'] = 'EXT:tw_lucenesearch/Classes/Utility/EidAutosuggest.php';
 
 ?>
