@@ -16,6 +16,8 @@ plugin.tx_twlucenesearch {
 		jquery = 0		
 		# cat=plugin.tx_twlucenesearch/javascript/b; type=boolean; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.javascript.searchboxJS
 		searchboxJS = 0
+		# cat=plugin.tx_twlucenesearch/javascript/c; type=boolean; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.javascript.autosuggestJS
+		autosuggestJS = 0
 	}
 	
 	index {
