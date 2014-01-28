@@ -56,3 +56,16 @@ plugin.tx_twlucenesearch {
 	######################################################################################################
 	
 [global]
+
+# INCLUDE THE AUTOSUGGEST JAVASCRIPT
+[globalVar = LIT:1 = {$plugin.tx_twlucenesearch.view.autosuggestJS} ]
+  
+	######################################################################################################
+	# PLEASE CHANGE THE OCCURENCES OF "page" IN THE FOLLOWING SECTION TO THE NAME OF YOUR MAIN PAGE OBJECT
+	# ----------------------------------------------------------------------------------------------------
+	page.includeJS.jquery_autocomplete	= EXT:tw_lucenesearch/Resources/Public/Javascript/jquery.autocomplete.min.js
+	page.includeJS.tx_twluceneautocomplete	= EXT:tw_lucenesearch/Resources/Public/Javascript/tw_luceneautocomplete.js 
+	page.includeCSS.jquery_autocomplete	= EXT:tw_lucenesearch/Resources/Public/Stylesheets/jquery.autocomplete.css 
+	######################################################################################################
+	  
+[global]
