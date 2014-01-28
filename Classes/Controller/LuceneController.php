@@ -189,8 +189,9 @@ class LuceneController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 			// Run the search for suggestions
 			$suggestions = json_encode($indexerService->suggest($searchterm)); 
 		}  
-		  		 
-		$this->view->assign('suggestions', $suggestions);
+ 
+		header('Content-type: application/json; charset=utf-8'); 
+		return $suggestions; 
 	}
 }
 
