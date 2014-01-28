@@ -60,9 +60,9 @@
 			<trans-unit id="constants.javascript.searchboxJS" xml:space="preserve">
 				<source>Include searchbox JavaScript:Includes a tiny JavaScript that prints "Your search terms ..." into the standard search box while it is not focused (please see manual for further information). The script relies on jQuery being present (so make sure to check the option above or include jQuery in any other suitable way) and your main PAGE object being called "page".</source>
 			</trans-unit> 
-			<trans-unit id="constants.javascript.autosuggestJS" xml:space="preserve"> 
-				<source>Include autosuggest JavaScript:Includes an autosuggest jQuery library.</source>
-			</trans-unit> 
+			<trans-unit id="constants.javascript.autocompleteJS" xml:space="preserve"> 
+				<source>Include autocomplete JavaScript:Includes an autocomplete jQuery library.</source>
+			</trans-unit>  
 			<trans-unit id="constants.indexing" xml:space="preserve">
 				<source>Indexing</source>
 			</trans-unit>
