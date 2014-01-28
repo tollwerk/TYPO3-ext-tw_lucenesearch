@@ -26,15 +26,15 @@ use \TYPO3\CMS\Core\Utility\GeneralUtility;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+ 
 /**
- * Autosuggest feature 
+ * Autocomplete feature 
  *
  * @package		tw_lucenesearch
  * @copyright	Copyright © 2014 Christian Eßl <essl@incert.at>, INCERT eBusiness GmbH
  * @author		Christian Eßl <essl@incert.at>
  */
-class EidAutosuggest {
+class EidAutocomplete {
  
 	/**
 	 * configuration
@@ -66,11 +66,11 @@ class EidAutosuggest {
 	 */
 	public function __construct($TYPO3_CONF_VARS) {
 		$this->configuration = array(
-			'pluginName' => 'LuceneAutosuggest', 
+			'pluginName' => 'LuceneAutocomplete', 
 			'vendorName' => 'Tollwerk',
 			'extensionName' => 'TwLucenesearch',
 			'controller' => 'Lucene',
-			'action' => 'autosuggest', 
+			'action' => 'autocomplete', 
 			'mvc' => array(
 				'requestHandlers' => array(
 					'TYPO3\CMS\Extbase\Mvc\Web\FrontendRequestHandler' => 'TYPO3\CMS\Extbase\Mvc\Web\FrontendRequestHandler'
@@ -78,7 +78,7 @@ class EidAutosuggest {
 			),
 			'settings' => array() 
 		);
-		$_POST['tx_twlucenesearch_lucene']['action'] = 'autosuggest'; // set action
+		$_POST['tx_twlucenesearch_lucene']['action'] = 'autocomplete'; // set action
 		$_POST['tx_twlucenesearch_lucene']['controller'] = 'Lucene'; // set action 
 
 		$this->bootstrap = new \TYPO3\CMS\Extbase\Core\Bootstrap(); 
@@ -95,6 +95,6 @@ $GLOBALS['TSFE']->getCompressedTCarray();
 $GLOBALS['TSFE']->initTemplate();
 $GLOBALS['TSFE']->getConfigArray();
  
-$eid = GeneralUtility::makeInstance('Tollwerk\TwLucenesearch\Utility\EidAutosuggest', $TYPO3_CONF_VARS);
+$eid = GeneralUtility::makeInstance('Tollwerk\TwLucenesearch\Utility\EidAutocomplete', $TYPO3_CONF_VARS);
 echo $eid->run(); // print content
 ?>
