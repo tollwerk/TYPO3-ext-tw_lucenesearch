@@ -249,6 +249,49 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
 		return false;
 	}
 	
+	/**
+	 * get suggestions for the completion of the search term
+	 *
+	 * @param string $searchTerm									Search terms
+	 * @return \Zend_Search_Lucene_Search_Query						Lucene search query
+	 */
+	public function suggest($searchTerm) {	
+		// If there are meaningful search terms
+		if (strlen(trim($searchTerm))) {	  			  
+			$index = \Zend_Search_Lucene::open($this->_indexDirectory);  
+			 
+			$query = new \Zend_Search_Lucene_Search_Query_Boolean();
+			$searchTermWildcard         = $searchTerm . "*";  
+			$pattern            = new \Zend_Search_Lucene_Index_Term($searchTermWildcard, NULL);
+			$userQuery          = new \Zend_Search_Lucene_Search_Query_Wildcard($pattern);
+			$signs              = true;
+			$query->addSubquery($userQuery, $signs);
+  			 
+			$hits = $index->find($query);
+			  
+			$suggestions = array(); 
+			$matchedArray = array();
+			foreach($hits as $hit) {        	 			
+				foreach($hit->getIndex()->terms() as $term) {  
+					$text = $term->text;
+					$textKey = trim(strtolower($text));
+					
+					if (substr($text, 0, strlen($searchTerm)) === $searchTerm) {
+						if(!array_key_exists($textKey, $matchedArray)) {
+							$suggestions[] = $text; 
+						}    
+						    
+						$matchedArray[$textKey] = TRUE;    
+					} 					
+				} 
+			}   
+			  
+			return $suggestions;
+		} 
+	
+		return ''; 
+	}
+	
 	/************************************************************************************************
 	 * PRIVAT METHODS
 	 ***********************************************************************************************/
