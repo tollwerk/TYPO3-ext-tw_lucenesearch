@@ -442,7 +442,7 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface {
 			if (array_key_exists($libxmlError->code, self::$_libxmlErrors)) {
 		
 				// Brute force approach: strip all tags and take the remaining text content
-				$texts					= trim(preg_replace(array("%\<[^\>]+\>%", "%\s+%"), ' ', $content));
+				$texts					= trim(preg_replace(array("%\<[^\>]+\>%", "%\s+%"), ' ', implode(' ', $contentParts)));
 				break;
 			}
 		}
