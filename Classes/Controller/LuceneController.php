@@ -5,7 +5,7 @@ namespace Tollwerk\TwLucenesearch\Controller;
 /***************************************************************
  *  Copyright notice
  *
- *  © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
+ *  © 2013 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
  *  
  *  All rights reserved
  *
@@ -30,7 +30,7 @@ namespace Tollwerk\TwLucenesearch\Controller;
  * Lucene search controller
  *
  * @package		tw_lucenesearch
- * @copyright	Copyright © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
+ * @copyright	Copyright © 2013 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
  * @author		Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
  */
 class LuceneController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
@@ -176,20 +176,20 @@ class LuceneController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	}
 	
 	/**
-	 * Autosuggest feature
+	 * Autocomplete feature
 	 *
 	 * @param string $searchterm		Search terms
 	 * @return void
 	 */
-	public function autosuggestAction($searchterm = '') {
+	public function autocompleteAction($searchterm = '') {
 		// Instanciating the lucene index service
 		/* @var $indexerService \Tollwerk\TwLucenesearch\Service\Lucene */
 		$indexerService					= \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstanceService('index', 'lucene');
 		if ($indexerService instanceof \TYPO3\CMS\Core\Service\AbstractService) {
 			// Run the search for suggestions
-			$suggestions = json_encode($indexerService->suggest($searchterm)); 
+			$suggestions = json_encode($indexerService->autocomplete($searchterm)); 
 		}  
- 
+  
 		header('Content-type: application/json; charset=utf-8'); 
 		return $suggestions; 
 	}
