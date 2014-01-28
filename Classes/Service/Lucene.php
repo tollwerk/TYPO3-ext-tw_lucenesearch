@@ -278,7 +278,7 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
 					
 					if (substr($text, 0, strlen($searchTerm)) === $searchTerm) {
 						if(!array_key_exists($textKey, $matchedArray)) {
-							$suggestions[] = $text; 
+							$suggestions[] = array($text, $text); 
 						}    
 						    
 						$matchedArray[$textKey] = TRUE;    
