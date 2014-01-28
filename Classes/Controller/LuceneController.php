@@ -174,6 +174,24 @@ class LuceneController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 			}
 		}
 	}
+	
+	/**
+	 * Autosuggest feature
+	 *
+	 * @param string $searchterm		Search terms
+	 * @return void
+	 */
+	public function autosuggestAction($searchterm = '') {
+		// Instanciating the lucene index service
+		/* @var $indexerService \Tollwerk\TwLucenesearch\Service\Lucene */
+		$indexerService					= \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstanceService('index', 'lucene');
+		if ($indexerService instanceof \TYPO3\CMS\Core\Service\AbstractService) {
+			// Run the search for suggestions
+			$suggestions = json_encode($indexerService->suggest($searchterm)); 
+		}  
+		  		 
+		$this->view->assign('suggestions', $suggestions);
+	}
 }
 
 ?>
