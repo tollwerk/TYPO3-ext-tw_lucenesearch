@@ -5,7 +5,7 @@ namespace Tollwerk\TwLucenesearch\Service;
 /***************************************************************
  *  Copyright notice
  *
- *  © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
+ *  © 2013 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
  *  
  *  All rights reserved
  *
@@ -33,7 +33,7 @@ require_once 'Zend/Search/Lucene/Document.php';
  * Lucene index service
  *
  * @package		tw_lucenesearch
- * @copyright	Copyright © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
+ * @copyright	Copyright © 2013 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
  * @author		Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
  */
 class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\CMS\Core\SingletonInterface {
@@ -250,12 +250,12 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
 	}
 	
 	/**
-	 * get suggestions for the completion of the search term
+	 * get suggestions for the autocompletion of the search term
 	 *
 	 * @param string $searchTerm									Search terms
 	 * @return \Zend_Search_Lucene_Search_Query						Lucene search query
 	 */
-	public function suggest($searchTerm) {	
+	public function autocomplete($searchTerm) {	
 		// If there are meaningful search terms
 		if (strlen(trim($searchTerm))) {	  			  
 			$index = \Zend_Search_Lucene::open($this->_indexDirectory);  
@@ -277,9 +277,9 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
 					$textKey = trim(strtolower($text));
 					
 					if (substr($text, 0, strlen($searchTerm)) === $searchTerm) {
-						if(!array_key_exists($textKey, $matchedArray)) {
+						if(!array_key_exists($textKey, $matchedArray)) {							
 							$suggestions[] = array($text, $text); 
-						}    
+						}     
 						    
 						$matchedArray[$textKey] = TRUE;    
 					} 					
