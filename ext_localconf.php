@@ -3,7 +3,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
+ *  © 2013 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
  *  
  *  All rights reserved
  *
@@ -49,24 +49,24 @@ $GLOBALS['TYPO3_CONF_VARS']['EXT']['extParams'][$_EXTKEY] = unserialize($_EXTCON
 // Search plugin configuration
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
 		'Tollwerk.' . $_EXTKEY,
-		'Lucene', 
+		'Lucene',
 		array(
 				'Lucene' => 'search,results,notfound
-		'), 
+		'),
 		array(
 				'Lucene' => 'results,notfound'
 		)
-);
+); 
 
-// Autosuggest plugin configuration 
+// Autocomplete plugin configuration 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
 		'Tollwerk.' . $_EXTKEY,
-		'LuceneAutosuggest', 
+		'LuceneAutocomplete', 
 		array( 
-				'Lucene' => 'autosuggest
+				'Lucene' => 'autocomplete 
 		'), 
 		array(
-				'Lucene' => 'autosuggest'
+				'Lucene' => 'autocomplete'
 		)
 );
 
@@ -91,7 +91,7 @@ if (!array_key_exists('term-rewrite-hooks', $GLOBALS['TYPO3_CONF_VARS']['EXTCONF
 	$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['tw_lucenesearch']['term-rewrite-hooks']		= array();
 }
 
-// enables call like /index.php?eID=eidautosuggest  
-$GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['eidautosuggest'] = 'EXT:tw_lucenesearch/Classes/Utility/EidAutosuggest.php';
+// enables call like /index.php?eID=eidautocomplete 
+$GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['eidautocomplete'] = 'EXT:tw_lucenesearch/Classes/Utility/EidAutocomplete.php';
 
 ?>
