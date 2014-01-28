@@ -57,8 +57,8 @@ plugin.tx_twlucenesearch {
 	
 [global]
 
-# INCLUDE THE AUTOSUGGEST JAVASCRIPT
-[globalVar = LIT:1 = {$plugin.tx_twlucenesearch.view.autosuggestJS} ]
+# INCLUDE THE AUTOCOMPLETE JAVASCRIPT
+[globalVar = LIT:1 = {$plugin.tx_twlucenesearch.view.autocompleteJS} ]
   
 	######################################################################################################
 	# PLEASE CHANGE THE OCCURENCES OF "page" IN THE FOLLOWING SECTION TO THE NAME OF YOUR MAIN PAGE OBJECT
