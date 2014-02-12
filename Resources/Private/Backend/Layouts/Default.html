@@ -1,0 +1,35 @@
+<f:be.container>
+    <div class="typo3-fullDoc">
+        <div id="typo3-docheader">
+            <div id="typo3-docheader-row1">
+                <div class="buttonsleft">
+                    
+                </div>
+                <div class="buttonsright">
+                    <f:be.buttons.shortcut />
+                </div>
+            </div>
+            <div id="typo3-docheader-row2">
+                <div class="docheader-row2-left">
+                    <f:be.buttons.csh />
+                    <f:be.menus.actionMenu>
+                        <f:be.menus.actionMenuItem label="{f:translate(key: 'mod.actions.index')}" controller="Module" action="index" />                             
+                        <f:be.menus.actionMenuItem label="{f:translate(key: 'mod.actions.page')}" controller="Module" action="page" />                             
+                        <f:be.menus.actionMenuItem label="{f:translate(key: 'mod.actions.other')}" controller="Module" action="other" />                             
+                    </f:be.menus.actionMenu>
+                </div>
+                <div class="docheader-row2-right">
+                    <f:be.pagePath />
+                    <f:be.pageInfo />
+                </div>
+            </div>
+            
+        </div>
+        <div id="typo3-docbody">
+            <div id="typo3-inner-docbody">
+                <f:flashMessages renderMode="div" />
+                <f:render section="main" />
+            </div>
+        </div>
+    </div>
+</f:be.container>
