@@ -4,18 +4,29 @@
 # customsubcategory=search=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search
 
 plugin.tx_twlucenesearch {
+	backend {
+		# cat=plugin.tx_twlucenesearch/file/a; type=string; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.file.be.templateRootPath
+		templateRootPath = EXT:tw_lucenesearch/Resources/Private/Backend/Templates/
+		# cat=plugin.tx_twlucenesearch/file/b; type=string; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.file.be.partialRootPath
+		partialRootPath = EXT:tw_lucenesearch/Resources/Private/Backend/Partials/
+		# cat=plugin.tx_twlucenesearch/file/c; type=string; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.file.be.layoutRootPath
+		layoutRootPath = EXT:tw_lucenesearch/Resources/Private/Backend/Layouts/
+	}
+
 	view {
-		# cat=plugin.tx_twlucenesearch/file; type=string; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.file.templateRootPath
+		# cat=plugin.tx_twlucenesearch/file/d; type=string; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.file.templateRootPath
 		templateRootPath = EXT:tw_lucenesearch/Resources/Private/Templates/
-		# cat=plugin.tx_twlucenesearch/file; type=string; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.file.partialRootPath
+		# cat=plugin.tx_twlucenesearch/file/e; type=string; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.file.partialRootPath
 		partialRootPath = EXT:tw_lucenesearch/Resources/Private/Partials/
-		# cat=plugin.tx_twlucenesearch/file; type=string; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.file.layoutRootPath
+		# cat=plugin.tx_twlucenesearch/file/f; type=string; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.file.layoutRootPath
 		layoutRootPath = EXT:tw_lucenesearch/Resources/Private/Layouts/
 
 		# cat=plugin.tx_twlucenesearch/javascript/a; type=boolean; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.javascript.jquery
 		jquery = 0		
 		# cat=plugin.tx_twlucenesearch/javascript/b; type=boolean; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.javascript.searchboxJS
 		searchboxJS = 0
+		# cat=plugin.tx_twlucenesearch/javascript/c; type=boolean; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.javascript.autocompleteJS
+		autocompleteJS = 0 
 	}
 	
 	index {

@@ -29,6 +29,16 @@ plugin.tx_twlucenesearch {
 	}
 }
 
+module.tx_twlucenesearch {
+    settings							< plugin.tx_blogexample.settings
+    persistence							< plugin.tx_blogexample.persistence
+    view {
+		templateRootPath				= {$plugin.tx_twlucenesearch.backend.templateRootPath}
+		partialRootPath					= {$plugin.tx_twlucenesearch.backend.partialRootPath}
+		layoutRootPath					= {$plugin.tx_twlucenesearch.backend.layoutRootPath}
+    }
+}
+
 # INCLUDE JQUERY IF CONFIGURED
 [globalVar = LIT:1 = {$plugin.tx_twlucenesearch.view.jquery} ]
 
@@ -55,4 +65,17 @@ plugin.tx_twlucenesearch {
 	page.includeJS.tx_twlucenesearch	= EXT:tw_lucenesearch/Resources/Public/Javascript/tw_lucenesearch.js
 	######################################################################################################
 	
+[global]
+
+# INCLUDE THE AUTOCOMPLETE JAVASCRIPT
+[globalVar = LIT:1 = {$plugin.tx_twlucenesearch.view.autocompleteJS} ]
+  
+	######################################################################################################
+	# PLEASE CHANGE THE OCCURENCES OF "page" IN THE FOLLOWING SECTION TO THE NAME OF YOUR MAIN PAGE OBJECT
+	# ----------------------------------------------------------------------------------------------------
+	page.includeCSS.jquery_autocomplete		= EXT:tw_lucenesearch/Resources/Public/Stylesheets/jquery.autocomplete.css 
+	page.includeJS.jquery_autocomplete		= EXT:tw_lucenesearch/Resources/Public/Javascript/jquery.autocomplete.min.js
+	page.includeJS.tx_twluceneautocomplete	= EXT:tw_lucenesearch/Resources/Public/Javascript/tw_luceneautocomplete.js 
+	######################################################################################################
+	  
 [global]

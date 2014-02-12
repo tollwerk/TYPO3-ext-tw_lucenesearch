@@ -42,6 +42,15 @@
 			<trans-unit id="constants.file" xml:space="preserve" approved="yes">
 				<source>Files &amp; directories</source>
 			<target state="translated">Dateien &amp; Verzeichnisse</target></trans-unit>
+			<trans-unit id="constants.file.be.templateRootPath" xml:space="preserve" approved="yes">
+				<source>Path to template root (BE)</source>
+			<target state="translated">Pfad zum Template-Wurzelverzeichnis (BE)</target></trans-unit>
+			<trans-unit id="constants.file.be.partialRootPath" xml:space="preserve" approved="yes">
+				<source>Path to template partials (BE)</source>
+			<target state="translated">Pfad zum Partial-Wurzelverzeichnis (BE)</target></trans-unit>
+			<trans-unit id="constants.file.be.layoutRootPath" xml:space="preserve" approved="yes">
+				<source>Path to template layouts (BE)</source>
+			<target state="translated">Pfad zum Layouts-Wurzelverzeichnis (BE)</target></trans-unit>
 			<trans-unit id="constants.file.templateRootPath" xml:space="preserve" approved="yes">
 				<source>Path to template root (FE):You can alter this in case you want to customize the tracking code output</source>
 			<target state="translated">Pfad zum Template-Verzeichnis (FE):Wählen Sie ein benutzerdefiniertes Template-Verzeichnis, wenn sie den Tracking-Code anpassen möchten</target></trans-unit>
@@ -59,7 +68,10 @@
 			<target state="translated">jQuery-Bibliothek einschließen:Bequeme Möglichkeit, um die aktuellste jQuery-1.x-Bibliothek in Ihren Quellcode einzubinden (setzt voraus, dass das zentrale PAGE-Objekt mit "page" benannt ist, andernfalls ist diese Option nutzlos).</target></trans-unit>
 			<trans-unit id="constants.javascript.searchboxJS" xml:space="preserve" approved="yes">
 				<source>Include searchbox JavaScript:Includes a tiny JavaScript that prints "Your search terms ..." into the standard search box while it is not focused (please see manual for further information). The script relies on jQuery being present (so make sure to check the option above or include jQuery in any other suitable way) and your main PAGE object being called "page".</source>
-			<target state="translated">Suchfeld-JavaScript einschließen:Bindet ein einfaches JavaScript ein, das "Ihre Suchbegriffe ..." im Standard-Suchfeld anzeigt, solange dieses nicht fokusiert ist (weitere Infos in der Dokumentation). Das Skript setzt jQuery (bitte stellen Sie also sicher, dass die vorangehende Option aktiviert oder jQuery anderweitig verfügbar ist) sowie ein mit "page" benanntes zentrales PAGE-Objekt voraus.</target></trans-unit>
+			<target state="translated">Suchfeld-JavaScript einschließen:Bindet ein einfaches JavaScript ein, das "Ihre Suchbegriffe ..." im Standard-Suchfeld anzeigt, solange dieses nicht fokusiert ist (weitere Infos in der Dokumentation). Das Skript setzt jQuery (bitte stellen Sie also sicher, dass die vorangehende Option aktiviert oder jQuery anderweitig verfügbar ist) sowie ein mit "page" benanntes zentrales PAGE-Objekt voraus.</target></trans-unit> 
+			<trans-unit id="constants.javascript.autocompleteJS" xml:space="preserve" approved="yes"> 
+				<source>Include autocomplete JavaScript:Includes an autocomplete jQuery library.</source>
+			<target state="translated">Autocomplete-JavaScript einschließen:Bindet eine jQuery-Bibliothek zur Autovervollständigung von Suchbegriffen ein</target></trans-unit>  
 			<trans-unit id="constants.indexing" xml:space="preserve" approved="yes">
 				<source>Indexing</source>
 			<target state="translated">Indizierung</target></trans-unit>

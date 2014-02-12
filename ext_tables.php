@@ -50,4 +50,22 @@ if (TYPO3_MODE=='BE')	{
 // Adding the "Classes" directory to the include path 
 set_include_path(implode(PATH_SEPARATOR, array_unique(array_merge(array(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY, 'Classes')), explode(PATH_SEPARATOR, get_include_path())))));
 
+// Adding the backend module
+if (TYPO3_MODE === 'BE') {
+	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
+		'Tollwerk.'.$_EXTKEY,
+		'web',			// Main area
+		'lucene',		// Name of the module
+		'',				// Position of the module
+		array(			// Allowed controller action combinations
+			'Module'	=> 'index,page,other',
+		),
+		array(          // Additional configuration
+			'access'    => 'user,group',
+			'icon'		=> 'EXT:'.$_EXTKEY.'/ext_icon.gif',
+			'labels'    => 'LLL:EXT:'.$_EXTKEY.'/Resources/Private/Language/locallang_mod.xml',
+		)
+	);
+}
+
 ?>

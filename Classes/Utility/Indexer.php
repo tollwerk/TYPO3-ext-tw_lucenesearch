@@ -32,6 +32,7 @@ namespace Tollwerk\TwLucenesearch\Utility;
  * @package		tw_lucenesearch
  * @copyright	Copyright © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
  * @author		Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
+ * @author		Christian Eßl <essl@incert.at>
  */
 class Indexer implements \TYPO3\CMS\Core\SingletonInterface {
 	/**
@@ -442,7 +443,7 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface {
 			if (array_key_exists($libxmlError->code, self::$_libxmlErrors)) {
 		
 				// Brute force approach: strip all tags and take the remaining text content
-				$texts					= trim(preg_replace(array("%\<[^\>]+\>%", "%\s+%"), ' ', $content));
+				$texts					= trim(preg_replace(array("%\<[^\>]+\>%", "%\s+%"), ' ', implode(' ', $contentParts)));
 				break;
 			}
 		}

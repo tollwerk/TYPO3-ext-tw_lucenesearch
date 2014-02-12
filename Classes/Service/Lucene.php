@@ -5,7 +5,7 @@ namespace Tollwerk\TwLucenesearch\Service;
 /***************************************************************
  *  Copyright notice
  *
- *  © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
+ *  © 2013 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
  *  
  *  All rights reserved
  *
@@ -33,14 +33,15 @@ require_once 'Zend/Search/Lucene/Document.php';
  * Lucene index service
  *
  * @package		tw_lucenesearch
- * @copyright	Copyright © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
+ * @copyright	Copyright © 2013 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
  * @author		Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
+ * @author		Christian Eßl <essl@incert.at>
  */
 class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\CMS\Core\SingletonInterface {
 	/**
 	 * Index directory
 	 * 
-	 * @var string
+	 * @var \string
 	 */
 	protected $_indexDirectory = null;
 	/**
@@ -52,7 +53,7 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
 	/**
 	 * Optimize index on instanciation
 	 * 
-	 * @var boolean
+	 * @var \boolean
 	 */
 	protected $_indexOptimize = true;
 	
@@ -63,7 +64,7 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
 	/**
 	 * Constructor
 	 * 
-	 * @return void
+	 * @return \void
 	 */
 	public function __construct() {
 		$this->_indexDirectory = PATH_site.trim($GLOBALS['TYPO3_CONF_VARS']['EXT']['extParams']['tw_lucenesearch']['indexDirectory'], DIRECTORY_SEPARATOR);
@@ -130,11 +131,13 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
 	 * 
 	 * @param string $searchTerm									Search terms
 	 * @param \Zend_Search_Lucene_Search_Query $query				Final index search
-	 * @return \Tollwerk\TwLucenesearch\Domain\Model\QueryHits				Query hits
+	 * @return \Tollwerk\TwLucenesearch\Domain\Model\QueryHits		Query hits
 	 */
 	public function find($searchTerm, &$query = null) {
 		$searchTerm				= trim($searchTerm);
 		$hits					= array();
+		
+		// If there are meaningful search terms
 		if (strlen($searchTerm)) {
 			require_once 'Zend/Search/Lucene/Search/QueryParserException.php';
 			require_once 'Zend/Search/Lucene/Search/QueryLexer.php';
@@ -179,8 +182,8 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
 		
 		// If there are meaningful search terms
 		if (strlen(trim($searchTerm))) {
-			$query			= new \Zend_Search_Lucene_Search_Query_Boolean();
-			$termQuery		= \Zend_Search_Lucene_Search_QueryParser::parse($searchTerm);
+			$query					= new \Zend_Search_Lucene_Search_Query_Boolean();
+			$termQuery				= \Zend_Search_Lucene_Search_QueryParser::parse($searchTerm);
 			
 			// Include term based restriction
 			$query->addSubquery($termQuery, true);
@@ -193,7 +196,7 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
 			}
 			
 			// If applicable: Apply rootline based restriction
-			$rootlinePids	= \Tollwerk\TwLucenesearch\Utility\Indexer::indexConfig($GLOBALS['TSFE'], 'search.restrictByRootlinePids');
+			$rootlinePids			= \Tollwerk\TwLucenesearch\Utility\Indexer::indexConfig($GLOBALS['TSFE'], 'search.restrictByRootlinePids');
 			if (is_array($rootlinePids) && count($rootlinePids)) {
 				require_once 'Zend/Search/Lucene/Search/Query/MultiTerm.php';
 				require_once 'Zend/Search/Lucene/Index/Term.php';
@@ -247,6 +250,47 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
 			return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * Get autocomplete suggestions for specific search terms
+	 *
+	 * @param \string $searchTerm									Search terms
+	 * @return \array												Autocomplete suggestions
+	 * @todo Rewrite hooks? Language / rootline restrictions
+	 */
+	public function autocomplete($searchTerm) {
+		$suggestions				= array();
+		
+		// If there are meaningful search terms
+		if (strlen(trim($searchTerm))) {	  			  
+			$index					= \Zend_Search_Lucene::open($this->_indexDirectory);  
+			 
+			$query					= new \Zend_Search_Lucene_Search_Query_Boolean();
+			$searchTermWildcard		= $searchTerm."*";  
+			$pattern				= new \Zend_Search_Lucene_Index_Term($searchTermWildcard, NULL);
+			$userQuery				= new \Zend_Search_Lucene_Search_Query_Wildcard($pattern);
+			$signs					= true;
+			$query->addSubquery($userQuery, $signs);
+  			 
+			$hits					= $index->find($query);
+			$matchedArray			= array();
+			foreach($hits as $hit) {        	 			
+				foreach($hit->getIndex()->terms() as $term) {  
+					$text			= $term->text;
+					$textKey		= trim(strtolower($text));
+					
+					if (substr($text, 0, strlen($searchTerm)) === $searchTerm) {
+						if(!array_key_exists($textKey, $matchedArray)) {							
+							$suggestions[]			= array($text, $text); 
+						}     
+						$matchedArray[$textKey]		= true;    
+					} 					
+				} 
+			}   
+		} 
+	
+		return $suggestions;
 	}
 	
 	/************************************************************************************************

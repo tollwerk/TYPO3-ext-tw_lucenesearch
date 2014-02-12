@@ -36,6 +36,25 @@
 			<trans-unit id="search.paginate.prev">
 				<source>previous</source>
 			</trans-unit>
+			
+			<trans-unit id="mod.actions.index">
+				<source>Index overview</source>
+			</trans-unit>
+			<trans-unit id="mod.actions.page">
+				<source>Page entries</source>
+			</trans-unit>
+			<trans-unit id="mod.actions.other">
+				<source>Other entries</source>
+			</trans-unit>
+			<trans-unit id="mod.header.index">
+				<source>Lucene index overview</source>
+			</trans-unit>
+			<trans-unit id="mod.header.page">
+				<source>Page index entries</source>
+			</trans-unit>
+			<trans-unit id="mod.header.other">
+				<source>Miscellaneous index entries</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

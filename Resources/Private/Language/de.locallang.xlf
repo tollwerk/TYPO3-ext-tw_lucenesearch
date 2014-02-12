@@ -1,52 +1,59 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <xliff version="1.0">
-	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2013-06-28T14:15:54Z" product-name="tw_lucenesearch">
+	<file source-language="en" datatype="plaintext" original="messages" date="2013-06-28T14:15:54Z" product-name="tw_lucenesearch">
 		<header/>
 		<body>
-			<trans-unit id="wizicon.title">
-				<source>Lucene search</source>
-				<target state="translated">Lucene-Suche</target>
-			</trans-unit>
-			<trans-unit id="wizicon.description">
+			<trans-unit id="wizicon.title" approved="no">
+				<source>Lucene search</source> <target state="needs-translation">Lucene-Suche</target></trans-unit>
+			<trans-unit id="wizicon.description" approved="no">
 				<source>Add an Apache Lucene index based search box or results display to the page.</source>
-				<target state="translated">Fügt ein Apache Lucene-Index basiertes Suchfeld oder eine Suchergebnisliste zur Seite hinzu.</target>
-			</trans-unit>
-			<trans-unit id="search.searchfor">
+			<target state="needs-translation">Fügt ein Apache Lucene-Index basiertes Suchfeld oder eine Suchergebnisliste zur Seite hinzu.</target></trans-unit>
+			<trans-unit id="search.searchfor" approved="no">
 				<source>Search for: %s</source>
-				<target state="translated">Suche nach: %s</target>
-			</trans-unit>
-			<trans-unit id="search.results.error">
+			<target state="needs-translation">Suche nach: %s</target></trans-unit>
+			<trans-unit id="search.results.error" approved="no">
 				<source>Your search could not be processed – please check your search terms. Every single search term has to consist of a least 3 chars, or you will have to mark it as a phrase by enclosing it in quotation marks. Dou you want to retry?</source>
-				<target state="translated">Ihre Suche konnte nicht durchgeführt werden – bitte prüfen Sie Ihre Suchbegriffe. Jeder einzelne Suchbegriff muss mindestens 3 Zeichen lang sein, oder Sie müssen ihn als Phrase kennzeichnen, indem Sie in in doppelte Anführungszeichen einschließen. Möchten Sie es erneut versuchen?</target>
-			</trans-unit>
-			<trans-unit id="search.results.segment">
+			<target state="needs-translation">Ihre Suche konnte nicht durchgeführt werden – bitte prüfen Sie Ihre Suchbegriffe. Jeder einzelne Suchbegriff muss mindestens 3 Zeichen lang sein, oder Sie müssen ihn als Phrase kennzeichnen, indem Sie in in doppelte Anführungszeichen einschließen. Möchten Sie es erneut versuchen?</target></trans-unit>
+			<trans-unit id="search.results.segment" approved="no">
 				<source>Displaying results %s - %s of %s</source>
-				<target state="translated">Zeige Ergebnisse %s - %s von %s</target>
-			</trans-unit>
-			<trans-unit id="search.results.none">
+			<target state="needs-translation">Zeige Ergebnisse %s - %s von %s</target></trans-unit>
+			<trans-unit id="search.results.none" approved="no">
 				<source>Unfortunately your search yielded no results. Do you want to retry with other search terms?</source>
-				<target state="translated">Ihre Suchanfrage ergab leider keine Ergebnisse. Möchten Sie es mit anderen Suchbegriffen erneut probieren?</target>
-			</trans-unit>
-			<trans-unit id="search.result.url">
+			<target state="needs-translation">Ihre Suchanfrage ergab leider keine Ergebnisse. Möchten Sie es mit anderen Suchbegriffen erneut probieren?</target></trans-unit>
+			<trans-unit id="search.result.url" approved="no">
 				<source>URL</source>
-				<target state="translated">URL</target>
-			</trans-unit>
-			<trans-unit id="search.box.default">
+			<target state="needs-translation">URL</target></trans-unit>
+			<trans-unit id="search.box.default" approved="no">
 				<source>Your search terms ...</source>
-				<target state="translated">Ihre Suchbegriffe ...</target>
-			</trans-unit>
-			<trans-unit id="search.box.now">
+			<target state="needs-translation">Ihre Suchbegriffe ...</target></trans-unit>
+			<trans-unit id="search.box.now" approved="no">
 				<source>Search</source>
-				<target state="translated">Suchen</target>
-			</trans-unit>
-			<trans-unit id="search.paginate.next">
+			<target state="needs-translation">Suchen</target></trans-unit>
+			<trans-unit id="search.paginate.next" approved="no">
 				<source>next</source>
-				<target state="translated">nächste</target>
-			</trans-unit>
-			<trans-unit id="search.paginate.prev">
+			<target state="needs-translation">nächste</target></trans-unit>
+			<trans-unit id="search.paginate.prev" approved="no">
 				<source>previous</source>
-				<target state="translated">vorherige</target>
-			</trans-unit>
+			<target state="needs-translation">vorherige</target></trans-unit>
+			
+			<trans-unit id="mod.actions.index" approved="yes">
+				<source>Index overview</source>
+			<target state="translated">Index-Übersicht</target></trans-unit>
+			<trans-unit id="mod.actions.page" approved="yes">
+				<source>Page entries</source>
+			<target state="translated">Seiten-Einträge</target></trans-unit>
+			<trans-unit id="mod.actions.other" approved="yes">
+				<source>Other entries</source>
+			<target state="translated">Sonstige Einträge</target></trans-unit>
+			<trans-unit id="mod.header.index" approved="yes">
+				<source>Lucene index overview</source>
+			<target state="translated">Lucene-Index-Übersicht</target></trans-unit>
+			<trans-unit id="mod.header.page" approved="yes">
+				<source>Page index entries</source>
+			<target state="translated">Seiten-Indexeinträge</target></trans-unit>
+			<trans-unit id="mod.header.other" approved="yes">
+				<source>Miscellaneous index entries</source>
+			<target state="translated">Sonstige Indexeinträge</target></trans-unit>
 		</body>
 	</file>
 </xliff>

@@ -5,7 +5,7 @@ namespace Tollwerk\TwLucenesearch\Controller;
 /***************************************************************
  *  Copyright notice
  *
- *  © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
+ *  © 2013 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
  *  
  *  All rights reserved
  *
@@ -30,15 +30,16 @@ namespace Tollwerk\TwLucenesearch\Controller;
  * Lucene search controller
  *
  * @package		tw_lucenesearch
- * @copyright	Copyright © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
+ * @copyright	Copyright © 2013 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
  * @author		Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
+ * @author		Christian Eßl <essl@incert.at>
  */
 class LuceneController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
 	/**
 	 * Search engine signatures
 	 * 
-	 * @var array
+	 * @var \array
 	 */
 	protected static $_searchEngineSignatures = array(
 		'daum'				=> 'q',
@@ -87,9 +88,9 @@ class LuceneController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	/**
 	 * Rendering a search box
 	 * 
-	 * @param string $searchterm		Search terms
-	 * @param int $page					Search result page ID
-	 * @return void
+	 * @param \string $searchterm		Search terms
+	 * @param \int $page				Search result page ID
+	 * @return \void
 	 */
 	public function searchAction($searchterm = '') {
 		$this->view->assign('searchterm', trim($searchterm));
@@ -99,10 +100,10 @@ class LuceneController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	/**
 	 * Search & display of search results
 	 *
-	 * @param string $searchterm		Search term(s)
-	 * @param int $pointer				Result pointer
-	 * @param boolean $notfound			Indicator for 404 based search
-	 * @return void
+	 * @param \string $searchterm		Search term(s)
+	 * @param \int $pointer				Result pointer
+	 * @param \boolean $notfound		Indicator for 404 based search
+	 * @return \void
 	 */
 	public function resultsAction($searchterm = '', $pointer = 0, $notfound = false) {
 		$page				= intval($this->settings['defaultResultsPage']) ? intval($this->settings['defaultResultsPage']) : $GLOBALS['TSFE']->id;
@@ -114,7 +115,7 @@ class LuceneController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 		
 		// Instanciating the lucene index service
 		/* @var $indexerService \Tollwerk\TwLucenesearch\Service\Lucene */
-		$indexerService					= \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstanceService('index', 'lucene');
+		$indexerService		= \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstanceService('index', 'lucene');
 		if ($indexerService instanceof \TYPO3\CMS\Core\Service\AbstractService) {
 			$indexInfo		= $indexerService->indexInfo();
 			
@@ -144,7 +145,7 @@ class LuceneController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	 * has occured. The action tries to detect a search engine and search terms in the referrer URL
 	 * and forwards them to an internal index search. 
 	 * 
-	 * @return void
+	 * @return \void
 	 */
 	public function notfoundAction() {
 		$referer			= array_key_exists('HTTP_REFERER', $_SERVER) ? $_SERVER['HTTP_REFERER'] : null;
@@ -173,6 +174,24 @@ class LuceneController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 				}
 			}
 		}
+	}
+	
+	/**
+	 * Autocomplete feature
+	 *
+	 * @param \string $searchterm		Search terms
+	 * @return \string					JSON encoded autocomplete suggestions
+	 */
+	public function autocompleteAction($searchterm = '') {
+		$this->response->setHeader('Content-Type', 'application/json; charset=utf-8');
+		$this->response->sendHeaders();
+		
+		// Instanciating the lucene index service
+		/* @var $indexerService \Tollwerk\TwLucenesearch\Service\Lucene */
+		$indexerService					= \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstanceService('index', 'lucene');
+		$suggestions					= ($indexerService instanceof \TYPO3\CMS\Core\Service\AbstractService) ? $indexerService->autocomplete($searchterm) : array(); 
+  
+		return json_encode($suggestions); 
 	}
 }
 
