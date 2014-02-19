@@ -2,4 +2,11 @@
 <f:section name="main">
     <h2 class="be_header"><f:translate key="mod.header.page"/></h2>
     <b><f:flashMessages /></b>
+    <table>
+        <tr>
+            <f:for each="{references}" as="reference" key="id">
+                <th id="{id}">{reference}</th>
+            </f:for>
+        </tr>
+    </table>
 </f:section>

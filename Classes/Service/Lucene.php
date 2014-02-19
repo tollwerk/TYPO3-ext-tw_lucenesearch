@@ -81,6 +81,7 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
 			'buffer'	=> $this->_index()->getMaxBufferedDocs(),
 			'factor'	=> $this->_index()->getMergeFactor(),
 			'memory'	=> $this->_getMemUsage(),
+			'size'		=> $this->_getSize(),
 		);
 	}
 	
@@ -365,6 +366,32 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
 			$memory = memory_get_usage(true);
 		}
 		return ($memory / 1024 / 1024);
+	}
+	
+	/**
+	 * Return the byte size of the complete index
+	 * 
+	 * @return \string												Byte size
+	 */
+	protected function _getSize() {
+		$bytes			= 0;
+		foreach (scandir($this->_indexDirectory) as $indexFile) {
+			if (@is_file($this->_indexDirectory.DIRECTORY_SEPARATOR.$indexFile)) {
+				$bytes	+= @filesize($this->_indexDirectory.DIRECTORY_SEPARATOR.$indexFile);
+			}
+		}
+		
+		if ($bytes >= 1073741824) {
+			$bytes		= number_format($bytes / 1073741824, 2).' GB';
+		} elseif ($bytes >= 1048576) {
+			$bytes		= number_format($bytes / 1048576, 2).' MB';
+		} elseif ($bytes >= 1024) {
+			$bytes		= number_format($bytes / 1024, 2).' KB';
+		} else {
+			$bytes		= intval($bytes).' Bytes';
+		}
+		
+		return $bytes;
 	}
 	
 	/**

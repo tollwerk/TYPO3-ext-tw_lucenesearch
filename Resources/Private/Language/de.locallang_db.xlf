@@ -21,24 +21,6 @@
 			<trans-unit id="feplugin.flex.notfound" xml:space="preserve" approved="yes">
 				<source>Error page search (404 Not found)</source>
 			<target state="translated">Fehlerseitensuche (404 Nicht gefunden)</target></trans-unit>
-			<trans-unit id="update.clear.description" xml:space="preserve" approved="yes">
-				<source>The search index currently contains %s documents. You can completely empty the search index in order remove all currently indexed document.</source>
-			<target state="translated">Der Suchindex enthält aktuell %s Dokumente. Sie können den Suchindex komplett leeren, um alle derzeit indizierten Dokumente zu verwerfen.</target></trans-unit>
-			<trans-unit id="update.clear.submit" xml:space="preserve" approved="yes">
-				<source>Clear index now</source>
-			<target state="translated">Index jetzt leeren</target></trans-unit>
-			<trans-unit id="update.clear.success" xml:space="preserve" approved="yes">
-				<source>The search index has been cleared successfully!</source>
-			<target state="translated">Der Suchindex wurde erfolgreich geleert!</target></trans-unit>
-			<trans-unit id="update.clear.error" xml:space="preserve" approved="yes">
-				<source>The search index could not be cleared due to the following error:</source>
-			<target state="translated">Der Suchindex konnte aus folgendem Grund nicht erfolgreich geleert werden:</target></trans-unit>
-			<trans-unit id="update.clear.error.unknown" xml:space="preserve" approved="yes">
-				<source>Unknown error</source>
-			<target state="translated">Unbekannter Fehler</target></trans-unit>
-			<trans-unit id="update.clear.noindex" xml:space="preserve" approved="yes">
-				<source>The search index could not be found.</source>
-			<target state="translated">Der Suchindex konnte nicht gefunden werden.</target></trans-unit>
 			<trans-unit id="constants.file" xml:space="preserve" approved="yes">
 				<source>Files &amp; directories</source>
 			<target state="translated">Dateien &amp; Verzeichnisse</target></trans-unit>

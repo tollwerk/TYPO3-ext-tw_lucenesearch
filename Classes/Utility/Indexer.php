@@ -655,110 +655,7 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface {
 	 */
 	public static function indexConfig(\TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $fe, $key = null) {
 		if (self::$_config === null) {
-			self::$_config							= array(
-				'enable'							=> false,
-				'externals'							=> false,
-				'descrLgd'							=> 300,
-				'reference'							=> array('id' => (object)array('constraints' => null, 'default' => null)),
-				'injectTimestamp'					=> true,
-				'search'							=> (object)array(
-					'restrictByRootlinePids'		=> array(),
-					'restrictByLanguage'			=> true,
-					'searchConfig'					=> array((object)array('field' => true, 'value' => '?', 'fuzzy' => false, 'boost' => null)),
-					'limits'						=> (object)array('query' => 100, 'display' => 20),
-					'highlightMatches'				=> false,
-				),
-			);
-			
-			if (isset($fe->tmpl) && ($fe->tmpl instanceof \TYPO3\CMS\Core\TypoScript\TemplateService) && is_array($fe->tmpl->setup) && array_key_exists('config.', $fe->tmpl->setup) && is_array($fe->tmpl->setup['config.'])) {
-				if (!array_key_exists('no_index', $_GET) && array_key_exists('index_enable', $fe->tmpl->setup['config.'])) {
-					self::$_config['enable']		= (boolean)intval($fe->tmpl->setup['config.']['index_enable']);
-				}
-				if (array_key_exists('index_externals', $fe->tmpl->setup['config.'])) {
-					self::$_config['externals']		= (boolean)intval($fe->tmpl->setup['config.']['index_externals']);
-				}
-				if (array_key_exists('index_descrLgd', $fe->tmpl->setup['config.'])) {
-					self::$_config['descrLgd']		= intval($fe->tmpl->setup['config.']['index_descrLgd']);
-				}
-				$indexReference			= array_key_exists('index_reference', $fe->tmpl->setup['config.']) ? trim($fe->tmpl->setup['config.']['index_reference']) : '';
-				$linkVars				= array_key_exists('linkVars', $fe->tmpl->setup['config.']) ? trim($fe->tmpl->setup['config.']['linkVars']) : '';
-				if (strlen($indexReference) || strlen($linkVars)) {
-					$referenceVars		= array();
-					foreach (\TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $linkVars.','.$indexReference) as $referenceVar) {
-						if (strlen($referenceVar) && preg_match("%([a-zA-Z][^\(\s]*)(?:\s*\(([^\)]*)\))?(?:\s*\=\s*(.+))?%", trim($referenceVar), $referenceVarConfig)) {
-							$referenceVar			= (object)array(
-								'default'			=> null,
-								'constraints'		=> null,
-							);
-								
-							// Register value restrictions
-							if ((count($referenceVarConfig) > 2) && strlen($referenceVarConfig[2])) {
-								$referenceVar->constraints = array();
-								foreach (\TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('|', trim($referenceVarConfig[2])) as $constraint) {
-									if (strpos($constraint, '-') !== false) {
-										list($lower, $upper) = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('-', $constraint);
-										$referenceVar->constraints = array_merge($referenceVar->constraints, range($lower, $upper));
-									} else {
-										$referenceVar->constraints[]	= trim($constraint);
-									}
-								}
-							}
-								
-							// Register default value
-							if ((count($referenceVarConfig) > 3) && strlen($referenceVarConfig[3])) {
-								$referenceVar->default = trim($referenceVarConfig[3]);
-							}
-								
-							$pointer				=& $referenceVars;
-							$referenceVarNameParts	= preg_split("%[\[\]]%", rtrim($referenceVarConfig[1], ']['));
-							foreach ($referenceVarNameParts as $referenceVarNamePartIndex => $referenceVarNamePart) {
-								if ($referenceVarNamePartIndex < (count($referenceVarNameParts) - 1)) {
-									if (!array_key_exists($referenceVarNamePart, $pointer)) {
-										$pointer[$referenceVarNamePart]		= array();
-									}
-									$pointer		=& $pointer[$referenceVarNamePart];
-								} else {
-									$pointer[$referenceVarNamePart]			= $referenceVar;
-								}
-							}
-						}
-					}
-					self::$_config['reference']		= $referenceVars;
-					self::_indexConfigSort(self::$_config['reference']);
-					if (array_key_exists('search_lucene.', $fe->tmpl->setup['config.']) && is_array($fe->tmpl->setup['config.']['search_lucene.'])) {
-						if (array_key_exists('restrictByRootlinePids', $fe->tmpl->setup['config.']['search_lucene.'])) {
-							self::$_config['search']->restrictByRootlinePids	= trim($fe->tmpl->setup['config.']['search_lucene.']['restrictByRootlinePids']);
-							self::$_config['search']->restrictByRootlinePids	= strlen(self::$_config['search']->restrictByRootlinePids) ? \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', self::$_config['search']->restrictByRootlinePids) : array();
-						}
-						if (array_key_exists('restrictByLanguage', $fe->tmpl->setup['config.']['search_lucene.'])) {
-							self::$_config['search']->restrictByLanguage		= (boolean)intval($fe->tmpl->setup['config.']['search_lucene.']['restrictByLanguage']);
-						}
-						if (array_key_exists('searchConfig', $fe->tmpl->setup['config.']['search_lucene.']) && strlen(trim($fe->tmpl->setup['config.']['search_lucene.']['searchConfig']))) {
-							self::$_config['search']->searchConfig				= array();
-							foreach (\TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', trim($fe->tmpl->setup['config.']['search_lucene.']['searchConfig'])) as $searchConfig) {
-								if (preg_match("%^([^\:]+)\:([^\^\~]+)(\~(\d+(?:\.\d+)?)?)?(?:\^(\d+(?:\.\d+)?))?$%", $searchConfig, $searchConfigParams)) {
-									require_once 'Zend/Search/Lucene/Search/Query/Fuzzy.php';
-									self::$_config['search']->searchConfig[]	= (object)array(
-										'field'		=> ($searchConfigParams[1] == '*') ? true : $searchConfigParams[1],
-										'value'		=> $searchConfigParams[2],
-										'fuzzy'		=> ((count($searchConfigParams) > 3) && strlen($searchConfigParams[3])) ? ((count($searchConfigParams) > 4) && strlen($searchConfigParams[4]) ? floatval($searchConfigParams[4]) : \Zend_Search_Lucene_Search_Query_Fuzzy::DEFAULT_MIN_SIMILARITY) : false,
-										'boost'		=> (count($searchConfigParams) > 5) ? floatval($searchConfigParams[5]) : null,
-									);
-								}
-							}
-						}
-						if (array_key_exists('limits.', $fe->tmpl->setup['config.']['search_lucene.']) && is_array($fe->tmpl->setup['config.']['search_lucene.']['limits.'])) {
-							self::$_config['search']->limits		= (object)$fe->tmpl->setup['config.']['search_lucene.']['limits.'];
-						}
-						if (array_key_exists('highlightMatches', $fe->tmpl->setup['config.']['search_lucene.'])) {
-							self::$_config['search']->highlightMatches			= (boolean)intval($fe->tmpl->setup['config.']['search_lucene.']['highlightMatches']);
-						}
-					}
-				}
-				if (array_key_exists('index_injectTimestamp', $fe->tmpl->setup['config.'])) {
-					self::$_config['injectTimestamp']		= (boolean)intval($fe->tmpl->setup['config.']['index_injectTimestamp']);
-				}
-			}
+			self::$_config		= self::indexConfigTS((isset($fe->tmpl) && ($fe->tmpl instanceof \TYPO3\CMS\Core\TypoScript\TemplateService) && is_array($fe->tmpl->setup) && array_key_exists('config.', $fe->tmpl->setup) && is_array($fe->tmpl->setup['config.'])) ? $fe->tmpl->setup['config.'] : array());
 		}
 		
 		if ($key === null) {
@@ -776,6 +673,119 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface {
 			}
 			return $pointer;
 		}
+	}
+	
+	/**
+	 * Extract and prepare the TypoScript index configuration
+	 * 
+	 * @param \array $typoscript			TypoScript configuration
+	 * @return \array						Index configuration
+	 */
+	public static function indexConfigTS(array $typoscript) {
+		$config								= array(
+			'enable'						=> false,
+			'externals'						=> false,
+			'descrLgd'						=> 300,
+			'reference'						=> array('id' => (object)array('constraints' => null, 'default' => null)),
+			'injectTimestamp'				=> true,
+			'search'						=> (object)array(
+				'restrictByRootlinePids'	=> array(),
+				'restrictByLanguage'		=> true,
+				'searchConfig'				=> array((object)array('field' => true, 'value' => '?', 'fuzzy' => false, 'boost' => null)),
+				'limits'					=> (object)array('query' => 100, 'display' => 20),
+				'highlightMatches'			=> false,
+			),
+		);
+			
+		if (!array_key_exists('no_index', $_GET) && array_key_exists('index_enable', $typoscript)) {
+			$config['enable']		= (boolean)intval($typoscript['index_enable']);
+		}
+		if (array_key_exists('index_externals', $typoscript)) {
+			$config['externals']		= (boolean)intval($typoscript['index_externals']);
+		}
+		if (array_key_exists('index_descrLgd', $typoscript)) {
+			$config['descrLgd']		= intval($typoscript['index_descrLgd']);
+		}
+		$indexReference			= array_key_exists('index_reference', $typoscript) ? trim($typoscript['index_reference']) : '';
+		$linkVars				= array_key_exists('linkVars', $typoscript) ? trim($typoscript['linkVars']) : '';
+		if (strlen($indexReference) || strlen($linkVars)) {
+			$referenceVars		= array();
+			foreach (\TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $linkVars.','.$indexReference) as $referenceVar) {
+				if (strlen($referenceVar) && preg_match("%([a-zA-Z][^\(\s]*)(?:\s*\(([^\)]*)\))?(?:\s*\=\s*(.+))?%", trim($referenceVar), $referenceVarConfig)) {
+					$referenceVar			= (object)array(
+							'default'			=> null,
+							'constraints'		=> null,
+					);
+	
+					// Register value restrictions
+					if ((count($referenceVarConfig) > 2) && strlen($referenceVarConfig[2])) {
+						$referenceVar->constraints = array();
+						foreach (\TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('|', trim($referenceVarConfig[2])) as $constraint) {
+							if (strpos($constraint, '-') !== false) {
+								list($lower, $upper) = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('-', $constraint);
+								$referenceVar->constraints = array_merge($referenceVar->constraints, range($lower, $upper));
+							} else {
+								$referenceVar->constraints[]	= trim($constraint);
+							}
+						}
+					}
+	
+					// Register default value
+					if ((count($referenceVarConfig) > 3) && strlen($referenceVarConfig[3])) {
+						$referenceVar->default = trim($referenceVarConfig[3]);
+					}
+	
+					$pointer				=& $referenceVars;
+					$referenceVarNameParts	= preg_split("%[\[\]]%", rtrim($referenceVarConfig[1], ']['));
+					foreach ($referenceVarNameParts as $referenceVarNamePartIndex => $referenceVarNamePart) {
+						if ($referenceVarNamePartIndex < (count($referenceVarNameParts) - 1)) {
+							if (!array_key_exists($referenceVarNamePart, $pointer)) {
+								$pointer[$referenceVarNamePart]		= array();
+							}
+							$pointer		=& $pointer[$referenceVarNamePart];
+						} else {
+							$pointer[$referenceVarNamePart]			= $referenceVar;
+						}
+					}
+				}
+			}
+			$config['reference']		= $referenceVars;
+			self::_indexConfigSort($config['reference']);
+			if (array_key_exists('search_lucene.', $typoscript) && is_array($typoscript['search_lucene.'])) {
+				if (array_key_exists('restrictByRootlinePids', $typoscript['search_lucene.'])) {
+					$config['search']->restrictByRootlinePids	= trim($typoscript['search_lucene.']['restrictByRootlinePids']);
+					$config['search']->restrictByRootlinePids	= strlen($config['search']->restrictByRootlinePids) ? \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $config['search']->restrictByRootlinePids) : array();
+				}
+				if (array_key_exists('restrictByLanguage', $typoscript['search_lucene.'])) {
+					$config['search']->restrictByLanguage		= (boolean)intval($typoscript['search_lucene.']['restrictByLanguage']);
+				}
+				if (array_key_exists('searchConfig', $typoscript['search_lucene.']) && strlen(trim($typoscript['search_lucene.']['searchConfig']))) {
+					$config['search']->searchConfig				= array();
+					foreach (\TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', trim($typoscript['search_lucene.']['searchConfig'])) as $searchConfig) {
+						if (preg_match("%^([^\:]+)\:([^\^\~]+)(\~(\d+(?:\.\d+)?)?)?(?:\^(\d+(?:\.\d+)?))?$%", $searchConfig, $searchConfigParams)) {
+							require_once 'Zend/Search/Lucene/Search/Query/Fuzzy.php';
+							$config['search']->searchConfig[]	= (object)array(
+								'field'		=> ($searchConfigParams[1] == '*') ? true : $searchConfigParams[1],
+								'value'		=> $searchConfigParams[2],
+								'fuzzy'		=> ((count($searchConfigParams) > 3) && strlen($searchConfigParams[3])) ? ((count($searchConfigParams) > 4) && strlen($searchConfigParams[4]) ? floatval($searchConfigParams[4]) : \Zend_Search_Lucene_Search_Query_Fuzzy::DEFAULT_MIN_SIMILARITY) : false,
+								'boost'		=> (count($searchConfigParams) > 5) ? floatval($searchConfigParams[5]) : null,
+							);
+						}
+					}
+				}
+				if (array_key_exists('limits.', $typoscript['search_lucene.']) && is_array($typoscript['search_lucene.']['limits.'])) {
+					$config['search']->limits					= (object)$typoscript['search_lucene.']['limits.'];
+				}
+				if (array_key_exists('highlightMatches', $typoscript['search_lucene.'])) {
+					$config['search']->highlightMatches			= (boolean)intval($typoscript['search_lucene.']['highlightMatches']);
+				}
+			}
+		}
+		if (array_key_exists('index_injectTimestamp', $typoscript)) {
+			$config['injectTimestamp']		= (boolean)intval($typoscript['index_injectTimestamp']);
+		}
+		
+		return $config;
 	}
 	
 	/**

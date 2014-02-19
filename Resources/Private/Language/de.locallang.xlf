@@ -54,6 +54,26 @@
 			<trans-unit id="mod.header.other" approved="yes">
 				<source>Miscellaneous index entries</source>
 			<target state="translated">Sonstige Indexeinträge</target></trans-unit>
+			<trans-unit id="mod.index.error" approved="yes">
+				<source>The index is not accessible</source> <target state="translated">Der Index steht nicht zur Verfügung</target></trans-unit>
+			<trans-unit id="mod.index.error.unknown" approved="yes">
+				<source>The index is not accessible due to an unknown error!</source> <target state="translated">Der Index steht aus einem unbekannten Grund nicht zur Verfügung!</target></trans-unit>
+			<trans-unit id="mod.index.stats.count" approved="yes">
+				<source>Total documents</source> <target state="translated">Gesamtanzahl Dokumente</target></trans-unit>
+			<trans-unit id="mod.index.stats.buffer" approved="yes">
+				<source>Max. buffered documents</source> <target state="translated">Max. gepufferte Dokumente</target></trans-unit>
+			<trans-unit id="mod.index.stats.factor" approved="yes">
+				<source>Merge factor</source> <target state="translated">Zusammenführungsfaktor</target></trans-unit>
+			<trans-unit id="mod.index.stats.size" approved="yes">
+				<source>Index size</source> <target state="translated">Indexgröße</target></trans-unit>
+			<trans-unit id="mod.index.clear" approved="yes">
+				<source>Clear the index</source> <target state="translated">Index leeren</target></trans-unit>
+			<trans-unit id="mod.index.clear.confirm" approved="yes">
+				<source>All indexed documents will get lost — this cannot be undone! Are you sure you want to clear the index?</source> <target state="translated">Alle indizierten Dokumente gehen verloren — dieser Schritt ist unwiderruflich! Sind Sie sicher, dass Sie den Index leeren möchten?</target></trans-unit>
+			<trans-unit id="mod.index.clear.success" approved="yes">
+				<source>The search index has been cleared successfully!</source> <target state="translated">Der Suchindex wurde erfolgreich geleert!</target></trans-unit>
+			<trans-unit id="mod.index.clear.error" approved="yes">
+				<source>The search index could not be cleared due to an unknown error!</source> <target state="translated">Der Suchindex konnte aus einem unbekannten Grund nicht geleert werden!</target></trans-unit>
 		</body>
 	</file>
 </xliff>

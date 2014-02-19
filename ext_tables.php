@@ -58,7 +58,7 @@ if (TYPO3_MODE === 'BE') {
 		'lucene',		// Name of the module
 		'',				// Position of the module
 		array(			// Allowed controller action combinations
-			'Module'	=> 'index,page,other',
+			'Module'	=> 'page,other,index',
 		),
 		array(          // Additional configuration
 			'access'    => 'user,group',

@@ -21,24 +21,6 @@
 			<trans-unit id="feplugin.flex.notfound" xml:space="preserve">
 				<source>Error page search (404 Not found)</source>
 			</trans-unit>
-			<trans-unit id="update.clear.description" xml:space="preserve">
-				<source>The search index currently contains %s documents. You can completely empty the search index in order remove all currently indexed document.</source>
-			</trans-unit>
-			<trans-unit id="update.clear.submit" xml:space="preserve">
-				<source>Clear index now</source>
-			</trans-unit>
-			<trans-unit id="update.clear.success" xml:space="preserve">
-				<source>The search index has been cleared successfully!</source>
-			</trans-unit>
-			<trans-unit id="update.clear.error" xml:space="preserve">
-				<source>The search index could not be cleared due to the following error:</source>
-			</trans-unit>
-			<trans-unit id="update.clear.error.unknown" xml:space="preserve">
-				<source>Unknown error</source>
-			</trans-unit>
-			<trans-unit id="update.clear.noindex" xml:space="preserve">
-				<source>The search index could not be found.</source>
-			</trans-unit>
 			<trans-unit id="constants.file" xml:space="preserve">
 				<source>Files &amp; directories</source>
 			</trans-unit>

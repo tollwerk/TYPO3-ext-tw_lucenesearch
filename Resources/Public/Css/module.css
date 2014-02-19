@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+table {
+	border-collapse: collapse;
+}
+
+td, th {
+	padding: .5em;
+}
+
+th {
+	font-weight: normal;
+	padding-right: 2em;
+}
+
+.controls {
+	margin-top: 2em;
+}
+
+.typo3-messages {
+	margin-bottom: 2em;
+}

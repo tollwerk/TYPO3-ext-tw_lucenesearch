@@ -1,5 +1,29 @@
 <f:layout name="Default" />
 <f:section name="main">
-    <h2 class="be_header"><f:translate key="mod.header.index"/></h2>
-    <b><f:flashMessages /></b>
+    <f:if condition="{info}">
+        <h2 class="be_header"><f:translate key="mod.header.index"/></h2>
+        <form method="post" onsubmit="return confirm('{f:translate(key: 'mod.index.clear.confirm')}');">
+            <table>
+                <tr class="bgColor-20">
+                    <th><f:translate key="mod.index.stats.count"/></th>
+                    <td>{info.count}</td>
+                </tr>
+                <tr class="bgColor-10">
+                    <th><f:translate key="mod.index.stats.buffer"/></th>
+                    <td>{info.buffer}</td>
+                </tr>
+                <tr class="bgColor-20">
+                    <th><f:translate key="mod.index.stats.factor"/></th>
+                    <td>{info.factor}</td>
+                </tr>
+                <tr class="bgColor-10">
+                    <th><f:translate key="mod.index.stats.size"/></th>
+                    <td>{info.size}</td>
+                </tr>
+            </table>
+            <p class="controls">
+                <input type="submit" name="tx_twlucenesearch_web_twlucenesearchlucene[clear]" value="{f:translate(key: 'mod.index.clear')}"/>
+            </p>
+        </form>
+    </f:if>
 </f:section>

@@ -55,6 +55,36 @@
 			<trans-unit id="mod.header.other">
 				<source>Miscellaneous index entries</source>
 			</trans-unit>
+			<trans-unit id="mod.index.error">
+				<source>The index is not accessible</source>
+			</trans-unit>
+			<trans-unit id="mod.index.error.unknown">
+				<source>The index is not accessible due to an unknown error!</source>
+			</trans-unit>
+			<trans-unit id="mod.index.stats.count">
+				<source>Total documents</source>
+			</trans-unit>
+			<trans-unit id="mod.index.stats.buffer">
+				<source>Max. buffered documents</source>
+			</trans-unit>
+			<trans-unit id="mod.index.stats.factor">
+				<source>Merge factor</source>
+			</trans-unit>
+			<trans-unit id="mod.index.stats.size">
+				<source>Index size</source>
+			</trans-unit>
+			<trans-unit id="mod.index.clear">
+				<source>Clear the index</source>
+			</trans-unit>
+			<trans-unit id="mod.index.clear.confirm">
+				<source>All indexed documents will get lost — this cannot be undone! Are you sure you want to clear the index?</source>
+			</trans-unit>
+			<trans-unit id="mod.index.clear.success">
+				<source>The search index has been cleared successfully!</source>
+			</trans-unit>
+			<trans-unit id="mod.index.clear.error">
+				<source>The search index could not be cleared due to an unknown error!</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
