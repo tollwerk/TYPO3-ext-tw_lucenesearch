@@ -1,12 +1,76 @@
+{namespace tw=Tollwerk\TwLucenesearch\ViewHelpers}
 <f:layout name="Default" />
 <f:section name="main">
     <h2 class="be_header"><f:translate key="mod.header.page"/></h2>
-    <b><f:flashMessages /></b>
-    <table>
-        <tr>
-            <f:for each="{references}" as="reference" key="id">
-                <th id="{id}">{reference}</th>
-            </f:for>
-        </tr>
-    </table>
+    <f:if condition="{documents}">
+        <f:then>
+            <form method="post">
+                <table class="documents">
+                    <thead>
+                        <tr>
+                            <th rowspan="2" class="checkbox"> </th>
+                            <th rowspan="2" class="language"><f:translate key="mod.page.header.language"/></ath>
+                            <th rowspan="2"><f:translate key="mod.page.header.title"/></th>
+                            <th colspan="{f:count(subject: references)}"><f:translate key="mod.page.header.reference"/></th>
+                            <th rowspan="2"><f:translate key="mod.page.header.timestamp"/></th>
+                            <th rowspan="2"><f:translate key="mod.page.header.bodytext"/></th>
+                            <th rowspan="2"><f:translate key="mod.page.header.keywords"/></th>
+                            <th rowspan="2" class="abstract"><f:translate key="mod.page.header.abstract"/></th>
+                            <th rowspan="2"> </th>
+                        </tr>
+                        <tr class="reference">
+                            <f:for each="{references}" as="reference" key="id">
+                                <th id="{id}">{reference}</th>
+                            </f:for>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <f:for each="{documents}" as="document" iteration="iterator">
+                            <tr class="{f:if(condition: '{iterator.isEven}', then: 'bgColor-10', else: 'bgColor-20')}">
+                                <td class="checkbox">
+                                    <input type="checkbox" name="tx_twlucenesearch_web_twlucenesearchlucene[documents][{document.reference}]" value="1" class="document" onclick="tw_lucenesearch_selectDocument(this)"/>
+                                </td>
+                                <td class="language">
+                                    <f:if condition="{document.language}">
+                                        <f:then><img src="sysext/t3skin/images/flags/{document.language}.png" class="title" alt="{document.language}" title="{document.language}"/></f:then>
+                                        <f:else><f:be.buttons.icon icon="icon-status-status"/></f:else>
+                                    </f:if>
+                                </td>
+                                <td>
+                                    {document.title}
+                                </td>
+                                <f:for each="{references}" as="reference" key="id">
+                                    <td><tw:arrays.index array="{document.referenceParameters}" index="{reference}"/></td>
+                                </f:for>
+                                <td class="nowrap">
+                                    <time datetime="{f:format.date(date: '@{document.timestamp}', format: 'c')}"><f:format.date format="r">@{document.timestamp}</f:format.date></time>
+                                </td>
+                                <td>
+                                    <f:translate key="mod.page.header.bodytext.live"/>
+                                </td>
+                                <td title="{document.keywords}" class="title">
+                                    {document.keywords -> f:format.crop(maxCharacters: 100)}
+                                </td>
+                                <td title="{document.abstract}" class="title abstract">
+                                    {document.abstract -> f:format.crop(maxCharacters: 100)}
+                                </td>
+                                <td>
+                                    <tw:link.preview reference="{document.referenceParameters}" target="_blank"><f:be.buttons.icon icon="actions-document-view"/></tw:link.preview>
+                                </td>
+                            </tr>
+                        </f:for>
+                    </tbody>
+                </table>
+                <p class="controls">
+                    <input type="button" value="{f:translate(key: 'mod.page.documents.select.all')}" onclick="tw_lucenesearch_selectDocuments(this, true);"/>
+                    <input type="button" value="{f:translate(key: 'mod.page.documents.select.none')}" onclick="tw_lucenesearch_selectDocuments(this, false);"/>
+                    <input type="submit" name="tx_twlucenesearch_web_twlucenesearchlucene[delete]" value="{f:translate(key: 'mod.page.documents.delete')}" onclick="return confirm('{f:translate(key: 'mod.page.documents.delete')}')" id="tw_lucenesearch_deleteDocuments" disabled="disabled"/>
+                    <input type="submit" name="tx_twlucenesearch_web_twlucenesearchlucene[reindex]" value="{f:translate(key: 'mod.page.documents.reindex')}" id="tw_lucenesearch_reindexDocuments" disabled="disabled"/>
+                </p>
+            </form>
+        </f:then>
+        <f:else>
+            <p><f:translate key="mod.page.documents.none"/></p>
+        </f:else>
+    </f:if>
 </f:section>

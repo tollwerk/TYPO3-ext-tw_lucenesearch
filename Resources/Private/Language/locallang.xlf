@@ -85,6 +85,48 @@
 			<trans-unit id="mod.index.clear.error">
 				<source>The search index could not be cleared due to an unknown error!</source>
 			</trans-unit>
+			<trans-unit id="mod.page.documents.none">
+				<source>There are no index documents for this page. Pages get indexed when they are visited in the frontend (or crawled by a crawler).</source>
+			</trans-unit>
+			<trans-unit id="mod.page.documents.select.all">
+				<source>Select all</source>
+			</trans-unit>
+			<trans-unit id="mod.page.documents.select.none">
+				<source>Clear selection</source>
+			</trans-unit>
+			<trans-unit id="mod.page.documents.delete">
+				<source>Delete selected documents from index</source>
+			</trans-unit>
+			<trans-unit id="mod.page.documents.delete.confirm">
+				<source>Are you sure you want to delete the selected documents from the index?</source>
+			</trans-unit>
+			<trans-unit id="mod.page.documents.reindex">
+				<source>Re-index selected documents</source>
+			</trans-unit>
+			<trans-unit id="mod.page.header.language">
+				<source>Language</source>
+			</trans-unit>
+			<trans-unit id="mod.page.header.title">
+				<source>Page title</source>
+			</trans-unit>
+			<trans-unit id="mod.page.header.reference">
+				<source>Reference</source>
+			</trans-unit>
+			<trans-unit id="mod.page.header.timestamp">
+				<source>Last modification</source>
+			</trans-unit>
+			<trans-unit id="mod.page.header.bodytext">
+				<source>Bodytext</source>
+			</trans-unit>
+			<trans-unit id="mod.page.header.bodytext.live">
+				<source>Live view</source>
+			</trans-unit>
+			<trans-unit id="mod.page.header.keywords">
+				<source>Keywords</source>
+			</trans-unit>
+			<trans-unit id="mod.page.header.abstract">
+				<source>Abstract</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

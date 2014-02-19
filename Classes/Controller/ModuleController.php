@@ -175,11 +175,14 @@ class ModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 		
 		// Find all index documents
 		$documents						= $this->_indexService->getByTypeId(\Tollwerk\TwLucenesearch\Utility\Indexer::PAGE, $this->_pageUid);
+// 		print_r($documents);
+// 		exit;
 		
 		$this->view->assign('documents', $documents);
 		$this->view->assign('default', $default);
 		$this->view->assign('references', $references);
 		$this->view->assign('config', $this->_pageConfig);
+		$this->view->assign('page', $this->_pageUid);
 	}
 
 	/**

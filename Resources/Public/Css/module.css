@@ -4,13 +4,28 @@ table {
 	border-collapse: collapse;
 }
 
-td, th {
-	padding: .5em;
+table img {
+	vertical-align: middle;
 }
 
-th {
+table.documents {
+	width: 100%;
+}
+
+td, th {
+	padding: .5em 2em .5em .5em;
+}
+
+td {
+	vertical-align: middle;
+}
+
+.title {
+	cursor: help;
+}
+
+.reference th {
 	font-weight: normal;
-	padding-right: 2em;
 }
 
 .controls {
@@ -19,4 +34,24 @@ th {
 
 .typo3-messages {
 	margin-bottom: 2em;
+}
+
+.checkbox {
+	width: 32px;
+}
+
+.center {
+	text-align: center;
+}
+
+.nowrap {
+	white-space: nowrap;
+}
+
+.language {
+	text-align: center;
+}
+
+.abstract {
+	
 }

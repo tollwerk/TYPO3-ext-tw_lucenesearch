@@ -1,6 +1,6 @@
 <?php
 
-namespace Tollwerk\TwLucenesearch\ViewHelpers\Index;
+namespace Tollwerk\TwLucenesearch\ViewHelpers\Arrays;
 
 /***************************************************************
  *  Copyright notice
@@ -27,41 +27,34 @@ namespace Tollwerk\TwLucenesearch\ViewHelpers\Index;
  ***************************************************************/
 
 /**
- * View helper for setting / altering the modification timestamp of the current frontend page
+ * Array by index view helper
+ * 
+ * Returns the value of an array element with a specific key 
  * 
  * = Examples =
  *
  * <code title="Example">
- * <twlucene:index.timestamp timestamp="{article.tstamp}"/>
+ * <twlucene:array.index array="{items}" index="{index}" />
  * </code>
  *
  * Output:
- * None (there lucene indexer will write appropriate timestamp meta tags into the source code)
- * 
+ * The value of the array element with the key {index}
+ *
  * @package		tw_lucenesearch
  * @copyright	Copyright © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
  * @author		Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
  */
-class TimestampViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class IndexViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	/**
-	 * Set the modification timestamp of the current frontend page
-	 *
-	 * @param int|DateTime $timestamp		Timestamp
-	 * @return string						Dummy string result (empty)
+	 * Return an array element with the given key
+	 * 
+	 * @param \array $array				Array
+	 * @param \string $index			Key
+	 * @return \mixed					Array element value
 	 */
-	public function render($timestamp = null) {
-		if ($timestamp instanceof \DateTime) {
-			$timestamp = $timestamp->format('U');
-		} elseif (strlen($timestamp)) {
-			$timestamp = intval($timestamp);
-		} else {
-			$timestamp = 0;
-		}
-		if ($timestamp) {
-			$GLOBALS['TSFE']->index_timestamp = isset($GLOBALS['TSFE']->index_timestamp) ? max($GLOBALS['TSFE']->index_timestamp, intval($timestamp)) : intval($timestamp);
-		}		
-		return '';
+	public function render(array $array, $index = '') {
+		return (strlen($index) && array_key_exists($index, $array)) ? $array[$index] : null; 
 	}
 }
 
