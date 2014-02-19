@@ -85,7 +85,7 @@ class EidAutocomplete {
 }
  
 global $TYPO3_CONF_VARS; 
-$GLOBALS['TSFE'] = \TYPO3\CMS\Core\Utility\GeneralUtility\GeneralUtility::makeInstance('tslib_fe', $GLOBALS['TYPO3_CONF_VARS'], GeneralUtility::_GP('id'), '');
+$GLOBALS['TSFE'] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tslib_fe', $GLOBALS['TYPO3_CONF_VARS'], GeneralUtility::_GP('id'), '');
 $GLOBALS['TSFE']->connectToDB();
 $GLOBALS['TSFE']->initFEuser();
 $GLOBALS['TSFE']->checkAlternativeIdMethods();
@@ -94,6 +94,6 @@ $GLOBALS['TSFE']->getCompressedTCarray();
 $GLOBALS['TSFE']->initTemplate();
 $GLOBALS['TSFE']->getConfigArray();
  
-$eid = \TYPO3\CMS\Core\Utility\GeneralUtility\GeneralUtility::makeInstance('Tollwerk\TwLucenesearch\Utility\EidAutocomplete', $TYPO3_CONF_VARS);
+$eid = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tollwerk\TwLucenesearch\Utility\EidAutocomplete', $TYPO3_CONF_VARS);
 echo $eid->run(); // print content
 ?>
