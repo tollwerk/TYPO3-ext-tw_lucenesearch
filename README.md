@@ -18,6 +18,13 @@ Requirements
 **ATTENTION**: This is a **TYPO3 CMS 6** release. Support for TYPO3 4.x has been dropped, use the 0.x versions instead (still available in the [TYPO3 Extension Repository](http://typo3.org/extensions/repository/view/tw_lucenesearch)).
 
 
+Release history
+---------------
+
+#### v1.5.0
+*	Added autocompletion support for frontend searches ([#6](https://github.com/jkphl/TYPO3-ext-tw_lucenesearch/pull/6))
+*	Added a backend module for index management 
+
 Legal
 -----
 

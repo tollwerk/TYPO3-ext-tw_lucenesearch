@@ -100,7 +100,7 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
 	 * 
 	 * @param string $reference										Unique document reference
 	 * @param \Zend_Search_Lucene_Search_QueryHit $hit				Query hit for the requested document
-	 * @return \Tollwerk\TwLucenesearch\Domain\Model\Document				Requested document
+	 * @return \Tollwerk\TwLucenesearch\Domain\Model\Document		Requested document
 	 */
 	public function get($reference, &$hit = null) {
 		$query					= new \Zend_Search_Lucene_Search_Query_Boolean();
@@ -115,6 +115,40 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
 			$hit				= null;
 			return null;
 		}
+	}
+	
+	/**
+	 * Fetch a document by it's type and ID
+	 * 
+	 * @param \string $type											Document type
+	 * @param \string $id											Document ID
+	 * @return \Tollwerk\TwLucenesearch\Domain\Model\Document		Requested document
+	 */
+	public function getByTypeId($type = null, $id = null) {
+		$documents					= array();
+		
+		// Query all index documents for the current page
+		$query					= new \Zend_Search_Lucene_Search_Query_Boolean();
+		
+		// Add a type query
+		if (($type !== null) && strlen($type)) {
+			$typeTerm			= new \Zend_Search_Lucene_Index_Term($type, 'type');
+			$typeQuery			= new \Zend_Search_Lucene_Search_Query_Term($typeTerm);
+			$query->addSubquery($typeQuery, true);
+		}
+		
+		// Add an ID query
+		if (($id !== null) && strlen($id)) {
+			$idTerm				= new \Zend_Search_Lucene_Index_Term($id, 'id');
+			$idQuery			= new \Zend_Search_Lucene_Search_Query_Term($idTerm);
+			$query->addSubquery($idQuery, true);
+		}
+		
+		foreach ($this->_index()->find($query) as $hit) {
+			$documents[]		= \Tollwerk\TwLucenesearch\Domain\Model\Document::cast($hit->getDocument());
+		}
+		
+		return $documents;
 	}
 	
 	/**

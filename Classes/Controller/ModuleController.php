@@ -145,6 +145,8 @@ class ModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	 * @return \void
 	 */
 	public function pageAction() {
+		
+		// Determine the index reference components
 		$references						= array();
 		foreach ($this->_pageConfig['reference'] as $key => $refConfig) {
 			$refLabel					= $key;
@@ -155,6 +157,27 @@ class ModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 			}
 			$references[$key]			= $refLabel;
 		}
+		
+		// Determine the TSConfig
+		$default						= array('language' => array(
+			'flag'						=> '',	
+			'label'						=> 'Default language'
+		));
+		$pageTSConfig					= \TYPO3\CMS\Backend\Utility\BackendUtility::getPagesTSconfig($this->_pageUid);
+		if (!empty($pageTSConfig['mod.']) && !empty($pageTSConfig['mod.']['SHARED.']) && is_array($pageTSConfig['mod.']['SHARED.'])) {
+			if (array_key_exists('defaultLanguageFlag', $pageTSConfig['mod.']['SHARED.'])) {
+				$default['language']['flag']	= $pageTSConfig['mod.']['SHARED.']['defaultLanguageFlag'];
+			}
+			if (array_key_exists('defaultLanguageLabel', $pageTSConfig['mod.']['SHARED.'])) {
+				$default['language']['label']	= $pageTSConfig['mod.']['SHARED.']['defaultLanguageLabel'];
+			}
+		}
+		
+		// Find all index documents
+		$documents						= $this->_indexService->getByTypeId(\Tollwerk\TwLucenesearch\Utility\Indexer::PAGE, $this->_pageUid);
+		
+		$this->view->assign('documents', $documents);
+		$this->view->assign('default', $default);
 		$this->view->assign('references', $references);
 		$this->view->assign('config', $this->_pageConfig);
 	}

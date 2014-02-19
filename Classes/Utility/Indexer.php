@@ -173,6 +173,12 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @var string
 	 */
 	const UTF8 = 'UTF-8';
+	/**
+	 * Document type: TYPO3 page
+	 * 
+	 * @var int
+	 */
+	const PAGE = 1;
 	
 	/************************************************************************************************
 	 * PUBLIC METHODS
@@ -284,7 +290,8 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface {
 				$this->_csObj			= \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Charset\\CharsetConverter');
 				$bodytext				= $this->_getPageBodytext($fe);
 				$document				= $this->_createDocument(array(
-					'type'				=> 0,							// TYPO3-Seite
+					'type'				=> self::PAGE,
+					'id'				=> strval($fe->id),
 					'language'			=> strval($fe->lang),
 					'reference'			=> $reference,
 					'rootline'			=> implode(' ', $this->_getRootLine($fe)),
@@ -307,8 +314,12 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface {
 	 */
 	public function _getPageReference(\TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $fe) {
 		$reference					= array();
+		$parameters					= \TYPO3\CMS\Core\Utility\GeneralUtility::array_merge_recursive_overrule(\TYPO3\CMS\Core\Utility\GeneralUtility::array_merge_recursive_overrule(array(
+			'id'					=> $fe->id,
+			'type'					=> $fe->type,
+		), $_GET), $_POST);
 		foreach (self::indexConfig($fe, 'reference') as $key => $config) {
-			$referenceVariable		= $this->_getReferenceVariable(\TYPO3\CMS\Core\Utility\GeneralUtility::array_merge_recursive_overrule($_GET, $_POST), $key, $config);
+			$referenceVariable		= $this->_getReferenceVariable($parameters, $key, $config);
 			
 			if ($referenceVariable != null) {
 				$reference[$key]	= $referenceVariable;
@@ -631,6 +642,7 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface {
 	protected function _createDocument($properties) {
 		$document				= new \Tollwerk\TwLucenesearch\Domain\Model\Document();
 		$document->addField(\Zend_Search_Lucene_Field::Keyword('type'		, $properties['type']			, self::UTF8));
+		$document->addField(\Zend_Search_Lucene_Field::Keyword('id'			, $properties['id']				, self::UTF8));
 		$document->addField(\Zend_Search_Lucene_Field::Keyword('language'	, $properties['language']		, self::UTF8));
 		$document->addField(\Zend_Search_Lucene_Field::Keyword('reference'	, $properties['reference']		, self::UTF8));
 		$document->addField(\Zend_Search_Lucene_Field::Text('rootline'		, $properties['rootline']		, self::UTF8));
