@@ -55,3 +55,15 @@ td {
 .abstract {
 	
 }
+
+.actions {
+	text-align: right;
+}
+
+table button {
+	border: none;
+	margin: 0;
+	padding: 0;
+	background: transparent;
+	cursor: pointer;
+}

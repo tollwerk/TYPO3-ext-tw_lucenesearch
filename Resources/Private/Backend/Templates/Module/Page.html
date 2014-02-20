@@ -28,7 +28,7 @@
                         <f:for each="{documents}" as="document" iteration="iterator">
                             <tr class="{f:if(condition: '{iterator.isEven}', then: 'bgColor-10', else: 'bgColor-20')}">
                                 <td class="checkbox">
-                                    <input type="checkbox" name="tx_twlucenesearch_web_twlucenesearchlucene[documents][{document.reference}]" value="1" class="document" onclick="tw_lucenesearch_selectDocument(this)"/>
+                                    <input type="checkbox" name="tx_twlucenesearch_web_twlucenesearchlucene[documents][{document.uid}]" value="1" class="document" onclick="tw_lucenesearch_selectDocument(this)" id="document-{document.uid}"/>
                                 </td>
                                 <td class="language">
                                     <f:if condition="{document.language}">
@@ -54,8 +54,10 @@
                                 <td title="{document.abstract}" class="title abstract">
                                     {document.abstract -> f:format.crop(maxCharacters: 100)}
                                 </td>
-                                <td>
-                                    <tw:link.preview reference="{document.referenceParameters}" target="_blank"><f:be.buttons.icon icon="actions-document-view"/></tw:link.preview>
+                                <td class="actions">
+                                    <tw:link.preview reference="{document.referenceParameters}" target="_blank" title="{f:translate(key: 'mod.page.document.preview')}"><f:be.buttons.icon icon="actions-document-view"/></tw:link.preview>
+                                    <button type="submit" name="tx_twlucenesearch_web_twlucenesearchlucene[delete]" onclick="return tw_lucenesearch_deleteDocument('document-{document.uid}')" title="{f:translate(key: 'mod.page.document.delete')}"><f:be.buttons.icon icon="actions-edit-delete"/></button>
+                                    <button type="submit" name="tx_twlucenesearch_web_twlucenesearchlucene[reindex]" onclick="return tw_lucenesearch_reindexDocument('document-{document.uid}')" title="{f:translate(key: 'mod.page.document.reindex')}"><f:be.buttons.icon icon="actions-system-refresh"/></button>
                                 </td>
                             </tr>
                         </f:for>
@@ -64,7 +66,7 @@
                 <p class="controls">
                     <input type="button" value="{f:translate(key: 'mod.page.documents.select.all')}" onclick="tw_lucenesearch_selectDocuments(this, true);"/>
                     <input type="button" value="{f:translate(key: 'mod.page.documents.select.none')}" onclick="tw_lucenesearch_selectDocuments(this, false);"/>
-                    <input type="submit" name="tx_twlucenesearch_web_twlucenesearchlucene[delete]" value="{f:translate(key: 'mod.page.documents.delete')}" onclick="return confirm('{f:translate(key: 'mod.page.documents.delete')}')" id="tw_lucenesearch_deleteDocuments" disabled="disabled"/>
+                    <input type="submit" name="tx_twlucenesearch_web_twlucenesearchlucene[delete]" value="{f:translate(key: 'mod.page.documents.delete')}" onclick="return confirm('{f:translate(key: 'mod.page.documents.delete.confirm')}')" id="tw_lucenesearch_deleteDocuments" disabled="disabled"/>
                     <input type="submit" name="tx_twlucenesearch_web_twlucenesearchlucene[reindex]" value="{f:translate(key: 'mod.page.documents.reindex')}" id="tw_lucenesearch_reindexDocuments" disabled="disabled"/>
                 </p>
             </form>

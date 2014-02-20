@@ -94,14 +94,35 @@
 			<trans-unit id="mod.page.documents.select.none">
 				<source>Clear selection</source>
 			</trans-unit>
+			<trans-unit id="mod.page.document.preview">
+				<source>Preview the indexed content of this document</source>
+			</trans-unit>
+			<trans-unit id="mod.page.document.delete">
+				<source>Delete this document from the index</source>
+			</trans-unit>
 			<trans-unit id="mod.page.documents.delete">
 				<source>Delete selected documents from index</source>
 			</trans-unit>
 			<trans-unit id="mod.page.documents.delete.confirm">
 				<source>Are you sure you want to delete the selected documents from the index?</source>
 			</trans-unit>
+			<trans-unit id="mod.page.documents.delete.success">
+				<source>%s document(s) have successfully been deleted from the index.</source>
+			</trans-unit>
+			<trans-unit id="mod.page.documents.delete.error">
+				<source>No documents have been deleted from the index.</source>
+			</trans-unit>
+			<trans-unit id="mod.page.document.reindex">
+				<source>Re-index this document</source>
+			</trans-unit>
 			<trans-unit id="mod.page.documents.reindex">
 				<source>Re-index selected documents</source>
+			</trans-unit>
+			<trans-unit id="mod.page.documents.reindex.success">
+				<source>%s document(s) have successfully been reindex.</source>
+			</trans-unit>
+			<trans-unit id="mod.page.documents.reindex.error">
+				<source>No documents have been reindex.</source>
 			</trans-unit>
 			<trans-unit id="mod.page.header.language">
 				<source>Language</source>

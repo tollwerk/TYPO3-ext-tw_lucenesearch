@@ -98,13 +98,24 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
 	/**
 	 * Fetch a document from the index
 	 * 
-	 * @param string $reference										Unique document reference
+	 * @param string $uid											Unique document ID
 	 * @param \Zend_Search_Lucene_Search_QueryHit $hit				Query hit for the requested document
 	 * @return \Tollwerk\TwLucenesearch\Domain\Model\Document		Requested document
 	 */
-	public function get($reference, &$hit = null) {
+	public function get($uid, &$hit = null) {
+		$refIDTerm				= new \Zend_Search_Lucene_Index_Term($uid, 'uid');
+		$hits					= $this->_index()->termDocs($refIDTerm);
+		$hit					= count($hits) ? current($hits) : null;
+		if ($hit !== null) {
+			return \Tollwerk\TwLucenesearch\Domain\Model\Document::cast($this->_index()->getDocument($hit));
+		} else {
+			$hit				= null;
+			return null;
+		}
+		
+		/*
 		$query					= new \Zend_Search_Lucene_Search_Query_Boolean();
-		$refIDTerm				= new \Zend_Search_Lucene_Index_Term($reference, 'reference');
+		$refIDTerm				= new \Zend_Search_Lucene_Index_Term($uid, 'uid');
 		$refIDQuery				= new \Zend_Search_Lucene_Search_Query_Term($refIDTerm);
 		$query->addSubquery($refIDQuery, true);
 		$hits					= $this->_index()->find($query);
@@ -115,6 +126,7 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
 			$hit				= null;
 			return null;
 		}
+		*/
 	}
 	
 	/**
@@ -154,7 +166,7 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
 	/**
 	 * Delete a document from the index
 	 *
-	 * @param string $reference										Unique document reference
+	 * @param string $id											Internal document identifier
 	 * @return void
 	 */
 	public function delete($id) {
@@ -327,6 +339,18 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
 	
 		return $suggestions;
 	}
+	
+	/**
+	 * Commit all pending index changes
+	 * 
+	 * @return \void
+	 */
+	public function commit() {
+		if ($this->_index instanceof \Zend_Search_Lucene_Interface) {
+			$this->_index->commit();
+		}
+	}
+	
 	
 	/************************************************************************************************
 	 * PRIVAT METHODS

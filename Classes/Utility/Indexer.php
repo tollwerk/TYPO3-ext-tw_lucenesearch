@@ -272,7 +272,7 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface {
 				
 				// Try to fetch a predecessor of the current page from the index
 				$hit					= null;
-				$document				= $indexerService->get($reference, $hit);
+				$document				= $indexerService->get(self::documentUid(strval($fe->id), self::PAGE, $reference), $hit);
 				
 				// If there exists a predecessor ...
 				if ($document instanceof \Zend_Search_Lucene_Document) {
@@ -282,7 +282,7 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface {
 						
 					// Else: Deletion of the predecessor
 					} else {
-						$indexerService->delete($hit->id);
+						$indexerService->delete($hit);
 					}
 				}
 				
@@ -318,6 +318,9 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface {
 			'id'					=> $fe->id,
 			'type'					=> $fe->type,
 		), $_GET), $_POST);
+		$parameters['id']			= intval($parameters['id']);
+		$parameters['type']			= intval($parameters['type']);
+		
 		foreach (self::indexConfig($fe, 'reference') as $key => $config) {
 			$referenceVariable		= $this->_getReferenceVariable($parameters, $key, $config);
 			
@@ -325,7 +328,7 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface {
 				$reference[$key]	= $referenceVariable;
 			}
 		}
-		
+		ksort($reference);
 		return serialize($reference);
 	}
 	
@@ -640,11 +643,13 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @return \Tollwerk\TwLucenesearch\Domain\Model\Document		Lucene index document
 	 */
 	protected function _createDocument($properties) {
+		$uid					= self::documentUid($properties['id'], $properties['type'], $properties['reference']);
 		$document				= new \Tollwerk\TwLucenesearch\Domain\Model\Document();
 		$document->addField(\Zend_Search_Lucene_Field::Keyword('type'		, $properties['type']			, self::UTF8));
 		$document->addField(\Zend_Search_Lucene_Field::Keyword('id'			, $properties['id']				, self::UTF8));
 		$document->addField(\Zend_Search_Lucene_Field::Keyword('language'	, $properties['language']		, self::UTF8));
 		$document->addField(\Zend_Search_Lucene_Field::Keyword('reference'	, $properties['reference']		, self::UTF8));
+		$document->addField(\Zend_Search_Lucene_Field::Keyword('uid'		, $uid							, self::UTF8));
 		$document->addField(\Zend_Search_Lucene_Field::Text('rootline'		, $properties['rootline']		, self::UTF8));
 		$document->addField(\Zend_Search_Lucene_Field::Text('title'			, $properties['title']			, self::UTF8));
 		$document->addField(\Zend_Search_Lucene_Field::Text('bodytext'		, $properties['bodytext']		, self::UTF8));
@@ -838,6 +843,18 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface {
 			$GLOBALS['TSFE']->page['title']			= strtr($pageFormat, $replace);
 			self::$_setPageTitle					= true;
 		}
+	}
+	
+	/**
+	 * Create a unique ID for an index document
+	 * 
+	 * @param \string $id			Document ID
+	 * @param \string $type			Document type
+	 * @param \string $reference	Serialized reference parameters
+	 * @return \string				Unique document ID
+	 */
+	public static function documentUid($id, $type, $reference) {
+		return md5($id.'-'.$type.'-'.$reference);
 	}
 }
 

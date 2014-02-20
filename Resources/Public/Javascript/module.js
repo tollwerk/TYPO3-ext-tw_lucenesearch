@@ -50,3 +50,37 @@ function tw_lucenesearch_updateDeleteButton() {
 		}
 	}
 }
+
+/**
+ * Delete a specific document
+ * 
+ * @param {String} doc			Document checkbox ID
+ * @return {Boolean}			Success
+ */
+function tw_lucenesearch_deleteDocument(doc) {
+	var cb = document.getElementById(doc);
+	if (cb) {
+		tw_lucenesearch_selectDocuments(cb, false);
+		cb.checked = true;
+		return true;
+	} else {
+		return false;
+	}
+}
+
+/**
+ * Re-index a specific document
+ * 
+ * @param {String} doc			Document checkbox ID
+ * @return {Boolean}			Success
+ */
+function tw_lucenesearch_reindexDocument(doc) {
+	var cb = document.getElementById(doc);
+	if (cb) {
+		tw_lucenesearch_selectDocuments(cb, false);
+		cb.checked = true;
+		return true;
+	} else {
+		return false;
+	}
+}

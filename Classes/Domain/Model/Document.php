@@ -42,6 +42,42 @@ class Document extends \Zend_Search_Lucene_Document {
 	 ***********************************************************************************************/
 	
 	/**
+	 * Return the document ID
+	 *
+	 * @return string					Document ID
+	 */
+	public function getId() {
+		return $this->getFieldValue('id');
+	}
+	
+	/**
+	 * Return the document ID (UTF-8)
+	 *
+	 * @return string					Document ID (UTF-8)
+	 */
+	public function getIdUtf8() {
+		return $this->getFieldUtf8Value('id');
+	}
+	
+	/**
+	 * Return the unique document ID
+	 *
+	 * @return string					Unique document ID
+	 */
+	public function getUid() {
+		return $this->getFieldValue('uid');
+	}
+	
+	/**
+	 * Return the unique document ID (UTF-8)
+	 *
+	 * @return string					Unique document ID (UTF-8)
+	 */
+	public function getUidUtf8() {
+		return $this->getFieldUtf8Value('uid');
+	}
+	
+	/**
 	 * Return the document title
 	 * 
 	 * @return string					Document title

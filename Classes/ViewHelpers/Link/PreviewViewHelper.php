@@ -44,7 +44,7 @@ namespace Tollwerk\TwLucenesearch\ViewHelpers\Link;
  * @copyright	Copyright © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
  * @author		Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
  */
-class PreviewViewHelper extends \Tollwerk\TwLucenesearch\ViewHelpers\Link\AbstractViewHelper {
+class PreviewViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Link\PageViewHelper {
 
 	/**
 	 * Renders a preview link to a particular page 
@@ -83,7 +83,7 @@ class PreviewViewHelper extends \Tollwerk\TwLucenesearch\ViewHelpers\Link\Abstra
 		$reference['index_content_only']					= 1;
 		
 		if (TYPO3_MODE === 'BE') {
-			$this->simulateFrontendEnvironment($pageUid);
+			\Tollwerk\TwLucenesearch\Utility\FrontendSimulator::simulateFrontendEnvironment($pageUid);
 		}
 		
 		$uriBuilder				= $this->controllerContext->getUriBuilder();
@@ -108,7 +108,7 @@ class PreviewViewHelper extends \Tollwerk\TwLucenesearch\ViewHelpers\Link\Abstra
 		}
 		
 		if (TYPO3_MODE === 'BE') {
-			$this->resetFrontendEnvironment();
+			\Tollwerk\TwLucenesearch\Utility\FrontendSimulator::resetFrontendEnvironment();
 		}
 		
 		return $result;
