@@ -3,132 +3,200 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2013-06-28T14:15:54Z" product-name="tw_lucenesearch">
 		<header/>
 		<body>
-			<trans-unit id="wizicon.title" approved="no">
-				<source>Lucene search</source> <target state="needs-translation">Lucene-Suche</target></trans-unit>
-			<trans-unit id="wizicon.description" approved="no">
+			<trans-unit id="wizicon.title">
+				<source>Lucene search</source>
+                <target>Lucene-Suche</target>
+            </trans-unit>
+			<trans-unit id="wizicon.description">
 				<source>Add an Apache Lucene index based search box or results display to the page.</source>
-			<target state="needs-translation">Fügt ein Apache Lucene-Index basiertes Suchfeld oder eine Suchergebnisliste zur Seite hinzu.</target></trans-unit>
-			<trans-unit id="search.searchfor" approved="no">
+                <target>Fügt ein Apache Lucene-Index basiertes Suchfeld oder eine Suchergebnisliste zur Seite hinzu.</target>
+            </trans-unit>
+			<trans-unit id="search.searchfor">
 				<source>Search for: %s</source>
-			<target state="needs-translation">Suche nach: %s</target></trans-unit>
-			<trans-unit id="search.results.error" approved="no">
-				<source>Your search could not be processed – please check your search terms. Every single search term has to consist of a least 3 chars, or you will have to mark it as a phrase by enclosing it in quotation marks. Dou you want to retry?</source>
-			<target state="needs-translation">Ihre Suche konnte nicht durchgeführt werden – bitte prüfen Sie Ihre Suchbegriffe. Jeder einzelne Suchbegriff muss mindestens 3 Zeichen lang sein, oder Sie müssen ihn als Phrase kennzeichnen, indem Sie in in doppelte Anführungszeichen einschließen. Möchten Sie es erneut versuchen?</target></trans-unit>
-			<trans-unit id="search.results.segment" approved="no">
+                <target>Suche nach: %s</target></trans-unit>
+			<trans-unit id="search.results.error">
+				<source>Your search could not be processed – please check your search terms.
+Every single search term has to consist of a least 3 chars, or you will have to mark it as a phrase by enclosing it in quotation marks.
+Do you want to retry?</source>
+                <target>Ihre Suche konnte nicht durchgeführt werden – bitte prüfen Sie Ihre Suchbegriffe.
+Jeder einzelne Suchbegriff muss mindestens 3 Zeichen lang sein, oder Sie müssen ihn als Phrase kennzeichnen, indem Sie in in doppelte Anführungszeichen einschließen.
+Möchten Sie es erneut versuchen?</target>
+            </trans-unit>
+			<trans-unit id="search.results.segment">
 				<source>Displaying results %s - %s of %s</source>
-			<target state="needs-translation">Zeige Ergebnisse %s - %s von %s</target></trans-unit>
-			<trans-unit id="search.results.none" approved="no">
-				<source>Unfortunately your search yielded no results. Do you want to retry with other search terms?</source>
-			<target state="needs-translation">Ihre Suchanfrage ergab leider keine Ergebnisse. Möchten Sie es mit anderen Suchbegriffen erneut probieren?</target></trans-unit>
-			<trans-unit id="search.result.url" approved="no">
+                <target>Zeige Ergebnisse %s - %s von %s</target>
+            </trans-unit>
+			<trans-unit id="search.results.none">
+				<source>Unfortunately your search yielded no results.
+Do you want to retry with other search terms?</source>
+                <target>Ihre Suchanfrage ergab leider keine Ergebnisse.
+Möchten Sie es mit anderen Suchbegriffen erneut probieren?</target>
+            </trans-unit>
+			<trans-unit id="search.result.url">
 				<source>URL</source>
-			<target state="needs-translation">URL</target></trans-unit>
-			<trans-unit id="search.box.default" approved="no">
+                <target>URL</target>
+            </trans-unit>
+			<trans-unit id="search.box.default">
 				<source>Your search terms ...</source>
-			<target state="needs-translation">Ihre Suchbegriffe ...</target></trans-unit>
-			<trans-unit id="search.box.now" approved="no">
+                <target>Ihre Suchbegriffe ...</target>
+            </trans-unit>
+			<trans-unit id="search.box.now">
 				<source>Search</source>
-			<target state="needs-translation">Suchen</target></trans-unit>
-			<trans-unit id="search.paginate.next" approved="no">
+                <target>Suchen</target>
+            </trans-unit>
+			<trans-unit id="search.paginate.next">
 				<source>next</source>
-			<target state="needs-translation">nächste</target></trans-unit>
-			<trans-unit id="search.paginate.prev" approved="no">
+                <target>nächste</target>
+            </trans-unit>
+			<trans-unit id="search.paginate.prev">
 				<source>previous</source>
-			<target state="needs-translation">vorherige</target></trans-unit>
-			
-			<trans-unit id="mod.actions.index" approved="yes">
+                <target>vorherige</target>
+            </trans-unit>
+			<trans-unit id="mod.actions.index">
 				<source>Index overview</source>
-			<target state="translated">Index-Übersicht</target></trans-unit>
-			<trans-unit id="mod.actions.page" approved="yes">
+                <target>Index-Übersicht</target>
+            </trans-unit>
+			<trans-unit id="mod.actions.page">
 				<source>Page entries</source>
-			<target state="translated">Seiten-Einträge</target></trans-unit>
-			<trans-unit id="mod.actions.other" approved="yes">
+                <target>Seiten-Einträge</target>
+            </trans-unit>
+			<trans-unit id="mod.actions.other">
 				<source>Other entries</source>
-			<target state="translated">Sonstige Einträge</target></trans-unit>
-			<trans-unit id="mod.header.index" approved="yes">
+                <target>Sonstige Einträge</target>
+            </trans-unit>
+			<trans-unit id="mod.header.index">
 				<source>Lucene index overview</source>
-			<target state="translated">Lucene-Index-Übersicht</target></trans-unit>
-			<trans-unit id="mod.header.page" approved="yes">
+                <target>Lucene-Index-Übersicht</target>
+            </trans-unit>
+			<trans-unit id="mod.header.page">
 				<source>Page index entries</source>
-			<target state="translated">Seiten-Indexeinträge</target></trans-unit>
-			<trans-unit id="mod.header.other" approved="yes">
+                <target>Seiten-Indexeinträge</target>
+            </trans-unit>
+			<trans-unit id="mod.header.other">
 				<source>Miscellaneous index entries</source>
-			<target state="translated">Sonstige Indexeinträge</target></trans-unit>
-			<trans-unit id="mod.index.error" approved="yes">
+                <target>Sonstige Indexeinträge</target>
+            </trans-unit>
+			<trans-unit id="mod.index.error">
 				<source>The index is not accessible</source>
-			<target state="translated">Der Index steht nicht zur Verfügung</target></trans-unit>
-			<trans-unit id="mod.index.error.unknown" approved="yes">
+                <target>Der Index steht nicht zur Verfügung</target>
+            </trans-unit>
+			<trans-unit id="mod.index.error.unknown">
 				<source>The index is not accessible due to an unknown error!</source>
-			<target state="translated">Der Index steht aus einem unbekannten Grund nicht zur Verfügung!</target></trans-unit>
-			<trans-unit id="mod.index.stats.count" approved="yes">
+                <target>Der Index steht aus einem unbekannten Grund nicht zur Verfügung!</target>
+            </trans-unit>
+			<trans-unit id="mod.index.stats.count">
 				<source>Total documents</source>
-			<target state="translated">Gesamtanzahl Dokumente</target></trans-unit>
-			<trans-unit id="mod.index.stats.buffer" approved="yes">
+                <target>Gesamtanzahl Dokumente</target>
+            </trans-unit>
+			<trans-unit id="mod.index.stats.buffer">
 				<source>Max. buffered documents</source>
-			<target state="translated">Max. gepufferte Dokumente</target></trans-unit>
-			<trans-unit id="mod.index.stats.factor" approved="yes">
+                <target>Max. gepufferte Dokumente</target>
+            </trans-unit>
+			<trans-unit id="mod.index.stats.factor">
 				<source>Merge factor</source>
-			<target state="translated">Zusammenführungsfaktor</target></trans-unit>
-			<trans-unit id="mod.index.stats.size" approved="yes">
+                <target>Zusammenführungsfaktor</target>
+            </trans-unit>
+			<trans-unit id="mod.index.stats.size">
 				<source>Index size</source>
-			<target state="translated">Indexgröße</target></trans-unit>
-			<trans-unit id="mod.index.clear" approved="yes">
+                <target>Indexgröße</target>
+            </trans-unit>
+			<trans-unit id="mod.index.clear">
 				<source>Clear the index</source>
-			<target state="translated">Index leeren</target></trans-unit>
-			<trans-unit id="mod.index.clear.confirm" approved="yes">
+                <target>Index leeren</target>
+            </trans-unit>
+			<trans-unit id="mod.index.clear.confirm">
 				<source>All indexed documents will get lost — this cannot be undone! Are you sure you want to clear the index?</source>
-			<target state="translated">Alle indizierten Dokumente gehen verloren — dieser Schritt ist unwiderruflich! Sind Sie sicher, dass Sie den Index leeren möchten?</target></trans-unit>
-			<trans-unit id="mod.index.clear.success" approved="yes">
+                <target>Alle indizierten Dokumente gehen verloren — dieser Schritt ist unwiderruflich! Sind Sie sicher, dass Sie den Index leeren möchten?</target>
+            </trans-unit>
+			<trans-unit id="mod.index.clear.success">
 				<source>The search index has been cleared successfully!</source>
-			<target state="translated">Der Suchindex wurde erfolgreich geleert!</target></trans-unit>
-			<trans-unit id="mod.index.clear.error" approved="yes">
+                <target>Der Suchindex wurde erfolgreich geleert!</target>
+            </trans-unit>
+			<trans-unit id="mod.index.clear.error">
 				<source>The search index could not be cleared due to an unknown error!</source>
-			<target state="translated">Der Suchindex konnte aus einem unbekannten Grund nicht geleert werden!</target></trans-unit>
-			<trans-unit id="mod.page.documents.none" approved="yes">
+                <target>Der Suchindex konnte aus einem unbekannten Grund nicht geleert werden!</target>
+            </trans-unit>
+			<trans-unit id="mod.page.documents.none">
 				<source>There are no index documents for this page. Pages get indexed when they are visited in the frontend (or crawled by a crawler).</source>
-			<target state="translated">Es existieren keine Indexdokumente zu dieser Seite. Seiten werden indiziert, sobald sie von einem Besucher (oder Crawler) im Frontend aufgerufen werden.</target></trans-unit>
-			<trans-unit id="mod.page.documents.select.all" approved="yes">
+                <target>Es existieren keine Indexdokumente zu dieser Seite. Seiten werden indiziert, sobald sie von einem Besucher (oder Crawler) im Frontend aufgerufen werden.</target>
+            </trans-unit>
+			<trans-unit id="mod.page.documents.select.all">
 				<source>Select all</source>
-			<target state="translated">Alle auswählen</target></trans-unit>
-			<trans-unit id="mod.page.documents.select.none" approved="yes">
+                <target>Alle auswählen</target>
+            </trans-unit>
+			<trans-unit id="mod.page.documents.select.none">
 				<source>Clear selection</source>
-			<target state="translated">Auswahl aufheben</target></trans-unit>
-			<trans-unit id="mod.page.document.preview" approved="yes">
-				<source>Preview the indexed content of this document</source> <target state="translated">Vorschau auf den Indexinhalt dieses Dokuments</target></trans-unit>
-			<trans-unit id="mod.page.document.delete" approved="yes">
-				<source>Delete this document from the index</source> <target state="translated">Dieses Dokument aus dem Index entfernen</target></trans-unit>
-			<trans-unit id="mod.page.documents.delete" approved="yes">
-				<source>Delete selected documents from index</source> <target state="translated">Ausgewählte Dokumente aus dem Index entfernen</target></trans-unit>
-			<trans-unit id="mod.page.documents.delete.confirm" approved="yes">
-				<source>Are you sure you want to delete the selected documents from the index?</source> <target state="translated">Sind Sie sicher, dass Sie die ausgewählten Dokumente aus dem Index entfernen möchten?</target></trans-unit>
-			<trans-unit id="mod.page.documents.delete.success" approved="yes">
-				<source>%s document(s) have successfully been deleted from the index.</source> <target state="translated">%s Dokument(e) wurde(n) erfolgreich aus dem Index entfernt.</target></trans-unit>
-			<trans-unit id="mod.page.documents.delete.error" approved="yes">
-				<source>No documents have been deleted from the index.</source> <target state="translated">Es wurden keine Dokumente aus dem Index entfernt.</target></trans-unit>
-			<trans-unit id="mod.page.document.reindex" approved="yes">
-				<source>Re-index this document</source> <target state="translated">Dieses Dokument neu indizieren</target></trans-unit>
-			<trans-unit id="mod.page.documents.reindex" approved="yes">
-				<source>Re-index selected documents</source> <target state="translated">Ausgewählte Dokumente neu indizieren</target></trans-unit>
-			<trans-unit id="mod.page.documents.reindex.success" approved="yes">
-				<source>%s document(s) have successfully been reindex.</source> <target state="translated">%s Dokument(e) wurde(n) erfolgreich neu indiziert.</target></trans-unit>
-			<trans-unit id="mod.page.documents.reindex.error" approved="yes">
-				<source>No documents have been reindex.</source> <target state="translated">Es wurden keine Dokumente neu indiziert.</target></trans-unit>
-			<trans-unit id="mod.page.header.language" approved="yes">
-				<source>Language</source> <target state="translated">Sprache</target></trans-unit>
-			<trans-unit id="mod.page.header.title" approved="yes">
-				<source>Page title</source> <target state="translated">Seitentitel</target></trans-unit>
-			<trans-unit id="mod.page.header.reference" approved="yes">
-				<source>Reference</source> <target state="translated">Referenz</target></trans-unit>
-			<trans-unit id="mod.page.header.timestamp" approved="yes">
-				<source>Last modification</source> <target state="translated">Letzte Änderung</target></trans-unit>
-			<trans-unit id="mod.page.header.bodytext" approved="yes">
-				<source>Bodytext</source> <target state="translated">Textkörper</target></trans-unit>
-			<trans-unit id="mod.page.header.bodytext.live" approved="yes">
-				<source>Live view</source> <target state="translated">Live-Vorschau</target></trans-unit>
-			<trans-unit id="mod.page.header.keywords" approved="yes">
-				<source>Keywords</source> <target state="translated">Schlüsselworte</target></trans-unit>
-			<trans-unit id="mod.page.header.abstract" approved="yes">
-				<source>Abstract</source> <target state="translated">Zusammenfassung</target></trans-unit>
+                <target>Auswahl aufheben</target>
+            </trans-unit>
+			<trans-unit id="mod.page.document.preview">
+				<source>Preview the indexed content of this document</source> <target>Vorschau auf den Indexinhalt dieses Dokuments</target></trans-unit>
+                <trans-unit id="mod.page.document.delete">
+				<source>Delete this document from the index</source> <target>Dieses Dokument aus dem Index entfernen</target>
+            </trans-unit>
+			<trans-unit id="mod.page.documents.delete">
+				<source>Delete selected documents from index</source>
+                <target>Ausgewählte Dokumente aus dem Index entfernen</target>
+            </trans-unit>
+            <trans-unit id="mod.page.documents.delete.confirm">
+				<source>Are you sure you want to delete the selected documents from the index?</source>
+                <target>Sind Sie sicher, dass Sie die ausgewählten Dokumente aus dem Index entfernen möchten?</target>
+            </trans-unit>
+			<trans-unit id="mod.page.documents.delete.success">
+				<source>%s document(s) have successfully been deleted from the index.</source>
+                <target>%s Dokument(e) wurde(n) erfolgreich aus dem Index entfernt.</target>
+            </trans-unit>
+			<trans-unit id="mod.page.documents.delete.error">
+				<source>No documents have been deleted from the index.</source>
+                <target>Es wurden keine Dokumente aus dem Index entfernt.</target>
+            </trans-unit>
+			<trans-unit id="mod.page.document.reindex">
+				<source>Re-index this document</source>
+                <target>Dieses Dokument neu indizieren</target>
+            </trans-unit>
+			<trans-unit id="mod.page.documents.reindex">
+				<source>Re-index selected documents</source>
+                <target>Ausgewählte Dokumente neu indizieren</target>
+            </trans-unit>
+			<trans-unit id="mod.page.documents.reindex.success">
+				<source>%s document(s) have successfully been reindex.</source>
+                <target>%s Dokument(e) wurde(n) erfolgreich neu indiziert.</target>
+            </trans-unit>
+			<trans-unit id="mod.page.documents.reindex.error">
+				<source>No documents have been reindex.</source>
+                <target>Es wurden keine Dokumente neu indiziert.</target>
+            </trans-unit>
+			<trans-unit id="mod.page.header.language">
+				<source>Language</source>
+                <target>Sprache</target>
+            </trans-unit>
+			<trans-unit id="mod.page.header.title">
+				<source>Page title</source>
+                <target>Seitentitel</target>
+            </trans-unit>
+			<trans-unit id="mod.page.header.reference">
+				<source>Reference</source>
+                <target>Referenz</target>
+            </trans-unit>
+			<trans-unit id="mod.page.header.timestamp">
+				<source>Last modification</source>
+                <target>Letzte Änderung</target>
+            </trans-unit>
+			<trans-unit id="mod.page.header.bodytext">
+				<source>Bodytext</source>
+                <target>Textkörper</target>
+            </trans-unit>
+			<trans-unit id="mod.page.header.bodytext.live">
+				<source>Live view</source>
+                <target>Live-Vorschau</target>
+            </trans-unit>
+			<trans-unit id="mod.page.header.keywords">
+				<source>Keywords</source>
+                <target>Schlüsselworte</target>
+            </trans-unit>
+			<trans-unit id="mod.page.header.abstract">
+				<source>Abstract</source>
+                <target>Zusammenfassung</target>
+            </trans-unit>
 		</body>
 	</file>
 </xliff>

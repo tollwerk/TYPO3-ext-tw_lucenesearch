@@ -1,22 +1,40 @@
 if (jQuery) {
-	jQuery(document).ready(function(){
-		jQuery('input.tx-twlucenesearch-sword').each(function() {
-			this._default		= '' + jQuery.trim(this.title);
-			this.title			= '';
-			this._onfocus		= function(){
-				if (this._default.length && (this.value == this._default)) {
-					this.value	= '';
-					jQuery(this).removeClass('default');
-				}
-			};
-			this._onblur		= function() {
-				if (this._default.length && !jQuery.trim(this.value).length) {
-					this.value	= this._default;
-					jQuery(this).addClass('default');
-				}
-			};
-			this._onblur();
-			jQuery(this.form).submit(jQuery.proxy(this._onfocus, this));
-		}).focus(function(){ this._onfocus(); }).blur(function(){ this._onblur(); });
-	});
+    (function($){
+        $(document).ready(function(){
+            $('input.tx-twlucenesearch-sword').each(function() {
+                var input = $(this);
+                var defaultValue = $.trim(input.attr('title'));
+                input.attr('title', '');
+
+                if (defaultValue) {
+                    if (placeholderIsSupported()) {
+                        input.attr('placeholder', defaultValue);
+                        if ($.trim(input.val()) === defaultValue) {
+                            input.val('');
+                        }
+                    } else {
+                        input.focus(function(){
+                            if ($.trim(input.val()) === defaultValue) {
+                                input.val('');
+                                input.removeClass('default');
+                            }
+                        }).blur(function(){
+                            if (!$.trim(input.val())) {
+                                input.val(defaultValue);
+                                input.addClass('default');
+                            }
+                        }).trigger('blur');
+
+                        $(input.closest('form')).submit(function(){
+                            input.trigger('focus');
+                        });
+                    }
+                }
+            });
+        });
+
+        function placeholderIsSupported() {
+            return ('placeholder' in document.createElement('input'));
+        }
+    })(jQuery);
 }
