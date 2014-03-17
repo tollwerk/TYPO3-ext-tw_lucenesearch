@@ -3,7 +3,7 @@
 <f:if condition="{error}">
 	<f:then>
 		<h1 class="tx-twlucenesearch-headline"><f:translate key="search.searchfor" arguments="{0: searchterm}"/></h1>
-		<p class="tx-twlucenesearch-error"><f:translate key="search.results.error"/></p>
+        <p class="tx-twlucenesearch-error"><f:format.nl2br><f:translate key="search.results.error"/></f:format.nl2br></p>
 		<f:render partial="Searchbox" arguments="{searchterm: searchterm}"/>
 	</f:then>
 	<f:else>
@@ -33,7 +33,7 @@
 						</ol>
 					</f:then>
 					<f:else>
-						<p><f:translate key="search.results.none"/></p>
+                        <p><f:format.nl2br><f:translate key="search.results.none"/></f:format.nl2br></p>
 						<f:render partial="Searchbox" arguments="{searchterm: searchterm, page: page}"/>
 					</f:else>
 				</f:if>
