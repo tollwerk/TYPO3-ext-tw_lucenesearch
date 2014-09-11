@@ -199,13 +199,13 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
 			
 			// Extend / rewrite the search query
 			$tokenTerms			= array();
-			$searchTerm			= $this->_rewriteQueryTerms($searchTerm, $tokenTerms);
-			
+			$luceneSearchTerm	= $this->_rewriteQueryTerms($searchTerm, $tokenTerms);
+
 			try {
 				$highlight		= intval(\Tollwerk\TwLucenesearch\Utility\Indexer::indexConfig($GLOBALS['TSFE'], 'search.highlightMatches'));
 				
 				// Construct the search request
-				$query			= $this->query($searchTerm);
+				$query			= $this->query($luceneSearchTerm);
 				
 				// Run the search an collect the results
 				$hits			= new \Tollwerk\TwLucenesearch\Domain\Model\QueryHits($this->_index(), $query, $tokenTerms, (boolean)$highlight);
@@ -213,6 +213,21 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
 			// In case of errors: Invalidate the query hits
 			} catch(\Zend_Search_Lucene_Exception $e) {
 				$hits			= null;
+
+                $searchTermParts = array();
+                foreach (explode(' ', $searchTerm) as $key => $value) {
+                    if (strpos($value, '"') !== 0 || strrpos($value, '"') !== strlen($value)-1) {
+                        $value = '"' . $value . '"';
+                    }
+
+                    $searchTermParts[] = $value;
+                }
+                $alternativeSearchTerm = implode(' ', $searchTermParts);
+
+                if ($alternativeSearchTerm != $searchTerm) {
+                    $query = null;
+                    $hits = $this->find($alternativeSearchTerm, $query);
+                }
 			}
 		}
 		
@@ -495,7 +510,7 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
 						$isPhrase			= true;
 						$tokenStr			= '"'.$token->text.'"';
 					}
-					
+
 					// Rewrite in accordance to the search configuration
 					$tokenRewrite			= array();
 					foreach ($searchConfig as $searchField) {
