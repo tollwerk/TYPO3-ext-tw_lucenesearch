@@ -32,7 +32,7 @@
                                 </td>
                                 <td class="language">
                                     <f:if condition="{document.language}">
-                                        <f:then><img src="sysext/t3skin/images/flags/{document.language}.png" class="title" alt="{document.language}" title="{document.language}"/></f:then>
+                                        <f:then><img src="{tw:languageFlag(language: document.language, referenceParameters: document.referenceParameters)}" class="title" alt="{document.language}" title="{document.language}"/></f:then>
                                         <f:else><f:be.buttons.icon icon="icon-status-status"/></f:else>
                                     </f:if>
                                 </td>
