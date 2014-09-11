@@ -63,6 +63,9 @@
 			<trans-unit id="constants.indexing.timestamp" xml:space="preserve">
 				<source>Inject modification timestamps:Whether to inject modification timestamps into the HTML source code of your pages (several meta tags)</source>
 			</trans-unit>
+			<trans-unit id="constants.indexing.languageReference" xml:space="preserve">
+				<source>Document language reference parameter:GET variable that should be considered relevant for uniquely identifying your language</source>
+			</trans-unit>
 			<trans-unit id="constants.search" xml:space="preserve">
 				<source>Search</source>
 			</trans-unit>

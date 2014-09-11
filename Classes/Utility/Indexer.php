@@ -324,7 +324,7 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface {
 		foreach (self::indexConfig($fe, 'reference') as $key => $config) {
 			$referenceVariable		= $this->_getReferenceVariable($parameters, $key, $config);
 			
-			if ($referenceVariable != null) {
+			if ($referenceVariable !== null) {
 				$reference[$key]	= $referenceVariable;
 			}
 		}
@@ -368,8 +368,14 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface {
 					$result						= $stack[$key];
 					
 					// If there are value restrictions and the current value is not valid: Return the default value
-					if (($result !== null) && is_array($config->constraints) && !in_array($result, $config->constraints)) {
-						$result					= $config->default;
+					if (($result !== null) && is_array($config->constraints)) {
+						if (in_array($result, $config->constraints)) {
+							// keep type (e.g. constraints is int, result is string)
+							$constraintsKey = array_search($result, $config->constraints);
+							$result = $config->constraints[$constraintsKey];
+						} else {
+							$result					= $config->default;
+						}
 					}
 				}
 				
@@ -763,6 +769,18 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface {
 						} else {
 							$pointer[$referenceVarNamePart]			= $referenceVar;
 						}
+					}
+				}
+			}
+			$indexLanguageReference	= array_key_exists('index_languageReference', $typoscript) ? trim($typoscript['index_languageReference']) : '';
+			if (strlen($indexLanguageReference) > 0 && array_key_exists($indexLanguageReference, $referenceVars)) {
+				$languageVar = &$referenceVars[$indexLanguageReference];
+				if ($languageVar->default === null) {
+					if ($languageVar->constraints && count($languageVar->constraints) > 0) {
+						$constraints = $languageVar->constraints;
+						$languageVar->default = array_shift($constraints);
+					} else {
+						$languageVar->default = 0;
 					}
 				}
 			}

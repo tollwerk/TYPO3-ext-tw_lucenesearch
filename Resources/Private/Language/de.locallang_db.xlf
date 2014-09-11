@@ -60,6 +60,9 @@
 			<trans-unit id="constants.indexing.reference" xml:space="preserve" approved="yes">
 				<source>Document reference parameters:Comma separated list of GET variables that should be considered relevant for uniquely identifying and indexing your pages</source>
 			<target state="translated">Dokumentreferenz-Parameter:Kommaseparierte Liste von GET-Parametern, die benötigt werden, um Ihre Seite eindeutig referenzieren und indizieren zu können</target></trans-unit>
+			it id="constants.indexing.languageReference" xml:space="preserve" approved="yes">
+				<source>Document language reference parameter:GET variable that should be considered relevant for uniquely identifying your language</source>
+			<target state="translated">Dokumentsprachreferenz-Parameter:GET-Parameter, der benötigt wird, um die Sprache Ihrer Seite eindeutig identifizieren zu können</target></trans-unit>
 			<trans-unit id="constants.indexing.timestamp" xml:space="preserve" approved="yes">
 				<source>Inject modification timestamps:Whether to inject modification timestamps into the HTML source code of your pages (several meta tags)</source>
 			<target state="translated">Modifikationszeitstempel ausgeben:Aktivieren Sie diese Option, um automatisch Modifikationszeitstempel in den Quellcode Ihrer Seiten zu integrieren (mehrere Meta-Elemente)</target></trans-unit>
@@ -89,4 +92,5 @@
 			<target state="translated">Standard-Ergebnisseite:ID der Seite, auf der die Suchergebnisse standardmäßig dargestellt werden</target></trans-unit>
 		</body>
 	</file>
+</xliff>
 </xliff>
