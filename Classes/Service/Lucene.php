@@ -214,19 +214,21 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
 			} catch(\Zend_Search_Lucene_Exception $e) {
 				$hits			= null;
 
-                $searchTermParts = array();
-                foreach (explode(' ', $searchTerm) as $key => $value) {
-                    if (strpos($value, '"') !== 0 || strrpos($value, '"') !== strlen($value)-1) {
-                        $value = '"' . $value . '"';
+                if (strlen($searchTerm) >= 3) {
+                    $searchTermParts = array();
+                    foreach (explode(' ', $searchTerm) as $key => $value) {
+                        if (strpos($value, '"') !== 0 || strrpos($value, '"') !== strlen($value)-1) {
+                            $value = '"' . $value . '"';
+                        }
+
+                        $searchTermParts[] = $value;
                     }
+                    $alternativeSearchTerm = implode(' ', $searchTermParts);
 
-                    $searchTermParts[] = $value;
-                }
-                $alternativeSearchTerm = implode(' ', $searchTermParts);
-
-                if ($alternativeSearchTerm != $searchTerm) {
-                    $query = null;
-                    $hits = $this->find($alternativeSearchTerm, $query);
+                    if ($alternativeSearchTerm != $searchTerm) {
+                        $query = null;
+                        $hits = $this->find($alternativeSearchTerm, $query);
+                    }
                 }
 			}
 		}
