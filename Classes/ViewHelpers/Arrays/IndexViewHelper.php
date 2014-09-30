@@ -53,9 +53,28 @@ class IndexViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelpe
 	 * @param \string $index			Key
 	 * @return \mixed					Array element value
 	 */
-	public function render(array $array, $index = '') {
-		return (strlen($index) && array_key_exists($index, $array)) ? $array[$index] : null; 
+	public function render(array $array, $index = '')
+    {
+        $value = null;
+        if (strlen($index)) {
+            $indexArr = explode('[', $index);
+            foreach ($indexArr as $key => $val) {
+                $indexArr[$key] = str_replace(array('[', ']'), '', $val);
+            }
+
+            if (array_key_exists($indexArr[0], $array)) {
+                $value = $array[$indexArr[0]];
+
+                for ($i = 1; $i < count($indexArr); $i++) {
+                    if (array_key_exists($indexArr[$i], $value)) {
+                        $value = $value[$indexArr[$i]];
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+
+        return $value;
 	}
 }
-
-?>
