@@ -1,5 +1,6 @@
 config {
 	index_reference						= {$plugin.tx_twlucenesearch.index.reference}
+	index_languageReference				= {$plugin.tx_twlucenesearch.index.languageReference}
 	index_injectTimestamp				= {$plugin.tx_twlucenesearch.index.timestamp}
 	search_lucene {
 		restrictByRootlinePids			= {$plugin.tx_twlucenesearch.search.rootline}
