@@ -399,7 +399,7 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
 					
 				// If an error occurs: Failure
 				} catch (\Zend_Search_Lucene_Exception $e) {
-					throw new Exception(sprintf('Error creating lucene index in "%1$s", reason: "%2$s"', $this->_indexDirectory, $e->getMessage()));
+					throw new \Exception(sprintf('Error creating lucene index in "%1$s", reason: "%2$s"', $this->_indexDirectory, $e->getMessage()));
 				}
 			}
 			
