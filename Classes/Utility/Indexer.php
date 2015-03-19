@@ -254,10 +254,10 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface {
 				
 			// Else ...
 			} else {
-				preg_replace("%\<head[^\>]*\>%", "$0<title>".$fe->page['title'].'</title>', $fe->content);
+				$fe->content			= preg_replace("%\<head[^\>]*\>%", "$0<title>".$fe->page['title'].'</title>', $fe->content);
 			}
 		}
-
+		
 		// If the current page should be indexed
 		if (!intval($fe->page['no_search']) && self::indexConfig($fe, 'enable')) {
 			// Instanciate the lucene index service
@@ -314,7 +314,7 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface {
 	 */
 	public function _getPageReference(\TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $fe) {
 		$reference					= array();
-		$parameters					= \TYPO3\CMS\Core\Utility\GeneralUtility::array_merge_recursive_overrule(\TYPO3\CMS\Core\Utility\GeneralUtility::array_merge_recursive_overrule(array(
+		$parameters					= \TYPO3\CMS\Core\Utility\GeneralUtility::array_merge(\TYPO3\CMS\Core\Utility\GeneralUtility::array_merge(array(
 			'id'					=> $fe->id,
 			'type'					=> $fe->type,
 		), $_GET), $_POST);
@@ -733,7 +733,7 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface {
 							'default'			=> null,
 							'constraints'		=> null,
 					);
-	
+
 					// Register value restrictions
 					if ((count($referenceVarConfig) > 2) && strlen($referenceVarConfig[2])) {
 						$referenceVar->constraints = array();
