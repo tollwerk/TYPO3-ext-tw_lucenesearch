@@ -95,7 +95,7 @@ class QueryHits implements \TYPO3\CMS\Extbase\Persistence\QueryResultInterface {
 		$this->_query			= $query;
 		$this->_terms			= $terms;
 		$this->_index->addReference();
-		
+
 		// Run the Lucene search and register the results
 		foreach ($this->_index->find($this->_query) as $hit) {
 			$this->_hits[]		= \Tollwerk\TwLucenesearch\Domain\Model\QueryHit::cast($hit);
@@ -105,12 +105,10 @@ class QueryHits implements \TYPO3\CMS\Extbase\Persistence\QueryResultInterface {
 		if (count($this->_hits) && $highlight) {
 			$this->_highlight	= array();
 			foreach ($this->_query->rewrite($this->_index)->getQueryTerms() as $term) {
-				if (strlen($term->text) >= 3) {
-					if (!array_key_exists($term->field, $this->_highlight)) {
-						$this->_highlight[$term->field] = array($term->text);
-					} else {
-						$this->_highlight[$term->field][] = $term->text;
-					}
+				if (!array_key_exists($term->field, $this->_highlight)) {
+					$this->_highlight[$term->field] = array($term->text);
+				} else {
+					$this->_highlight[$term->field][] = $term->text;
 				}
 			}
 		}

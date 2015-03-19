@@ -183,7 +183,7 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
 	public function find($searchTerm, &$query = null) {
 		$searchTerm				= trim($searchTerm);
 		$hits					= array();
-		
+
 		// If there are meaningful search terms
 		if (strlen($searchTerm)) {
 			require_once 'Zend/Search/Lucene/Search/QueryParserException.php';
@@ -215,7 +215,7 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
 				$hits			= null;
 			}
 		}
-		
+
 		return $hits;
 	}
 	
@@ -269,12 +269,10 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
 	public function getQueryTerms(\Zend_Search_Lucene_Search_Query $query) {
 		$terms								= array();
 		foreach ($query->rewrite($this->_index)->getQueryTerms() as $term) {
-			if (strlen($term->text) >= 3) {
-				if (!array_key_exists($term->field, $terms)) {
-					$terms[$term->field]	= array($term->text);
-				} else {
-					$terms[$term->field][]	= $term->text;
-				}
+			if (!array_key_exists($term->field, $terms)) {
+				$terms[$term->field]	= array($term->text);
+			} else {
+				$terms[$term->field][]	= $term->text;
 			}
 		}
 		return $terms;
