@@ -18,6 +18,18 @@ plugin.tx_twlucenesearch {
 		templateRootPath				= {$plugin.tx_twlucenesearch.view.templateRootPath}
 		partialRootPath					= {$plugin.tx_twlucenesearch.view.partialRootPath}
 		layoutRootPath					= {$plugin.tx_twlucenesearch.view.layoutRootPath}
+		templateRootPaths {
+			10							= EXT:tw_lucenesearch/Resources/Private/Templates/
+			20							= {$plugin.tx_twlucenesearch.view.templateRootPath}
+		}
+		partialRootPaths {
+			10							= EXT:tw_lucenesearch/Resources/Private/Partials/
+			20							= {$plugin.tx_twlucenesearch.view.partialRootPath}
+		}
+		layoutRootPaths {
+			10							= EXT:tw_lucenesearch/Resources/Private/Layouts/
+			20							= {$plugin.tx_twlucenesearch.view.layoutRootPath}
+		}
 		widget {
 			Tx_Fluid_ViewHelpers_Widget_PaginateViewHelper {
 				templateRootPath		= {$plugin.tx_twlucenesearch.view.templateRootPath}
@@ -30,12 +42,24 @@ plugin.tx_twlucenesearch {
 }
 
 module.tx_twlucenesearch {
-    settings							< plugin.tx_blogexample.settings
-    persistence							< plugin.tx_blogexample.persistence
+    settings							< plugin.tx_twlucenesearch.settings
+    persistence							< plugin.tx_twlucenesearch.persistence
     view {
 		templateRootPath				= {$plugin.tx_twlucenesearch.backend.templateRootPath}
 		partialRootPath					= {$plugin.tx_twlucenesearch.backend.partialRootPath}
 		layoutRootPath					= {$plugin.tx_twlucenesearch.backend.layoutRootPath}
+		templateRootPaths {
+			10							= EXT:tw_lucenesearch/Resources/Private/Backend/Templates/
+			20							= {$plugin.tx_twlucenesearch.backend.templateRootPath}
+		}
+		partialRootPaths {
+			10							= EXT:tw_lucenesearch/Resources/Private/Backend/Partials/
+			20							= {$plugin.tx_twlucenesearch.backend.partialRootPath}
+		}
+		layoutRootPaths {
+			10							= EXT:tw_lucenesearch/Resources/Private/Backend/Layouts/
+			20							= {$plugin.tx_twlucenesearch.backend.layoutRootPath}
+		}
     }
 }
 
@@ -62,7 +86,7 @@ module.tx_twlucenesearch {
 	######################################################################################################
 	# PLEASE CHANGE THE OCCURENCES OF "page" IN THE FOLLOWING SECTION TO THE NAME OF YOUR MAIN PAGE OBJECT
 	# ----------------------------------------------------------------------------------------------------
-	page.includeJS.tx_twlucenesearch	= EXT:tw_lucenesearch/Resources/Public/Javascript/tw_lucenesearch.js
+	page.includeJS.tx_twlucenesearch	= EXT:tw_lucenesearch/Resources/Public/Js/tw_lucenesearch.js
 	######################################################################################################
 
 [global]
@@ -73,9 +97,9 @@ module.tx_twlucenesearch {
 	######################################################################################################
 	# PLEASE CHANGE THE OCCURENCES OF "page" IN THE FOLLOWING SECTION TO THE NAME OF YOUR MAIN PAGE OBJECT
 	# ----------------------------------------------------------------------------------------------------
-	page.includeCSS.jquery_autocomplete		= EXT:tw_lucenesearch/Resources/Public/Css/jquery.autocomplete.css
-	page.includeJS.jquery_autocomplete		= EXT:tw_lucenesearch/Resources/Public/Javascript/jquery.autocomplete.min.js
-	page.includeJS.tx_twluceneautocomplete	= EXT:tw_lucenesearch/Resources/Public/Javascript/tw_luceneautocomplete.js
+	page.includeCSS.jquery_autocomplete		= EXT:tw_lucenesearch/Resources/Public/Css/jquery.autocomplete.css 
+	page.includeJS.jquery_autocomplete		= EXT:tw_lucenesearch/Resources/Public/Js/jquery.autocomplete.min.js
+	page.includeJS.tx_twluceneautocomplete	= EXT:tw_lucenesearch/Resources/Public/Js/tw_luceneautocomplete.js 
 	######################################################################################################
 
 [global]

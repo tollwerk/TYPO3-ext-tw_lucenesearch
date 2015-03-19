@@ -12,7 +12,7 @@
 
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'tollwerk Lucene search',
-	'description' => '[TYPO3 CMS 6 Release] Simple and lightweight implementation of the Apache Lucene Index as frontend search solution for TYPO3, built on extbase / fluid, supporting wildcard and fuzzy searches, search term highlighting, indexing of uncached pages, custom search term rewrite hooks and much more without any further software requirements (Java application server, Apache Solr etc.). ATTENTION: Support for TYPO3 4.x has been dropped, use the 0.x versions instead!',
+	'description' => '[TYPO3 CMS 6 & 7 Release] Simple and lightweight implementation of the Apache Lucene Index as frontend search solution for TYPO3, built on extbase / fluid, supporting wildcard and fuzzy searches, search term highlighting, indexing of uncached pages, custom search term rewrite hooks and much more without any further software requirements (Java application server, Apache Solr etc.). ATTENTION: Support for TYPO3 4.x has been dropped, use the 0.x versions instead!',
 	'category' => 'plugin',
 	'shy' => 0,
 	'version' => '1.0.2',
@@ -37,7 +37,7 @@ $EM_CONF[$_EXTKEY] = array(
 			'extbase' => '6.0.0-0.0.0',
 			'fluid' => '6.0.0-0.0.0',
 			'php' => '5.3.0-0.0.0',
-			'typo3' => '6.0.0-6.1.99',
+			'typo3' => '6.0.0-7.9.99',
 		),
 		'conflicts' => array(
 		),
