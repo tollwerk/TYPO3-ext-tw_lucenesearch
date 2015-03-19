@@ -13,9 +13,7 @@
 				<source>Search for: %s</source>
 			</trans-unit>
 			<trans-unit id="search.results.error">
-				<source>Your search could not be processed – please check your search terms.
-Every single search term has to consist of a least 3 chars, or you will have to mark it as a phrase by enclosing it in quotation marks.
-Do you want to retry?</source>
+				<source>Your search could not be processed – please check your search terms. You will have to mark it as a phrase by enclosing it in quotation marks. Do you want to retry?</source>
 			</trans-unit>
 			<trans-unit id="search.results.segment">
 				<source>Displaying results %s - %s of %s</source>

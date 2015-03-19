@@ -2,23 +2,23 @@
 <!--TYPO3SEARCH_end-->
 <f:if condition="{error}">
 	<f:then>
-		<h1 class="tx-twlucenesearch-headline"><f:translate key="search.searchfor" arguments="{0: searchterm}"/></h1>
-        <p class="tx-twlucenesearch-error"><f:format.nl2br><f:translate key="search.results.error"/></f:format.nl2br></p>
+		<h2 class="tx-twlucenesearch-headline"><f:translate key="search.searchfor" arguments="{0: searchterm}"/></h2>
+		<p class="tx-twlucenesearch-error"><f:translate key="search.results.error"/></p>
 		<f:render partial="Searchbox" arguments="{searchterm: searchterm}"/>
 	</f:then>
 	<f:else>
 		<div class="tx-twlucenesearch-container">
-			<f:widget.paginate objects="{hits}" as="paginatedHits" configuration="{itemsPerPage: settings.search.limits.display, insertAbove: 0, insertBelow: 1}">
-				<h1 class="tx-twlucenesearch-headline"><f:translate key="search.searchfor" arguments="{0: searchterm}"/></h1>
-				<f:if condition="{paginatedHits}">
-					<f:then>
-						<h2><f:translate key="search.results.segment" arguments="{0: hits.start, 1: hits.end, 2: hits.count}"/></h2>
+			<h2 class="tx-twlucenesearch-headline"><f:translate key="search.searchfor" arguments="{0: searchterm}"/></h2>
+			<f:if condition="{hits}">
+				<f:then>
+					<f:widget.paginate objects="{hits}" as="paginatedHits" configuration="{itemsPerPage: settings.search.limits.display, insertAbove: 0, insertBelow: 1}">
+						<h3><f:translate key="search.results.segment" arguments="{0: hits.start, 1: hits.end, 2: hits.count}"/></h3>
 						<ol class="tx-twlucenesearch-results" start="{tw:arrays.key(array: paginatedHits, position: 0)}">
 						<f:for each="{paginatedHits}" as="hit">
 							<li class="tx-twlucenesearch-result">
-								<h1 class="tx-twlucenesearch-result-title">
+								<h3 class="tx-twlucenesearch-result-title">
 									<f:link.page pageUid="{hit.document.pageUid}" additionalParams="{hit.document.pageAdditionalParams}" noCacheHash="1">{hit.document.title}</f:link.page>
-								</h1>
+								</h3>
 								<p class="tx-twlucenesearch-abstract">
 									<tw:search.highlight text="{hit.document.bodytext}" search="{query}" crop="500"/>
 								</p>
@@ -31,13 +31,13 @@
 							</li>
 						</f:for>
 						</ol>
-					</f:then>
-					<f:else>
-                        <p><f:format.nl2br><f:translate key="search.results.none"/></f:format.nl2br></p>
-						<f:render partial="Searchbox" arguments="{searchterm: searchterm, page: page}"/>
-					</f:else>
-				</f:if>
-			</f:widget.paginate>
+					</f:widget.paginate>
+				</f:then>
+				<f:else>
+					<p><f:translate key="search.results.none"/></p>
+					<f:render partial="Searchbox" arguments="{searchterm: searchterm, page: page}"/>
+				</f:else>
+			</f:if>
 		</div>
 	</f:else>
 </f:if>
