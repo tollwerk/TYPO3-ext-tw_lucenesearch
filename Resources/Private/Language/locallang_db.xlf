@@ -34,7 +34,10 @@
 				<source>Path to template layouts (BE)</source>
 			</trans-unit>
 			<trans-unit id="constants.file.templateRootPath" xml:space="preserve">
-				<source>Path to template root (FE):You can alter this in case you want to customize the tracking code output</source>
+				<source>Path to template root (FE):You can alter this in case you want to customize the templates</source>
+			</trans-unit>
+			<trans-unit id="constants.file.templateRootPath.paginate" xml:space="preserve">
+				<source>Path to template root (FE) for paginate widget:You can alter this in case you want to customize the pagination widget</source>
 			</trans-unit>
 			<trans-unit id="constants.file.partialRootPath" xml:space="preserve">
 				<source>Path to template partials (FE):You can alter this, though the standard plugin doesn't use partials ...</source>

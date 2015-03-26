@@ -34,8 +34,11 @@
 				<source>Path to template layouts (BE)</source>
 			<target state="translated">Pfad zum Layouts-Wurzelverzeichnis (BE)</target></trans-unit>
 			<trans-unit id="constants.file.templateRootPath" xml:space="preserve" approved="yes">
-				<source>Path to template root (FE):You can alter this in case you want to customize the tracking code output</source>
-			<target state="translated">Pfad zum Template-Verzeichnis (FE):Wählen Sie ein benutzerdefiniertes Template-Verzeichnis, wenn sie den Tracking-Code anpassen möchten</target></trans-unit>
+				<source>Path to template root (FE):You can alter this in case you want to customize the templates</source>
+			<target state="translated">Pfad zum Template-Verzeichnis (FE):Wählen Sie ein benutzerdefiniertes Template-Verzeichnis, wenn sie die Vorlagen anpassen möchten</target></trans-unit>
+			<trans-unit id="constants.file.templateRootPath.paginate" xml:space="preserve" approved="yes">
+				<source>Path to template root (FE):You can alter this in case you want to customize the pagination widget</source>
+			<target state="translated">Pfad zum Template-Verzeichnis (FE):Wählen Sie ein benutzerdefiniertes Template-Verzeichnis, wenn sie das Paginierungs-Widget anpassen möchten</target></trans-unit>
 			<trans-unit id="constants.file.partialRootPath" xml:space="preserve" approved="yes">
 				<source>Path to template partials (FE):You can alter this, though the standard plugin doesn't use partials ...</source>
 			<target state="translated">Pfad zum Partial-Verzeichnis (FE):Mit dieser Einstellung können Sie das Partial-Verzeichnis anpassen, wenngleich auch der Standard-Plugin keine Partials nutzt ...</target></trans-unit>

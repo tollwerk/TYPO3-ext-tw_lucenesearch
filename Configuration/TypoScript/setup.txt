@@ -31,8 +31,8 @@ plugin.tx_twlucenesearch {
 			20							= {$plugin.tx_twlucenesearch.view.layoutRootPath}
 		}
 		widget {
-			Tx_Fluid_ViewHelpers_Widget_PaginateViewHelper {
-				templateRootPath		= {$plugin.tx_twlucenesearch.view.templateRootPath}
+			TYPO3\CMS\Fluid\ViewHelpers\Widget\PaginateViewHelper {
+				templateRootPath		= {$plugin.tx_twlucenesearch.view.paginateWidgetTemplateRootPath}
 			}
 		}
 	}

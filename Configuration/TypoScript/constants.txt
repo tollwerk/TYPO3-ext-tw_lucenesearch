@@ -20,6 +20,8 @@ plugin.tx_twlucenesearch {
 		partialRootPath = EXT:tw_lucenesearch/Resources/Private/Partials/
 		# cat=plugin.tx_twlucenesearch/file/f; type=string; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.file.layoutRootPath
 		layoutRootPath = EXT:tw_lucenesearch/Resources/Private/Layouts/
+		# cat=plugin.tx_twlucenesearch/file/g; type=string; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.file.templateRootPath.paginate
+		paginateWidgetTemplateRootPath = EXT:tw_lucenesearch/Resources/Private/Templates/
 
 		# cat=plugin.tx_twlucenesearch/javascript/a; type=boolean; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.javascript.jquery
 		jquery = 0		
