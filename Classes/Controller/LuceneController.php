@@ -136,6 +136,7 @@ class LuceneController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 		$this->view->assign('hits', $hits);
 		$this->view->assign('query', $query);
 		$this->view->assign('notfound', $notfound * 1);
+		$this->view->assign('baseUrl', $_SERVER['SERVER_NAME']);
 	}
 	
 	/**

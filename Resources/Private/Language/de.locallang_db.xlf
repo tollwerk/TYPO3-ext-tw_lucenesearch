@@ -87,6 +87,9 @@
 			<trans-unit id="constants.search.pid" xml:space="preserve" approved="yes">
 				<source>Default results PID:ID of the page displaying search results by default</source>
 			<target state="translated">Standard-Ergebnisseite:ID der Seite, auf der die Suchergebnisse standardmäßig dargestellt werden</target></trans-unit>
+			<trans-unit id="constants.search.method" xml:space="preserve" approved="yes">
+				<source>Search form method</source>
+			<target state="translated">Suchformular-Methode</target></trans-unit>
 		</body>
 	</file>
 </xliff>

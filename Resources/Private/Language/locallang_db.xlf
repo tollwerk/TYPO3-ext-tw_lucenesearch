@@ -87,6 +87,9 @@
 			<trans-unit id="constants.search.pid" xml:space="preserve">
 				<source>Default results PID:ID of the page displaying search results by default</source>
 			</trans-unit>
+			<trans-unit id="constants.search.method" xml:space="preserve">
+				<source>Search form method</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

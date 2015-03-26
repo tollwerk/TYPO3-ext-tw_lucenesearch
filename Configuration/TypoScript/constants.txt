@@ -51,5 +51,7 @@ plugin.tx_twlucenesearch {
 		limits.display = 20
 		# cat=plugin.tx_twlucenesearch/search/g; type=int+; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.pid
 		pid = 
+		# cat=plugin.tx_twlucenesearch/search/h; type=options[GET,POST]; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.method
+		method = GET
 	}
 }

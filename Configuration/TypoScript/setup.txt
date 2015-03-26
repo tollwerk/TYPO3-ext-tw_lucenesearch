@@ -38,6 +38,7 @@ plugin.tx_twlucenesearch {
 	}
 	settings {
 		defaultResultsPage				= {$plugin.tx_twlucenesearch.search.pid}
+		formMethod						= {$plugin.tx_twlucenesearch.search.method}
 	}
 }
 
@@ -69,7 +70,7 @@ module.tx_twlucenesearch {
 	######################################################################################################
 	# PLEASE CHANGE THE OCCURENCES OF "page" IN THE FOLLOWING SECTION TO THE NAME OF YOUR MAIN PAGE OBJECT
 	# ----------------------------------------------------------------------------------------------------
-	page.includeJS {
+	page.includeJSFooter {
 		jquery							= http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js
 		jquery {
 			external					= 1
@@ -86,7 +87,7 @@ module.tx_twlucenesearch {
 	######################################################################################################
 	# PLEASE CHANGE THE OCCURENCES OF "page" IN THE FOLLOWING SECTION TO THE NAME OF YOUR MAIN PAGE OBJECT
 	# ----------------------------------------------------------------------------------------------------
-	page.includeJS.tx_twlucenesearch	= EXT:tw_lucenesearch/Resources/Public/Js/tw_lucenesearch.js
+	page.includeJSFooter.tx_twlucenesearch			= EXT:tw_lucenesearch/Resources/Public/Js/tw_lucenesearch.js
 	######################################################################################################
 
 [global]
@@ -97,9 +98,9 @@ module.tx_twlucenesearch {
 	######################################################################################################
 	# PLEASE CHANGE THE OCCURENCES OF "page" IN THE FOLLOWING SECTION TO THE NAME OF YOUR MAIN PAGE OBJECT
 	# ----------------------------------------------------------------------------------------------------
-	page.includeCSS.jquery_autocomplete		= EXT:tw_lucenesearch/Resources/Public/Css/jquery.autocomplete.css 
-	page.includeJS.jquery_autocomplete		= EXT:tw_lucenesearch/Resources/Public/Js/jquery.autocomplete.min.js
-	page.includeJS.tx_twluceneautocomplete	= EXT:tw_lucenesearch/Resources/Public/Js/tw_luceneautocomplete.js 
+	page.includeCSS.jquery_autocomplete				= EXT:tw_lucenesearch/Resources/Public/Css/jquery.autocomplete.css 
+	page.includeJSFooter.jquery_autocomplete		= EXT:tw_lucenesearch/Resources/Public/Js/Vendor/jquery.autocomplete.min.js
+	page.includeJSFooter.tx_twluceneautocomplete	= EXT:tw_lucenesearch/Resources/Public/Js/tw_luceneautocomplete.js 
 	######################################################################################################
 
 [global]
