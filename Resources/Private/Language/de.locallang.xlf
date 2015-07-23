@@ -8,7 +8,7 @@
 			<trans-unit id="wizicon.description" approved="yes">
 				<source>Add an Apache Lucene index based search box or results display to the page.</source> <target state="signed-off">Fügt ein Apache Lucene-Index basiertes Suchfeld oder eine Suchergebnisliste zur Seite hinzu.</target></trans-unit>
 			<trans-unit id="search.searchfor" approved="yes">
-				<source>Search for: %s</source> <target state="signed-off">Suche nach: %s</target></trans-unit>
+				<source>Search for:</source> <target state="signed-off">Suche nach:</target></trans-unit>
 			<trans-unit id="search.results.error" approved="yes">
 				<source>Your search could not be processed – please check your search terms. You will have to mark it as a phrase by enclosing it in quotation marks. Do you want to retry?</source> <target state="signed-off">Ihre Suche konnte nicht durchgeführt werden – bitte prüfen Sie Ihre Suchbegriffe. Sie müssen Phrasen kennzeichnen, indem Sie sie in doppelte Anführungszeichen einschließen. Möchten Sie es erneut versuchen?</target></trans-unit>
 			<trans-unit id="search.results.segment" approved="yes">

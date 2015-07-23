@@ -2,13 +2,21 @@
 <!--TYPO3SEARCH_end-->
 <f:if condition="{error}">
 	<f:then>
-		<h2 class="tx-twlucenesearch-headline"><f:translate key="search.searchfor" arguments="{0: searchterm}"/></h2>
+		<h2 class="tx-twlucenesearch-headline">
+			<f:format.htmlspecialchars keepQuotes="1" encoding="NULL" doubleEncode="1">
+				<f:translate key="search.searchfor" arguments="{0: searchterm}"/>
+			</f:format.htmlspecialchars>
+		</h2>
 		<p class="tx-twlucenesearch-error"><f:translate key="search.results.error"/></p>
 		<f:render partial="Searchbox" arguments="{searchterm: searchterm}"/>
 	</f:then>
 	<f:else>
 		<div class="tx-twlucenesearch-container">
-			<h2 class="tx-twlucenesearch-headline"><f:translate key="search.searchfor" arguments="{0: searchterm}"/></h2>
+			<h2 class="tx-twlucenesearch-headline">
+				<f:format.htmlspecialchars keepQuotes="0" encoding="NULL" doubleEncode="1">
+					<f:translate key="search.searchfor" arguments="{0: searchterm}"/>
+				</f:format.htmlspecialchars>	
+			</h2>
 			<f:if condition="{hits}">
 				<f:then>
 					<f:widget.paginate objects="{hits}" as="paginatedHits" configuration="{itemsPerPage: settings.search.limits.display, insertAbove: 0, insertBelow: 1, addQueryStringMethod: settings.formMethod}">
