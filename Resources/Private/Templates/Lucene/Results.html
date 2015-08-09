@@ -1,4 +1,5 @@
 {namespace tw=Tollwerk\TwLucenesearch\ViewHelpers}
+
 <!--TYPO3SEARCH_end-->
 <f:if condition="{error}">
 	<f:then>
@@ -29,7 +30,7 @@
 									<div class="tx-twlucenesearch-footer">
 										<span><f:translate key="search.result.url"/></span>:
 										<f:link.page pageUid="{hit.document.pageUid}" additionalParams="{hit.document.pageAdditionalParams}" noCacheHash="1" class="tx-twlucenesearch-result-url">
-											/<f:uri.page pageUid="{hit.document.pageUid}" additionalParams="{hit.document.pageAdditionalParams}" noCacheHash="1"/>
+											<f:uri.page pageUid="{hit.document.pageUid}" additionalParams="{hit.document.pageAdditionalParams}" noCacheHash="1" absolute="1"/>
 										</f:link.page>
 									</div>
 								</li>

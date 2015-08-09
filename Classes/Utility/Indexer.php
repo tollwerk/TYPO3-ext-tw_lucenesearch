@@ -246,6 +246,7 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface {
 			header('Content-Type: text/plain');
 			die($this->_getPageBodytext($fe));
 		}
+		
 		// If requested: Set the page title
 		if (self::$_setPageTitle) {
 			// If the page title has already been set ...
@@ -834,9 +835,12 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface {
 			if ($pageFormat === null) {
 				$pageFormat		= $format;
 			}
+			if (!array_key_exists('_title', $GLOBALS['TSFE']->page)) {
+				$GLOBALS['TSFE']->page['_title'] = $GLOBALS['TSFE']->page['title'];
+			}
 			$replace			= array(
 				'%S'			=> $GLOBALS['TSFE']->tmpl->setup['sitetitle'],
-				'%P'			=> $GLOBALS['TSFE']->page['title'],
+				'%P'			=> $GLOBALS['TSFE']->page['_title'],
 				'%C'			=> $title,	
 			);
 			$GLOBALS['TSFE']->indexedDocTitle		= strtr($format, $replace);

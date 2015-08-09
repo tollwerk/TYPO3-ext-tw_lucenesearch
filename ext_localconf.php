@@ -93,5 +93,3 @@ if (!array_key_exists('term-rewrite-hooks', $GLOBALS['TYPO3_CONF_VARS']['EXTCONF
 
 // Enables eID calls for the autocomplete feature (like /index.php?eID=eidautocomplete) 
 $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['eidautocomplete'] = 'EXT:tw_lucenesearch/Classes/Utility/EidAutocomplete.php';
-
-?>

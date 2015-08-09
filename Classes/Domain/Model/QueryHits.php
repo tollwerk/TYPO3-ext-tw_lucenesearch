@@ -98,7 +98,7 @@ class QueryHits implements \TYPO3\CMS\Extbase\Persistence\QueryResultInterface {
 
 		// Run the Lucene search and register the results
 		foreach ($this->_index->find($this->_query) as $hit) {
-			$this->_hits[]		= \Tollwerk\TwLucenesearch\Domain\Model\QueryHit::cast($hit);
+			$this->_hits[]		= \Tollwerk\TwLucenesearch\Domain\Model\QueryHit::cast($hit, count($this->_hits));
 		}
 		
 		// If search terms should be highlighted ...
