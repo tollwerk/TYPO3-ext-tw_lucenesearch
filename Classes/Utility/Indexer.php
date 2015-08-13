@@ -824,28 +824,33 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface {
 	/**
 	 * Set the indexed and page title of the current page
 	 * 
-	 * @param string $title			User defined page title
-	 * @param string $format		Title format with substitution markers (%S = Website title, %P = Page title, %C = User defined title as given in argument 1)
-	 * @param string $pageFormat	Optional: Alternative format for page title
+	 * @param \string $title		User defined page title
+	 * @param \string $format		Title format with substitution markers (%S = Website title, %P = Page title, %C = User defined title as given in argument 1)
+	 * @param \array $pageFormats	Optional: Alternative formats for page title
+	 * @param \int $limit			Max. title length
 	 * @return void
 	 */
-	public static function setPageTitle($title, $format = '%S: %P - %C', $pageFormat = null) {
+	public static function setPageTitle($title, $format = '%S: %P - %C', array $pageFormats = null, $limit = 0) {
 		$format					= trim($format);
-		if (strlen($format)) {
-			if ($pageFormat === null) {
-				$pageFormat		= $format;
-			}
+		$pageFormats			= (($pageFormats === null) || !count(array_filter($pageFormats))) ? array($format) : array_filter($pageFormats);
+		if (strlen($format) && count($pageFormats)) {
 			if (!array_key_exists('_title', $GLOBALS['TSFE']->page)) {
 				$GLOBALS['TSFE']->page['_title'] = $GLOBALS['TSFE']->page['title'];
 			}
 			$replace			= array(
 				'%S'			=> $GLOBALS['TSFE']->tmpl->setup['sitetitle'],
 				'%P'			=> $GLOBALS['TSFE']->page['_title'],
-				'%C'			=> $title,	
+				'%C'			=> $title,
 			);
-			$GLOBALS['TSFE']->indexedDocTitle		= strtr($format, $replace);
-			$GLOBALS['TSFE']->page['title']			= strtr($pageFormat, $replace);
-			self::$_setPageTitle					= true;
+			$GLOBALS['TSFE']->indexedDocTitle			= strtr($format, $replace);
+			foreach ($pageFormats as $pageFormat) {
+				$GLOBALS['TSFE']->page['title']			= strtr($pageFormat, $replace);
+				if (!$limit || (strlen($GLOBALS['TSFE']->page['title']) <= $limit)) {
+					break;
+				}
+			}
+			
+			self::$_setPageTitle						= true;
 		}
 	}
 	
