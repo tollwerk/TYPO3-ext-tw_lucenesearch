@@ -147,9 +147,10 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
    *
    * @param \string $type Document type
    * @param \string $id Document ID
+   * @param \boolean $returnHits Return hits instead of documents
    * @return \Tollwerk\TwLucenesearch\Domain\Model\Document        Requested document
    */
-  public function getByTypeId($type = null, $id = null)
+  public function getByTypeId($type = null, $id = null, $returnHits = false)
   {
     $documents = array();
 
@@ -171,7 +172,9 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
     }
 
     foreach ($this->_index()->find($query) as $hit) {
-      $documents[] = \Tollwerk\TwLucenesearch\Domain\Model\Document::cast($hit->getDocument());
+      $documents[] = $returnHits ?
+        \Tollwerk\TwLucenesearch\Domain\Model\QueryHit::cast($hit, count($documents)) :
+        \Tollwerk\TwLucenesearch\Domain\Model\Document::cast($hit->getDocument());
     }
 
     return $documents;
@@ -286,7 +289,7 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
           // Other non-page documents
         } else {
           $typeQuery = new \Zend_Search_Lucene_Search_Query_Boolean();
-          $typeQuery->addSubquery(new \Zend_Search_Lucene_Search_Query_Term(new \Zend_Search_Lucene_Index_Term($searchType, 'type')));
+          $typeQuery->addSubquery(new \Zend_Search_Lucene_Search_Query_Term(new \Zend_Search_Lucene_Index_Term($searchType, 'type')), true);
           $typeQueries[] = $typeQuery;
         }
       }
