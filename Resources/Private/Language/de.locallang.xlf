@@ -37,6 +37,8 @@
 				<source>Page index entries</source> <target state="signed-off">Seiten-Indexeinträge</target></trans-unit>
 			<trans-unit id="mod.header.other" approved="yes">
 				<source>Miscellaneous index entries</source> <target state="signed-off">Sonstige Indexeinträge</target></trans-unit>
+			<trans-unit id="mod.header.other.type" approved="yes">
+				<source>Type: %s</source> <target state="signed-off">Typ: %s</target></trans-unit>
 			<trans-unit id="mod.index.error" approved="yes">
 				<source>The index is not accessible</source> <target state="signed-off">Der Index steht nicht zur Verfügung</target></trans-unit>
 			<trans-unit id="mod.index.error.unknown" approved="yes">
@@ -116,6 +118,8 @@
 			<trans-unit id="mod.page.header.abstract" approved="yes">
 				<source>Abstract</source>
 			<target state="translated">Zusammenfassung</target></trans-unit>
+			<trans-unit id="mod.other.documents.none" approved="yes">
+                 <source>There are no index documents for this type.</source> <target state="signed-off">Es existieren keine Indexdokumente zu diesem Typ.</target></trans-unit>
 		</body>
 	</file>
 </xliff>

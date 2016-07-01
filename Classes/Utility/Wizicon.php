@@ -44,7 +44,7 @@ class Wizicon {
 	function proc($wizardItems)	{
 		$LL												= $this->includeLocalLang();
 		$wizardItems['plugins_tx_twlucenesearch_pi1']	= array(
-			'icon'										=> \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('tw_lucenesearch').'/Resources/Public/Icons/Wizicon.gif',
+			'icon'										=> version_compare(TYPO3_version, '7.5.0', '>=') ? 'EXT:tw_lucenesearch/Resources/Public/Icons/Wizicon.gif' : \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('tw_lucenesearch').'/Resources/Public/Icons/Wizicon.gif', 
 			'title'										=> $GLOBALS['LANG']->getLLL('wizicon.title', $LL),
 			'description'								=> $GLOBALS['LANG']->getLLL('wizicon.description', $LL),
 			'params'									=> '&defVals[tt_content][CType]=list&defVals[tt_content][list_type]=twlucenesearch_lucene'

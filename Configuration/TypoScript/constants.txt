@@ -43,17 +43,19 @@ plugin.tx_twlucenesearch {
 		rootline =
 		# cat=plugin.tx_twlucenesearch/search/b; type=boolean; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.language
 		language = 1
-		# cat=plugin.tx_twlucenesearch/search/c; type=boolean; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.highlight
+		# cat=plugin.tx_twlucenesearch/search/c; type=string; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.types
+		types = page
+		# cat=plugin.tx_twlucenesearch/search/d; type=boolean; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.highlight
 		highlight = 1
-		# cat=plugin.tx_twlucenesearch/search/d; type=string; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.config 
+		# cat=plugin.tx_twlucenesearch/search/e; type=string; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.config
 		config = title:?*^2, keywords:?*^1.6, abstract:?*~^1.2, bodytext:?*~
-		# cat=plugin.tx_twlucenesearch/search/e; type=int+; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.limits.query
+		# cat=plugin.tx_twlucenesearch/search/f; type=int+; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.limits.query
 		limits.query = 100
-		# cat=plugin.tx_twlucenesearch/search/f; type=int+; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.limits.display  
+		# cat=plugin.tx_twlucenesearch/search/g; type=int+; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.limits.display
 		limits.display = 20
-		# cat=plugin.tx_twlucenesearch/search/g; type=int+; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.pid
+		# cat=plugin.tx_twlucenesearch/search/h; type=int+; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.pid
 		pid = 
-		# cat=plugin.tx_twlucenesearch/search/h; type=options[GET,POST]; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.method
+		# cat=plugin.tx_twlucenesearch/search/1; type=options[GET,POST]; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.method
 		method = GET
 	}
 }

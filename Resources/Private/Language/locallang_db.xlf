@@ -75,6 +75,9 @@
 			<trans-unit id="constants.search.language" xml:space="preserve">
 				<source>Search results language:Whether to restrict the search results to the current frontend language</source>
 			</trans-unit>
+			<trans-unit id="constants.search.types" xml:space="preserve">
+				<source>Search types:Comma separated list of document types to search</source>
+			</trans-unit>
 			<trans-unit id="constants.search.highlight" xml:space="preserve">
 				<source>Highlight search terms:Whether to highlight the search terms in the search result list</source>
 			</trans-unit>

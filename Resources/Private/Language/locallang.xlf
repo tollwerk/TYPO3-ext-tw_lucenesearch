@@ -55,6 +55,9 @@ Do you want to retry with other search terms?</source>
 			<trans-unit id="mod.header.other">
 				<source>Miscellaneous index entries</source>
 			</trans-unit>
+			<trans-unit id="mod.header.other.type">
+				<source>Type: %s</source>
+			</trans-unit>
 			<trans-unit id="mod.index.error">
 				<source>The index is not accessible</source>
 			</trans-unit>
@@ -148,6 +151,9 @@ Do you want to retry with other search terms?</source>
 			<trans-unit id="mod.page.header.abstract">
 				<source>Abstract</source>
 			</trans-unit>
+			<trans-unit id="mod.other.documents.none">
+                <source>There are no index documents for this type.</source>
+            </trans-unit>
 		</body>
 	</file>
 </xliff>

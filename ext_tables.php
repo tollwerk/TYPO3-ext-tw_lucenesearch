@@ -34,11 +34,32 @@ if (!defined('TYPO3_MODE')) {
 	'Lucene',
 	'LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:feplugin'
 );
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+	$_EXTKEY,
+	'LuceneCE',
+	'LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:feplugin'
+);
 
 // Plugin integration into the backend forms
 $pluginSignature															= str_replace('_','',$_EXTKEY).'_lucene';
 $TCA['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature]	= 'pi_flexform';
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:'.$_EXTKEY.'/Configuration/FlexForms/ControllerActions.xml');
+$pluginSignature															= str_replace('_','',$_EXTKEY).'_lucenece';
+$TCA['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature]	= 'pi_flexform';
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue('*', 'FILE:EXT:'.$_EXTKEY.'/Configuration/FlexForms/ControllerActions.xml', $pluginSignature);
+
+$TCA['tt_content']['types']['twlucenesearch_lucenece'] = $TCA['tt_content']['types']['list'];
+$TCA['tt_content']['types']['twlucenesearch_lucenece']['showitem'] =
+"--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.general;general,
+		--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.header;header,rowDescription,
+	--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.plugin,pi_flexform;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:list_type_formlabel,select_key;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:select_key_formlabel,pages;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:pages.ALT.list_formlabel,recursive,
+	--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.appearance,
+		--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.frames;frames,
+	--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access,
+		--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.visibility;visibility,
+		--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.access;access, include_countries, exclude_countries,
+	--div--;LLL:EXT:frntend/Resources/Private/Language/locallang_ttc.xlf:tabs.extended,
+	--div--;LLL:EXT:flux/Resources/Private/Language/locallang.xlf:tt_content.tabs.relation, tx_flux_parent, tx_flux_column, tx_flux_children;LLL:EXT:flux/Resources/Private/Language/locallang.xlf:tt_content.tx_flux_children";
 
 if (TYPO3_MODE=='BE')	{
 	$TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['Tollwerk\\TwLucenesearch\\Wizicon'] = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY, 'Classes'.DIRECTORY_SEPARATOR.'Utility'.DIRECTORY_SEPARATOR.'Wizicon.php');

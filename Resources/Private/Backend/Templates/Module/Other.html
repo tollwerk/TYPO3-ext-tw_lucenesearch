@@ -1,5 +1,15 @@
 <f:layout name="Default" />
-<f:section name="main">
+<f:section name="Main">
     <h2 class="be_header"><f:translate key="mod.header.other"/></h2>
-    <b><f:flashMessages /></b>
+    <f:for each="{documents}" as="typeDocuments" key="type">
+        <h3><f:translate key="mod.header.other.type" arguments="{0: type}"/></h3>
+        <f:if condition="{typeDocuments}">
+            <f:then>
+                <f:render partial="Document/Table.html" arguments="{documents: typeDocuments, references: '{0: \'id\'}'}"/>
+            </f:then>
+            <f:else>
+                <p><f:translate key="mod.other.documents.none"/></p>
+            </f:else>
+        </f:if>
+    </f:for>
 </f:section>

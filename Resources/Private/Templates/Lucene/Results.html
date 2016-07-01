@@ -16,7 +16,7 @@
 			</h2>
 			<f:if condition="{hits}">
 				<f:then>
-					<f:widget.paginate objects="{hits}" as="paginatedHits" configuration="{itemsPerPage: settings.search.limits.display, insertAbove: 0, insertBelow: 1, addQueryStringMethod: settings.formMethod}">
+					<f:widget.paginate objects="{hits}" as="paginatedHits" configuration="{itemsPerPage: settings.search.limits.display, insertAbove: 0, insertBelow: 1, addQueryStringMethod: 'POST,GET'}">
 						<h3><f:translate key="search.results.segment" arguments="{0: hits.start, 1: hits.end, 2: hits.count}"/></h3>
 						<ol class="tx-twlucenesearch-results" start="{tw:arrays.key(array: paginatedHits, position: 0)}">
 							<f:for each="{paginatedHits}" as="hit">
@@ -29,9 +29,18 @@
 									</p>
 									<div class="tx-twlucenesearch-footer">
 										<span><f:translate key="search.result.url"/></span>:
-										<f:link.page pageUid="{hit.document.pageUid}" additionalParams="{hit.document.pageAdditionalParams}" noCacheHash="1" class="tx-twlucenesearch-result-url">
-											<f:uri.page pageUid="{hit.document.pageUid}" additionalParams="{hit.document.pageAdditionalParams}" noCacheHash="1" absolute="1"/>
-										</f:link.page>
+                    <f:if condition="{hit.document.referenceParameters.url}">
+                      <f:then>
+                        <f:link.external uri="{hit.document.referenceParameters.url}" defaultScheme="" class="tx-twlucenesearch-result-url" target="_blank">
+                          <f:uri.external uri="{hit.document.referenceParameters.url}" defaultScheme=""/>
+                        </f:link.external>
+                      </f:then>
+                      <f:else>
+                        <f:link.page pageUid="{hit.document.pageUid}" additionalParams="{hit.document.pageAdditionalParams}" noCacheHash="1" class="tx-twlucenesearch-result-url">
+                          <f:uri.page pageUid="{hit.document.pageUid}" additionalParams="{hit.document.pageAdditionalParams}" noCacheHash="1"/>
+                        </f:link.page>
+                      </f:else>
+                    </f:if>
 									</div>
 								</li>
 							</f:for>

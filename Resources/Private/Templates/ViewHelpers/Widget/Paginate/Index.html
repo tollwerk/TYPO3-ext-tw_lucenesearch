@@ -14,10 +14,10 @@
 			<li class="previous">
 				<f:if condition="{pagination.previousPage} > 1">
 					<f:then>
-						<f:widget.link arguments="{currentPage: pagination.previousPage}" addQueryStringMethod="{settings.formMethod}"><f:translate key="LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang.xlf:search.paginate.prev"/></f:widget.link>
+						<f:widget.link arguments="{currentPage: pagination.previousPage}" addQueryStringMethod="{addQueryStringMethod}"><f:translate key="LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang.xlf:search.paginate.prev"/></f:widget.link>
 					</f:then>
 					<f:else>
-						<f:widget.link addQueryStringMethod="{settings.formMethod}"><f:translate key="LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang.xlf:search.paginate.prev"/></f:widget.link>
+						<f:widget.link addQueryStringMethod="{addQueryStringMethod}"><f:translate key="LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang.xlf:search.paginate.prev"/></f:widget.link>
 					</f:else>
 				</f:if>
 			</li>
@@ -33,10 +33,10 @@
 					<li>
 						<f:if condition="{page.number} > 1">
 							<f:then>
-								<f:widget.link arguments="{currentPage: page.number}" addQueryStringMethod="{settings.formMethod}">{page.number}</f:widget.link>
+								<f:widget.link arguments="{currentPage: page.number}" addQueryStringMethod="{addQueryStringMethod}">{page.number}</f:widget.link>
 							</f:then>
 							<f:else>
-								<f:widget.link addQueryStringMethod="{settings.formMethod}">{page.number}</f:widget.link>
+								<f:widget.link addQueryStringMethod="{addQueryStringMethod}">{page.number}</f:widget.link>
 							</f:else>
 						</f:if>
 					</li>
@@ -45,7 +45,7 @@
 		</f:for>
 		<f:if condition="{pagination.nextPage}">
 			<li class="next">
-				<f:widget.link arguments="{currentPage: pagination.nextPage}" addQueryStringMethod="{settings.formMethod}"><f:translate key="LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang.xlf:search.paginate.next"/></f:widget.link>
+				<f:widget.link arguments="{currentPage: pagination.nextPage}" addQueryStringMethod="{addQueryStringMethod}"><f:translate key="LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang.xlf:search.paginate.next"/></f:widget.link>
 			</li>
 		</f:if>
 	</ul>
