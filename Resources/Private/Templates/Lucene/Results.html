@@ -22,7 +22,18 @@
 							<f:for each="{paginatedHits}" as="hit">
 								<li class="tx-twlucenesearch-result">
 									<h3 class="tx-twlucenesearch-result-title">
-										<f:link.page pageUid="{hit.document.pageUid}" additionalParams="{hit.document.pageAdditionalParams}" noCacheHash="1">{hit.document.title}</f:link.page>
+                    <f:if condition="{hit.document.referenceParameters.url}">
+                      <f:then>
+                        <f:link.external uri="{hit.document.referenceParameters.url}" defaultScheme="" class="tx-twlucenesearch-result-url" target="_blank">
+                          {hit.document.title}
+                        </f:link.external>
+                      </f:then>
+                      <f:else>
+                        <f:link.page pageUid="{hit.document.pageUid}" additionalParams="{hit.document.pageAdditionalParams}" noCacheHash="1" class="tx-twlucenesearch-result-url">
+                          {hit.document.title}
+                        </f:link.page>
+                      </f:else>
+                    </f:if>
 									</h3>
 									<p class="tx-twlucenesearch-abstract">
 										<tw:search.highlight text="{hit.document.bodytext}" search="{query}" crop="500"/>

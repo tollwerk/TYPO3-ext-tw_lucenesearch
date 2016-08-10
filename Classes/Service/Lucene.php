@@ -288,9 +288,14 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
 
           // Other non-page documents
         } else {
-          $typeQuery = new \Zend_Search_Lucene_Search_Query_Boolean();
-          $typeQuery->addSubquery(new \Zend_Search_Lucene_Search_Query_Term(new \Zend_Search_Lucene_Index_Term($searchType, 'type')), true);
-          $typeQueries[] = $typeQuery;
+          $typeQuery = array(new \Zend_Search_Lucene_Search_Query_Term(new \Zend_Search_Lucene_Index_Term($searchType, 'type')));
+
+          // If applicable: Apply language based restriction
+          if (\Tollwerk\TwLucenesearch\Utility\Indexer::indexConfig($GLOBALS['TSFE'], 'search.restrictByLanguage')) {
+            $typeQuery[] = new \Zend_Search_Lucene_Search_Query_Term(new \Zend_Search_Lucene_Index_Term($GLOBALS['TSFE']->lang, 'language'));
+          }
+
+          $typeQueries[] = new \Zend_Search_Lucene_Search_Query_Boolean($typeQuery, true);
         }
       }
 
