@@ -59,6 +59,16 @@ $GLOBALS['TYPO3_CONF_VARS']['EXT']['extParams'][$_EXTKEY] = unserialize($_EXTCON
 );
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
     'Tollwerk.'.$_EXTKEY,
+    'LuceneAutocomplete',
+    array(
+        'Lucene' => 'autocomplete',
+    ),
+    array(
+        'Lucene' => 'autocomplete',
+    )
+);
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    'Tollwerk.'.$_EXTKEY,
     'LuceneCE',
     array(
         'Lucene' => 'search,results,notfound',
