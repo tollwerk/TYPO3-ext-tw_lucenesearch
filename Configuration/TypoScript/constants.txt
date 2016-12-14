@@ -36,6 +36,8 @@ plugin.tx_twlucenesearch {
 		reference = id
 		# cat=plugin.tx_twlucenesearch/indexing/b; type=boolean; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.indexing.timestamp
 		timestamp = 1
+		# cat=plugin.tx_twlucenesearch/indexing/b; type=boolean; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.indexing.languageReference
+		languageReference = L
 	}
 	
 	search {

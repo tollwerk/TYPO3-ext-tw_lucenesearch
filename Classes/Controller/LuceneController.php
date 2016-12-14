@@ -111,6 +111,9 @@ class LuceneController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
   public function resultsAction($searchterm = '', $pointer = 0, $notfound = false)
   {
     $settings = \Tollwerk\TwLucenesearch\Utility\Indexer::indexConfig($GLOBALS['TSFE']);
+    if (!is_array($this->settings)) {
+      $this->settings = array();
+    }
     \TYPO3\CMS\Core\Utility\ArrayUtility::mergeRecursiveWithOverrule($settings, $this->settings);
     $this->settings = $settings;
     $page = intval($this->settings['defaultResultsPage']) ? intval($this->settings['defaultResultsPage']) : $GLOBALS['TSFE']->id;
