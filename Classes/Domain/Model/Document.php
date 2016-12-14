@@ -131,6 +131,22 @@ class Document extends \Zend_Search_Lucene_Document {
 	public function getLanguage() {
 		return $this->getFieldValue('language');
 	}
+
+	/**
+	 * Return the document flag
+	 *
+	 * @return string
+	 */
+	public function getFlag() {
+		$flag = $this->getLanguage();
+		switch ($flag) {
+			case 'en':
+				$flag = 'gb';
+				break;
+		}
+
+		return $flag;
+	}
 	
 	/**
 	 * Return the document language (UTF-8)

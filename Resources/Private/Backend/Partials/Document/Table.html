@@ -28,9 +28,11 @@
                 <td class="language">
                     <f:if condition="{document.language}">
                         <f:then>
-                            <span class="t3-icon t3-icon-flags t3-icon-flags-{document.language} t3-icon-{document.language}" title="{document.language}"> </span>
+                            <f:be.buttons.icon icon="flags-{document.flag}" title="{document.language}"/>
                         </f:then>
-                        <f:else><f:be.buttons.icon icon="icon-status-status"/></f:else>
+                        <f:else>
+                            <f:be.buttons.icon icon="flags-multiple"/>
+                        </f:else>
                     </f:if>
                 </td>
                 <td>
