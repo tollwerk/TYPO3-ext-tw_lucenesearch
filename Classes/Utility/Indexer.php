@@ -324,14 +324,21 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface
   public function _getPageReference(\TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $fe)
   {
     $reference = array();
-    $parameters = \TYPO3\CMS\Core\Utility\GeneralUtility::array_merge(\TYPO3\CMS\Core\Utility\GeneralUtility::array_merge(array(
-      'id' => $fe->id,
-      'type' => $fe->type,
-    ), $_GET), $_POST);
-    $parameters['id'] = intval($parameters['id']);
-    $parameters['type'] = intval($parameters['type']);
+    $parameters = \TYPO3\CMS\Core\Utility\GeneralUtility::array_merge($_GET, $_POST);
+    $parameters['id'] = intval($fe->id);
+    $parameters['type'] = intval($fe->type);
 
-    foreach (self::indexConfig($fe, 'reference') as $key => $config) {
+    $referenceConfig = self::indexConfig($fe, 'reference');
+    if (!array_key_exists('id', $referenceConfig)) {
+      $referenceConfig['id'] = (object)array('default' => null, 'constraints' => null);
+    }
+    if (!array_key_exists('L', $referenceConfig)) {
+      $referenceConfig['L'] = (object)array('default' => '0', 'constraints' => null);
+    } else {
+      $referenceConfig['L']->default = '0';
+    }
+
+    foreach ($referenceConfig as $key => $config) {
       $referenceVariable = $this->_getReferenceVariable($parameters, $key, $config);
 
       if ($referenceVariable !== null) {
@@ -339,6 +346,7 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface
       }
     }
     ksort($reference);
+
     return serialize($reference);
   }
 
