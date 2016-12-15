@@ -207,8 +207,7 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
             $searchTerm = $this->_rewriteQueryTerms($searchTerm, $tokenTerms);
 
             try {
-                $highlight = intval(\Tollwerk\TwLucenesearch\Utility\Indexer::indexConfig($GLOBALS['TSFE'],
-                    'search.highlightMatches'));
+                $highlight = intval(Indexer::indexConfig($GLOBALS['TSFE'], 'search.highlightMatches'));
 
                 // Construct the search request
                 $query = $this->query($searchTerm);
@@ -246,8 +245,7 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
             $typeQueries = array();
 
             // Run through all search types
-            foreach (\Tollwerk\TwLucenesearch\Utility\Indexer::indexConfig($GLOBALS['TSFE'],
-                'search.searchTypes') as $searchType) {
+            foreach (Indexer::indexConfig($GLOBALS['TSFE'], 'search.searchTypes') as $searchType) {
 
                 // Page documents
                 if ($searchType == Indexer::PAGE) {
@@ -260,17 +258,14 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
                     );
 
                     // If applicable: Apply language based restriction
-                    if (\Tollwerk\TwLucenesearch\Utility\Indexer::indexConfig($GLOBALS['TSFE'],
-                        'search.restrictByLanguage')
-                    ) {
+                    if (Indexer::indexConfig($GLOBALS['TSFE'], 'search.restrictByLanguage')) {
                         $pageQueries[] = new \Zend_Search_Lucene_Search_Query_Term(
                             new \Zend_Search_Lucene_Index_Term($GLOBALS['TSFE']->lang, 'language')
                         );
                     }
 
                     // If applicable: Apply rootline based restriction
-                    $rootlinePids = \Tollwerk\TwLucenesearch\Utility\Indexer::indexConfig($GLOBALS['TSFE'],
-                        'search.restrictByRootlinePids');
+                    $rootlinePids = Indexer::indexConfig($GLOBALS['TSFE'], 'search.restrictByRootlinePids');
                     if (is_array($rootlinePids) && count($rootlinePids)) {
                         require_once 'Zend/Search/Lucene/Search/Query/MultiTerm.php';
                         require_once 'Zend/Search/Lucene/Index/Term.php';
@@ -291,9 +286,7 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
                     );
 
                     // If applicable: Apply language based restriction
-                    if (\Tollwerk\TwLucenesearch\Utility\Indexer::indexConfig($GLOBALS['TSFE'],
-                        'search.restrictByLanguage')
-                    ) {
+                    if (Indexer::indexConfig($GLOBALS['TSFE'], 'search.restrictByLanguage')) {
                         $typeQuery[] = new \Zend_Search_Lucene_Search_Query_Term(
                             new \Zend_Search_Lucene_Index_Term($GLOBALS['TSFE']->lang, 'language')
                         );
@@ -466,8 +459,12 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
 
             if (TYPO3_MODE == 'FE') {
                 \Zend_Search_Lucene::setTermsPerQueryLimit(
-                    \Tollwerk\TwLucenesearch\Utility\Indexer::indexConfig($GLOBALS['TSFE'], 'search.limits.query')
+                    Indexer::indexConfig($GLOBALS['TSFE'], 'search.limits.query')
                 );
+
+                $minCharacters = max(1, Indexer::indexConfig($GLOBALS['TSFE'], 'search.minCharacters'));
+                \Zend_Search_Lucene_Search_Query_Fuzzy::setDefaultPrefixLength($minCharacters);
+                \Zend_Search_Lucene_Search_Query_Wildcard::setMinPrefixLength($minCharacters);
             }
         }
 
@@ -528,7 +525,7 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
         $tokenTerms = array();
 
         try {
-            $searchConfig = \Tollwerk\TwLucenesearch\Utility\Indexer::indexConfig($GLOBALS['TSFE'],
+            $searchConfig = Indexer::indexConfig($GLOBALS['TSFE'],
                 'search.searchConfig');
             $lexer = new \Zend_Search_Lucene_Search_QueryLexer();
 

@@ -90,6 +90,9 @@
 			<trans-unit id="constants.search.limits.display" xml:space="preserve">
 				<source>Max. displayed results:Set the maximum of matching search results that are displayed at once</source>
 			</trans-unit>
+			<trans-unit id="constants.search.chars" xml:space="preserve">
+                <source>Character limit:Number of minimum chars to trigger a search</source>
+            </trans-unit>
 			<trans-unit id="constants.search.pid" xml:space="preserve">
 				<source>Default results PID:ID of the page displaying search results by default</source>
 			</trans-unit>

@@ -10,6 +10,7 @@ config {
 			query						= {$plugin.tx_twlucenesearch.search.limits.query}
 			display						= {$plugin.tx_twlucenesearch.search.limits.display}
 		}
+		minCharacters					= {$plugin.tx_twlucenesearch.search.chars}
 		highlightMatches				= {$plugin.tx_twlucenesearch.search.highlight}
 	}
 }
@@ -40,6 +41,7 @@ plugin.tx_twlucenesearch {
 	settings {
 		defaultResultsPage				= {$plugin.tx_twlucenesearch.search.pid}
 		formMethod						= {$plugin.tx_twlucenesearch.search.method}
+		minCharacters					= {$plugin.tx_twlucenesearch.search.chars}
 	}
 }
 

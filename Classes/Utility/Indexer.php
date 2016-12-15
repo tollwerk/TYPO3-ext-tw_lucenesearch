@@ -741,6 +741,7 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface
         'searchTypes' => array(),
         'searchConfig' => array((object)array('field' => true, 'value' => '?', 'fuzzy' => false, 'boost' => null)),
         'limits' => (object)array('query' => 100, 'display' => 20),
+        'minCharacters' => 3,
         'highlightMatches' => false,
       ),
     );
@@ -839,6 +840,9 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface
             $typoscript['search_lucene.']) && is_array($typoscript['search_lucene.']['limits.'])
         ) {
           $config['search']->limits = (object)$typoscript['search_lucene.']['limits.'];
+        }
+        if (array_key_exists('minCharacters', $typoscript['search_lucene.'])) {
+          $config['search']->minCharacters = intval($typoscript['search_lucene.']['minCharacters']);
         }
         if (array_key_exists('highlightMatches', $typoscript['search_lucene.'])) {
           $config['search']->highlightMatches = (boolean)intval($typoscript['search_lucene.']['highlightMatches']);
