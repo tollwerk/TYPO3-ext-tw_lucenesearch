@@ -311,6 +311,7 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface
           'timestamp' => $timestamp,
         ));
         $indexerService->add($document);
+        $indexerService->commit();
       }
     }
   }
