@@ -6,7 +6,7 @@ namespace Tollwerk\TwLucenesearch\Utility;
  *  Copyright notice
  *
  *  © 2014 Christian Eßl <essl@incert.at>, INCERT eBusiness GmbH
- *  
+ *
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -25,66 +25,70 @@ namespace Tollwerk\TwLucenesearch\Utility;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
- 
+
 /**
- * Autocomplete feature 
+ * Autocomplete feature
  *
- * @package		tw_lucenesearch
- * @copyright	Copyright © 2014 Christian Eßl <essl@incert.at>, INCERT eBusiness GmbH
- * @author		Christian Eßl <essl@incert.at>
+ * @package        tw_lucenesearch
+ * @copyright    Copyright © 2014 Christian Eßl <essl@incert.at>, INCERT eBusiness GmbH
+ * @author        Christian Eßl <essl@incert.at>
  */
-class EidAutocomplete {
- 
-	/**
-	 * configuration
-	 *
-	 * @var \array
-	 */
-	protected $configuration;
+class EidAutocomplete
+{
 
-	/**
-	 * bootstrap
-	 *
-	 * @var \array
-	 */
-	protected $bootstrap;
+    /**
+     * configuration
+     *
+     * @var \array
+     */
+    protected $configuration;
 
-	/**
-	 * Generates the output
-	 *
-	 * @return \string		from action
-	 */
-	public function run() {
-		return $this->bootstrap->run('', $this->configuration);
-	}
- 
-	/**
-	 * Initialize Extbase
-	 *
-	 * @param \array $TYPO3_CONF_VARS 			The global $TYPO3_CONF_VARS array. Will be set internally in ->TYPO3_CONF_VARS
-	 */
-	public function __construct($TYPO3_CONF_VARS) {
-		$this->configuration = array(
-			'pluginName' => 'LuceneAutocomplete', 
-			'vendorName' => 'Tollwerk',
-			'extensionName' => 'TwLucenesearch',
-			'controller' => 'Lucene',
-			'action' => 'autocomplete', 
-			'mvc' => array(
-				'requestHandlers' => array(
-					'TYPO3\CMS\Extbase\Mvc\Web\FrontendRequestHandler' => 'TYPO3\CMS\Extbase\Mvc\Web\FrontendRequestHandler'
-				)
-			),
-			'settings' => array() 
-		);
-		$_POST['tx_twlucenesearch_lucene']['action'] = 'autocomplete'; // set action
-		$_POST['tx_twlucenesearch_lucene']['controller'] = 'Lucene'; // set action 
+    /**
+     * bootstrap
+     *
+     * @var \array
+     */
+    protected $bootstrap;
 
-		$this->bootstrap = new \TYPO3\CMS\Extbase\Core\Bootstrap(); 
-	}
+    /**
+     * Generates the output
+     *
+     * @return \string        from action
+     */
+    public function run()
+    {
+        return $this->bootstrap->run('', $this->configuration);
+    }
+
+    /**
+     * Initialize Extbase
+     *
+     * @param \array $TYPO3_CONF_VARS The global $TYPO3_CONF_VARS array. Will be set internally in ->TYPO3_CONF_VARS
+     */
+    public function __construct($TYPO3_CONF_VARS)
+    {
+        $this->configuration = array(
+            'pluginName' => 'LuceneAutocomplete',
+            'vendorName' => 'Tollwerk',
+            'extensionName' => 'TwLucenesearch',
+            'controller' => 'Lucene',
+            'action' => 'autocomplete',
+            'mvc' => array(
+                'requestHandlers' => array(
+                    'TYPO3\CMS\Extbase\Mvc\Web\FrontendRequestHandler' => 'TYPO3\CMS\Extbase\Mvc\Web\FrontendRequestHandler'
+                )
+            ),
+            'settings' => array()
+        );
+        $_POST['tx_twlucenesearch_lucene']['action'] = 'autocomplete'; // set action
+        $_POST['tx_twlucenesearch_lucene']['controller'] = 'Lucene'; // set action
+
+        $this->bootstrap = new \TYPO3\CMS\Extbase\Core\Bootstrap();
+    }
 }
- 
-$GLOBALS['TSFE'] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController', $GLOBALS['TYPO3_CONF_VARS'], \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('id'), '');
+
+$GLOBALS['TSFE'] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController',
+    $GLOBALS['TYPO3_CONF_VARS'], \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('id'), '');
 $GLOBALS['TSFE']->connectToDB();
 $GLOBALS['TSFE']->initFEuser();
 $GLOBALS['TSFE']->checkAlternativeIdMethods();
@@ -92,5 +96,6 @@ $GLOBALS['TSFE']->determineId();
 $GLOBALS['TSFE']->initTemplate();
 $GLOBALS['TSFE']->getConfigArray();
 \TYPO3\CMS\Frontend\Utility\EidUtility::initTCA();
- 
-echo \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tollwerk\TwLucenesearch\Utility\EidAutocomplete', $TYPO3_CONF_VARS)->run();
+
+echo \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tollwerk\TwLucenesearch\Utility\EidAutocomplete',
+    $TYPO3_CONF_VARS)->run();

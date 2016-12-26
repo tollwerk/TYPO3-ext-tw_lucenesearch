@@ -6,7 +6,7 @@ namespace Tollwerk\TwLucenesearch\ViewHelpers\Arrays;
  *  Copyright notice
  *
  *  © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
- *  
+ *
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,9 +28,9 @@ namespace Tollwerk\TwLucenesearch\ViewHelpers\Arrays;
 
 /**
  * Array by index view helper
- * 
- * Returns the value of an array element with a specific key 
- * 
+ *
+ * Returns the value of an array element with a specific key
+ *
  * = Examples =
  *
  * <code title="Example">
@@ -40,22 +40,24 @@ namespace Tollwerk\TwLucenesearch\ViewHelpers\Arrays;
  * Output:
  * The value of the array element with the key {index}
  *
- * @package		tw_lucenesearch
- * @copyright	Copyright © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
- * @author		Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
+ * @package        tw_lucenesearch
+ * @copyright    Copyright © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
+ * @author        Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
  */
-class IndexViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class IndexViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+{
 
-	/**
-	 * Return an array element with the given key
-	 * 
-	 * @param \array $array				Array
-	 * @param \string $index			Key
-	 * @return \mixed					Array element value
-	 */
-	public function render(array $array, $index = '') {
-		return (strlen($index) && array_key_exists($index, $array)) ? $array[$index] : null; 
-	}
+    /**
+     * Return an array element with the given key
+     *
+     * @param \array $array Array
+     * @param \string $index Key
+     * @return \mixed                    Array element value
+     */
+    public function render(array $array, $index = '')
+    {
+        return (strlen($index) && array_key_exists($index, $array)) ? $array[$index] : null;
+    }
 }
 
 ?>

@@ -6,7 +6,7 @@ namespace Tollwerk\TwLucenesearch\ViewHelpers\Arrays;
  *  Copyright notice
  *
  *  © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
- *  
+ *
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,9 +28,9 @@ namespace Tollwerk\TwLucenesearch\ViewHelpers\Arrays;
 
 /**
  * Array key view helper
- * 
- * Returns the key of an element at the given numeric position within an array   
- * 
+ *
+ * Returns the key of an element at the given numeric position within an array
+ *
  * = Examples =
  *
  * <code title="Example">
@@ -40,23 +40,25 @@ namespace Tollwerk\TwLucenesearch\ViewHelpers\Arrays;
  * Output:
  * The key of the array element at position {position}
  *
- * @package		tw_lucenesearch
- * @copyright	Copyright © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
- * @author		Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
+ * @package        tw_lucenesearch
+ * @copyright    Copyright © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
+ * @author        Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
  */
-class KeyViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class KeyViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+{
 
-	/**
-	 * Return an array key at a certain position within the array
-	 * 
-	 * @param array $array				Array
-	 * @param int $position				Position
-	 * @return mixed					Array key
-	 */
-	public function render(array $array, $position = 0) {
-		$keys			= array_keys($array);
-		return array_key_exists(intval($position), $keys) ? $keys[intval($position)] : null;
-	}
+    /**
+     * Return an array key at a certain position within the array
+     *
+     * @param array $array Array
+     * @param int $position Position
+     * @return mixed                    Array key
+     */
+    public function render(array $array, $position = 0)
+    {
+        $keys = array_keys($array);
+        return array_key_exists(intval($position), $keys) ? $keys[intval($position)] : null;
+    }
 }
 
 ?>

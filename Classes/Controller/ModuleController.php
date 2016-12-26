@@ -103,7 +103,8 @@ class ModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
                 // If the index can be successfully cleared
                 if ($this->_indexService->clear(true)) {
                     $message = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessage',
-                        \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mod.index.clear.success', 'tw_lucenesearch'),
+                        \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mod.index.clear.success',
+                            'tw_lucenesearch'),
                         '', // the header is optional
                         \TYPO3\CMS\Core\Messaging\FlashMessage::OK
                     );
@@ -113,7 +114,8 @@ class ModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
                     // Else: Error
                 } else {
                     $message = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessage',
-                        \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mod.index.clear.error', 'tw_lucenesearch'),
+                        \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mod.index.clear.error',
+                            'tw_lucenesearch'),
                         '',
                         \TYPO3\CMS\Core\Messaging\FlashMessage::ERROR
                     );
@@ -135,7 +137,8 @@ class ModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
                     \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mod.index.error', 'tw_lucenesearch'),
                     \TYPO3\CMS\Core\Messaging\FlashMessage::ERROR
                 ) : \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessage',
-                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mod.index.error.unknown', 'tw_lucenesearch'),
+                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mod.index.error.unknown',
+                        'tw_lucenesearch'),
                     '',
                     \TYPO3\CMS\Core\Messaging\FlashMessage::ERROR
                 );
@@ -170,10 +173,12 @@ class ModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         }
 
         // Determine the TSConfig
-        $default = array('language' => array(
-            'flag' => '',
-            'label' => 'Default language'
-        ));
+        $default = array(
+            'language' => array(
+                'flag' => '',
+                'label' => 'Default language'
+            )
+        );
         $pageTSConfig = \TYPO3\CMS\Backend\Utility\BackendUtility::getPagesTSconfig($this->_pageUid);
         if (!empty($pageTSConfig['mod.']) && !empty($pageTSConfig['mod.']['SHARED.']) && is_array($pageTSConfig['mod.']['SHARED.'])) {
             if (array_key_exists('defaultLanguageFlag', $pageTSConfig['mod.']['SHARED.'])) {
@@ -349,7 +354,8 @@ class ModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
                 // Success message
                 if ($commit) {
                     $message = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessage',
-                        sprintf(\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mod.page.documents.'.($delete ? 'delete' : 'reindex').'.success', 'tw_lucenesearch'), count($documents)),
+                        sprintf(\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mod.page.documents.'.($delete ? 'delete' : 'reindex').'.success',
+                            'tw_lucenesearch'), count($documents)),
                         '', // the header is optional
                         \TYPO3\CMS\Core\Messaging\FlashMessage::OK
                     );
@@ -357,7 +363,8 @@ class ModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
                     // Else: Info message
                 } else {
                     $message = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessage',
-                        \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mod.page.documents.'.($delete ? 'delete' : 'reindex').'.error', 'tw_lucenesearch'),
+                        \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mod.page.documents.'.($delete ? 'delete' : 'reindex').'.error',
+                            'tw_lucenesearch'),
                         '', // the header is optional
                         \TYPO3\CMS\Core\Messaging\FlashMessage::WARNING
                     );

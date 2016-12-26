@@ -6,7 +6,7 @@ namespace Tollwerk\TwLucenesearch\ViewHelpers\Index;
  *  Copyright notice
  *
  *  © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
- *  
+ *
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,8 +28,8 @@ namespace Tollwerk\TwLucenesearch\ViewHelpers\Index;
 
 /**
  * View helper for setting / altering the index and page title of the current frontend page
- * 
-  * = Examples =
+ *
+ * = Examples =
  *
  * <code title="Example">
  * <twlucene:index.title title="{article.title}" format="%C - %S: %P"/>
@@ -37,37 +37,39 @@ namespace Tollwerk\TwLucenesearch\ViewHelpers\Index;
  *
  * Output:
  * None (there lucene indexer will write the appropriate title into the lucene index and the source code)
- * 
- * @package		tw_lucenesearch
- * @copyright	Copyright © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
- * @author		Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
+ *
+ * @package        tw_lucenesearch
+ * @copyright    Copyright © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
+ * @author        Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
  */
-class TitleViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class TitleViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+{
 
-	/**
-	 * Set the indexed and page title of the current page
-	 * 
-	 * @param string $title			User defined page title
-	 * @param string $format		Title format with substitution markers (%S = Website title, %P = Page title, %C = User defined title as given in argument 1)
-	 * @param string $pageFormat	Optional: Alternative format for page title
-	 * @param \array $pageFormats	Prioritized list of alternative page title formats
-	 * @param \int $limit			Max. title length
-	 * @return string				Dummy result string (empty)
-	 */
-	public function render($title, $format = '%S: %P - %C', $pageFormat = null, array $pageFormats = null, $limit = 0) {
-		if (($pageFormats === null) || !count($pageFormats)) {
-			$pageFormats			= array();
-			if (strlen(trim($pageFormat))) {
-				$pageFormats[]		= trim($pageFormat);
-			} elseif (strlen(trim($format))) {
-				$pageFormats[]		= trim($format);
-			}
-		}
-		if (strlen(trim($format)) && count($pageFormats)) {
-			\Tollwerk\TwLucenesearch\Utility\Indexer::setPageTitle($title, $format, $pageFormats, $limit);
-		}
-		return '';
-	}
+    /**
+     * Set the indexed and page title of the current page
+     *
+     * @param string $title User defined page title
+     * @param string $format Title format with substitution markers (%S = Website title, %P = Page title, %C = User defined title as given in argument 1)
+     * @param string $pageFormat Optional: Alternative format for page title
+     * @param \array $pageFormats Prioritized list of alternative page title formats
+     * @param \int $limit Max. title length
+     * @return string                Dummy result string (empty)
+     */
+    public function render($title, $format = '%S: %P - %C', $pageFormat = null, array $pageFormats = null, $limit = 0)
+    {
+        if (($pageFormats === null) || !count($pageFormats)) {
+            $pageFormats = array();
+            if (strlen(trim($pageFormat))) {
+                $pageFormats[] = trim($pageFormat);
+            } elseif (strlen(trim($format))) {
+                $pageFormats[] = trim($format);
+            }
+        }
+        if (strlen(trim($format)) && count($pageFormats)) {
+            \Tollwerk\TwLucenesearch\Utility\Indexer::setPageTitle($title, $format, $pageFormats, $limit);
+        }
+        return '';
+    }
 }
 
 ?>
