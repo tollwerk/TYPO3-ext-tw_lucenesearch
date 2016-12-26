@@ -89,7 +89,7 @@ if (TYPO3_MODE === 'BE') {
         ),
         array(          // Additional configuration
             'access' => 'user,group',
-            'icon' => 'EXT:'.$_EXTKEY.'/Resources/Public/Icons/module-extensionmanager.svg',
+            'icon' => 'EXT:'.$_EXTKEY.'/Resources/Public/Icons/module-lucenesearch.svg',
             'labels' => 'LLL:EXT:'.$_EXTKEY.'/Resources/Private/Language/locallang_mod.xml',
         )
     );
