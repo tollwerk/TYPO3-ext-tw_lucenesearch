@@ -26,6 +26,9 @@ namespace Tollwerk\TwLucenesearch\Utility;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Utility\ArrayUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * Lucene indexer
  *
@@ -270,7 +273,7 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface
         if (!intval($fe->page['no_search']) && self::indexConfig($fe, 'enable')) {
             // Instanciate the lucene index service
             /* @var $indexerService \Tollwerk\TwLucenesearch\Service\Lucene */
-            $indexerService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstanceService('index', 'lucene');
+            $indexerService = GeneralUtility::makeInstanceService('index', 'lucene');
             if ($indexerService instanceof \TYPO3\CMS\Core\Service\AbstractService) {
                 // Construct unique page reference
                 $reference = $this->_getPageReference($fe);
@@ -297,7 +300,7 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface
                 }
 
                 // Instanciate the index document
-                $this->_csObj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Charset\\CharsetConverter');
+                $this->_csObj = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Charset\\CharsetConverter');
                 $bodytext = $this->_getPageBodytext($fe);
                 $document = $this->_createDocument(array(
                     'type' => self::PAGE,
@@ -326,10 +329,12 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface
     public function _getPageReference(\TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $fe)
     {
         $reference = array();
-        $parameters = \TYPO3\CMS\Core\Utility\GeneralUtility::array_merge(\TYPO3\CMS\Core\Utility\GeneralUtility::array_merge(array(
+        $parameters = array(
             'id' => $fe->id,
             'type' => $fe->type,
-        ), $_GET), $_POST);
+        );
+        ArrayUtility::mergeRecursiveWithOverrule($parameters, (array)$_GET);
+        ArrayUtility::mergeRecursiveWithOverrule($parameters, (array)$_POST);
         $parameters['id'] = intval($parameters['id']);
         $parameters['type'] = intval($parameters['type']);
 
@@ -773,7 +778,7 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface
         $linkVars = array_key_exists('linkVars', $typoscript) ? trim($typoscript['linkVars']) : '';
         if (strlen($indexReference) || strlen($linkVars)) {
             $referenceVars = array();
-            foreach (\TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',',
+            foreach (GeneralUtility::trimExplode(',',
                 $linkVars.','.$indexReference) as $referenceVar) {
                 if (strlen($referenceVar) && preg_match("%([a-zA-Z][^\(\s]*)(?:\s*\(([^\)]*)\))?(?:\s*\=\s*(.+))?%",
                         trim($referenceVar), $referenceVarConfig)
@@ -786,10 +791,10 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface
                     // Register value restrictions
                     if ((count($referenceVarConfig) > 2) && strlen($referenceVarConfig[2])) {
                         $referenceVar->constraints = array();
-                        foreach (\TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('|',
+                        foreach (GeneralUtility::trimExplode('|',
                             trim($referenceVarConfig[2])) as $constraint) {
                             if (strpos($constraint, '-') !== false) {
-                                list($lower, $upper) = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('-',
+                                list($lower, $upper) = GeneralUtility::trimExplode('-',
                                     $constraint);
                                 $referenceVar->constraints = array_merge($referenceVar->constraints,
                                     range($lower, $upper));
@@ -837,7 +842,7 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface
             if (array_key_exists('search_lucene.', $typoscript) && is_array($typoscript['search_lucene.'])) {
                 if (array_key_exists('restrictByRootlinePids', $typoscript['search_lucene.'])) {
                     $config['search']->restrictByRootlinePids = trim($typoscript['search_lucene.']['restrictByRootlinePids']);
-                    $config['search']->restrictByRootlinePids = strlen($config['search']->restrictByRootlinePids) ? \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',',
+                    $config['search']->restrictByRootlinePids = strlen($config['search']->restrictByRootlinePids) ? GeneralUtility::trimExplode(',',
                         $config['search']->restrictByRootlinePids) : array();
                 }
                 if (array_key_exists('restrictByLanguage', $typoscript['search_lucene.'])) {
@@ -853,7 +858,7 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface
                         $typoscript['search_lucene.']) && strlen(trim($typoscript['search_lucene.']['searchConfig']))
                 ) {
                     $config['search']->searchConfig = array();
-                    foreach (\TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',',
+                    foreach (GeneralUtility::trimExplode(',',
                         trim($typoscript['search_lucene.']['searchConfig'])) as $searchConfig) {
                         if (preg_match("%^([^\:]+)\:([^\^\~]+)(\~(\d+(?:\.\d+)?)?)?(?:\^(\d+(?:\.\d+)?))?$%",
                             $searchConfig,

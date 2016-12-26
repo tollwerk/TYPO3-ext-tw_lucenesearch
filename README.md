@@ -13,7 +13,7 @@ A (slightly outdated) online documentation is available in the [TYPO3 Extension 
 Requirements
 ------------
 
-The extension requires TYPO3 7.x or above.
+This extension version is compatible with TYPO3 7.0-7.4.
 
 **ATTENTION**: Please be aware that there won't be any more TER releases of this extension.
 
@@ -21,10 +21,9 @@ The extension requires TYPO3 7.x or above.
 Release history
 ---------------
 
-#### v2.0.0
+#### v1.6.0
 
 * Multiple bugfixes & contributions
-* TYPO3 8.x compatibility
 * Suitable for composer mode TYPO3
 
 #### v1.5.0
