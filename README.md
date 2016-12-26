@@ -23,11 +23,11 @@ Release history
 
 #### v1.5.0
 *	Added autocompletion support for frontend searches ([#6](https://github.com/jkphl/TYPO3-ext-tw_lucenesearch/pull/6))
-*	Added a backend module for index management 
+*	Added a backend module for index management
 
 Legal
 -----
 
-Copyright © 2014 Joschi Kuphal joschi@kuphal.net / @jkphl
+Copyright © 2016 Joschi Kuphal joschi@kuphal.net / @jkphl
 
 Licensed under the terms of the [GPL v2](LICENSE.txt) license.

@@ -29,9 +29,9 @@ namespace Tollwerk\TwLucenesearch\Utility;
 /**
  * Autocomplete feature
  *
- * @package        tw_lucenesearch
- * @copyright    Copyright © 2014 Christian Eßl <essl@incert.at>, INCERT eBusiness GmbH
- * @author        Christian Eßl <essl@incert.at>
+ * @package tw_lucenesearch
+ * @copyright Copyright © 2014 Christian Eßl <essl@incert.at>, INCERT eBusiness GmbH
+ * @author Christian Eßl <essl@incert.at>
  */
 class EidAutocomplete
 {

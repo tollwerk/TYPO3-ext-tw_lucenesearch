@@ -5,7 +5,7 @@ namespace Tollwerk\TwLucenesearch\ViewHelpers\Arrays;
 /***************************************************************
  *  Copyright notice
  *
- *  © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
+ *  © 2016 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
  *
  *  All rights reserved
  *
@@ -40,9 +40,9 @@ namespace Tollwerk\TwLucenesearch\ViewHelpers\Arrays;
  * Output:
  * The value of the array element with the key {index}
  *
- * @package        tw_lucenesearch
- * @copyright    Copyright © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
- * @author        Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
+ * @package tw_lucenesearch
+ * @copyright Copyright © 2016 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
+ * @author Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
  */
 class IndexViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
 {
