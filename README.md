@@ -13,13 +13,18 @@ A (slightly outdated) online documentation is available in the [TYPO3 Extension 
 Requirements
 ------------
 
-This extension version is compatible with TYPO3 7.0-7.4.
+This extension version is compatible with TYPO3 7.5 and above.
 
 **ATTENTION**: Please be aware that there won't be any more TER releases of this extension.
 
 
 Release history
 ---------------
+
+#### v2.0.0
+
+* TYPO3 8 compatibility
+* Uses new Icon API (TYPO3 7.5 and above)
 
 #### v1.6.0
 
