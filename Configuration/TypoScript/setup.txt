@@ -1,110 +1,113 @@
 config {
-	index_reference						= {$plugin.tx_twlucenesearch.index.reference}
-	index_languageReference				= {$plugin.tx_twlucenesearch.index.languageReference}
-	index_injectTimestamp				= {$plugin.tx_twlucenesearch.index.timestamp}
+	index_reference = {$plugin.tx_twlucenesearch.index.reference}
+	index_languageReference = {$plugin.tx_twlucenesearch.index.languageReference}
+	index_injectTimestamp = {$plugin.tx_twlucenesearch.index.timestamp}
 	search_lucene {
-		restrictByRootlinePids			= {$plugin.tx_twlucenesearch.search.rootline}
-		restrictByLanguage				= {$plugin.tx_twlucenesearch.search.language}
-		searchTypes						= {$plugin.tx_twlucenesearch.search.types}
-		searchConfig					= {$plugin.tx_twlucenesearch.search.config}
+		restrictByRootlinePids = {$plugin.tx_twlucenesearch.search.rootline}
+		restrictByLanguage = {$plugin.tx_twlucenesearch.search.language}
+		searchTypes = {$plugin.tx_twlucenesearch.search.types}
+		searchConfig = {$plugin.tx_twlucenesearch.search.config}
 		limits {
-			query						= {$plugin.tx_twlucenesearch.search.limits.query}
-			display						= {$plugin.tx_twlucenesearch.search.limits.display}
+			query = {$plugin.tx_twlucenesearch.search.limits.query}
+			display = {$plugin.tx_twlucenesearch.search.limits.display}
 		}
-		minCharacters					= {$plugin.tx_twlucenesearch.search.chars}
-		highlightMatches				= {$plugin.tx_twlucenesearch.search.highlight}
+
+		minCharacters = {$plugin.tx_twlucenesearch.search.chars}
+		highlightMatches = {$plugin.tx_twlucenesearch.search.highlight}
 	}
 }
 
 plugin.tx_twlucenesearch {
 	view {
-		templateRootPath				= {$plugin.tx_twlucenesearch.view.templateRootPath}
-		partialRootPath					= {$plugin.tx_twlucenesearch.view.partialRootPath}
-		layoutRootPath					= {$plugin.tx_twlucenesearch.view.layoutRootPath}
+		templateRootPath = {$plugin.tx_twlucenesearch.view.templateRootPath}
+		partialRootPath = {$plugin.tx_twlucenesearch.view.partialRootPath}
+		layoutRootPath = {$plugin.tx_twlucenesearch.view.layoutRootPath}
 		templateRootPaths {
-			10							= EXT:tw_lucenesearch/Resources/Private/Templates/
-			20							= {$plugin.tx_twlucenesearch.view.templateRootPath}
+			10 = EXT:tw_lucenesearch/Resources/Private/Templates/
+			20 = {$plugin.tx_twlucenesearch.view.templateRootPath}
 		}
+
 		partialRootPaths {
-			10							= EXT:tw_lucenesearch/Resources/Private/Partials/
-			20							= {$plugin.tx_twlucenesearch.view.partialRootPath}
+			10 = EXT:tw_lucenesearch/Resources/Private/Partials/
+			20 = {$plugin.tx_twlucenesearch.view.partialRootPath}
 		}
+
 		layoutRootPaths {
-			10							= EXT:tw_lucenesearch/Resources/Private/Layouts/
-			20							= {$plugin.tx_twlucenesearch.view.layoutRootPath}
+			10 = EXT:tw_lucenesearch/Resources/Private/Layouts/
+			20 = {$plugin.tx_twlucenesearch.view.layoutRootPath}
 		}
+
 		widget {
 			TYPO3\CMS\Fluid\ViewHelpers\Widget\PaginateViewHelper {
-				templateRootPath		= {$plugin.tx_twlucenesearch.view.paginateWidgetTemplateRootPath}
+				templateRootPath = {$plugin.tx_twlucenesearch.view.paginateWidgetTemplateRootPath}
 			}
 		}
 	}
+
 	settings {
-		defaultResultsPage				= {$plugin.tx_twlucenesearch.search.pid}
-		formMethod						= {$plugin.tx_twlucenesearch.search.method}
-		minCharacters					= {$plugin.tx_twlucenesearch.search.chars}
+		defaultResultsPage = {$plugin.tx_twlucenesearch.search.pid}
+		formMethod = {$plugin.tx_twlucenesearch.search.method}
+		minCharacters = {$plugin.tx_twlucenesearch.search.chars}
 	}
 }
 
 module.tx_twlucenesearch {
-    settings							< plugin.tx_twlucenesearch.settings
-    persistence							< plugin.tx_twlucenesearch.persistence
-    view {
-		templateRootPath				= {$plugin.tx_twlucenesearch.backend.templateRootPath}
-		partialRootPath					= {$plugin.tx_twlucenesearch.backend.partialRootPath}
-		layoutRootPath					= {$plugin.tx_twlucenesearch.backend.layoutRootPath}
+	settings < plugin.tx_twlucenesearch.settings
+	persistence < plugin.tx_twlucenesearch.persistence
+	view {
+		templateRootPath = {$plugin.tx_twlucenesearch.backend.templateRootPath}
+		partialRootPath = {$plugin.tx_twlucenesearch.backend.partialRootPath}
+		layoutRootPath = {$plugin.tx_twlucenesearch.backend.layoutRootPath}
 		templateRootPaths {
-			10							= EXT:tw_lucenesearch/Resources/Private/Backend/Templates/
-			20							= {$plugin.tx_twlucenesearch.backend.templateRootPath}
+			10 = EXT:tw_lucenesearch/Resources/Private/Backend/Templates/
+			20 = {$plugin.tx_twlucenesearch.backend.templateRootPath}
 		}
+
 		partialRootPaths {
-			10							= EXT:tw_lucenesearch/Resources/Private/Backend/Partials/
-			20							= {$plugin.tx_twlucenesearch.backend.partialRootPath}
+			10 = EXT:tw_lucenesearch/Resources/Private/Backend/Partials/
+			20 = {$plugin.tx_twlucenesearch.backend.partialRootPath}
 		}
+
 		layoutRootPaths {
-			10							= EXT:tw_lucenesearch/Resources/Private/Backend/Layouts/
-			20							= {$plugin.tx_twlucenesearch.backend.layoutRootPath}
+			10 = EXT:tw_lucenesearch/Resources/Private/Backend/Layouts/
+			20 = {$plugin.tx_twlucenesearch.backend.layoutRootPath}
 		}
-    }
+	}
 }
 
 # INCLUDE JQUERY IF CONFIGURED
-[globalVar = LIT:1 = {$plugin.tx_twlucenesearch.view.jquery} ]
-
+[globalVar = LIT:1 = {$plugin.tx_twlucenesearch.view.jquery}]
 	######################################################################################################
 	# PLEASE CHANGE THE OCCURENCES OF "page" IN THE FOLLOWING SECTION TO THE NAME OF YOUR MAIN PAGE OBJECT
 	# ----------------------------------------------------------------------------------------------------
 	page.includeJSFooter {
-		jquery							= http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js
+		jquery = http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js
 		jquery {
-			external					= 1
-			disableCompression			= 1
-			forceOnTop					= 1
+			external = 1
+			disableCompression = 1
+			forceOnTop = 1
 		}
 	}
+
 	######################################################################################################
 [global]
 
 # INCLUDE THE SEARCH BOX JAVASCRIPT
-[globalVar = LIT:1 = {$plugin.tx_twlucenesearch.view.searchboxJS} ]
-
+[globalVar = LIT:1 = {$plugin.tx_twlucenesearch.view.searchboxJS}]
 	######################################################################################################
 	# PLEASE CHANGE THE OCCURENCES OF "page" IN THE FOLLOWING SECTION TO THE NAME OF YOUR MAIN PAGE OBJECT
 	# ----------------------------------------------------------------------------------------------------
-	page.includeJSFooter.tx_twlucenesearch			= EXT:tw_lucenesearch/Resources/Public/Js/tw_lucenesearch.js
+	page.includeJSFooter.tx_twlucenesearch = EXT:tw_lucenesearch/Resources/Public/Js/tw_lucenesearch.js
 	######################################################################################################
-
 [global]
 
 # INCLUDE THE AUTOCOMPLETE JAVASCRIPT
-[globalVar = LIT:1 = {$plugin.tx_twlucenesearch.view.autocompleteJS} ]
-
+[globalVar = LIT:1 = {$plugin.tx_twlucenesearch.view.autocompleteJS}]
 	######################################################################################################
 	# PLEASE CHANGE THE OCCURENCES OF "page" IN THE FOLLOWING SECTION TO THE NAME OF YOUR MAIN PAGE OBJECT
 	# ----------------------------------------------------------------------------------------------------
-	page.includeCSS.jquery_autocomplete				= EXT:tw_lucenesearch/Resources/Public/Css/jquery.autocomplete.css 
-	page.includeJSFooter.jquery_autocomplete		= EXT:tw_lucenesearch/Resources/Public/Js/Vendor/jquery.autocomplete.min.js
-	page.includeJSFooter.tx_twluceneautocomplete	= EXT:tw_lucenesearch/Resources/Public/Js/tw_luceneautocomplete.js 
+	page.includeCSS.jquery_autocomplete = EXT:tw_lucenesearch/Resources/Public/Css/jquery.autocomplete.css
+	page.includeJSFooter.jquery_autocomplete = EXT:tw_lucenesearch/Resources/Public/Js/Vendor/jquery.autocomplete.min.js
+	page.includeJSFooter.tx_twluceneautocomplete = EXT:tw_lucenesearch/Resources/Public/Js/tw_luceneautocomplete.js
 	######################################################################################################
-
 [global]
