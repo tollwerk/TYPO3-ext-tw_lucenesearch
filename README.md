@@ -7,19 +7,25 @@ Simple and lightweight implementation of the Apache Lucene Index as frontend sea
 Documentation
 -------------
 
-The full online documentation is available in the [TYPO3 Extension Repository](http://docs.typo3.org/typo3cms/extensions/tw_lucenesearch/).
-
-A PDF-version of the documentation is available at the [Tollwerk website](http://tollwerk.de/fileadmin/media/manuals/tw_lucenesearch/manual.pdf).
+A (slightly outdated) online documentation is available in the [TYPO3 Extension Repository](http://docs.typo3.org/typo3cms/extensions/tw_lucenesearch/). The PDF version is available at the [Tollwerk website](https://tollwerk.de/fileadmin/media/manuals/tw_lucenesearch/manual.pdf) or at the [Github repository](https://github.com/tollwerk/TYPO3-ext-tw_lucenesearch/blob/master/doc/manual.pdf).
 
 
 Requirements
 ------------
 
-**ATTENTION**: This is a **TYPO3 CMS 6** release. Support for TYPO3 4.x has been dropped, use the 0.x versions instead (still available in the [TYPO3 Extension Repository](http://typo3.org/extensions/repository/view/tw_lucenesearch)).
+The extension requires TYPO3 7.x or above.
+
+**ATTENTION**: Please be aware that there won't be any more TER releases of this extension.
 
 
 Release history
 ---------------
+
+#### v2.0.0
+
+* Multiple bugfixes & contributions
+* TYPO3 8.x compatibility
+* Suitable for composer mode TYPO3
 
 #### v1.5.0
 *	Added autocompletion support for frontend searches ([#6](https://github.com/jkphl/TYPO3-ext-tw_lucenesearch/pull/6))
