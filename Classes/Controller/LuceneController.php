@@ -36,7 +36,6 @@ namespace Tollwerk\TwLucenesearch\Controller;
  */
 class LuceneController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
-
     /**
      * Search engine signatures
      *
@@ -97,7 +96,10 @@ class LuceneController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     {
         $this->view->assign('searchterm', trim($searchterm));
         $this->view->assign('page',
-            intval($this->settings['defaultResultsPage']) ? intval($this->settings['defaultResultsPage']) : $GLOBALS['TSFE']->id);
+            intval($this->settings['defaultResultsPage']) ?
+                intval($this->settings['defaultResultsPage']) :
+                $GLOBALS['TSFE']->id
+        );
     }
 
     /**
@@ -111,15 +113,20 @@ class LuceneController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     public function resultsAction($searchterm = '', $pointer = 0, $notfound = false)
     {
         $settings = \Tollwerk\TwLucenesearch\Utility\Indexer::indexConfig($GLOBALS['TSFE']);
-        \TYPO3\CMS\Core\Utility\ArrayUtility::mergeRecursiveWithOverrule($settings, $this->settings);
+        \TYPO3\CMS\Core\Utility\ArrayUtility::mergeRecursiveWithOverrule(
+            $settings,
+            is_array($this->settings) ? $this->settings : []
+        );
         $this->settings = $settings;
-        $page = intval($this->settings['defaultResultsPage']) ? intval($this->settings['defaultResultsPage']) : $GLOBALS['TSFE']->id;
+        $page = intval($this->settings['defaultResultsPage']) ?
+            intval($this->settings['defaultResultsPage']) :
+            $GLOBALS['TSFE']->id;
         $indexInfo = null;
         $hits = array();
         $error = false;
         $query = null;
 
-        // Instanciating the lucene index service
+        // Instantiating the lucene index service
         /* @var $indexerService \Tollwerk\TwLucenesearch\Service\Lucene */
         $indexerService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstanceService('index', 'lucene');
         if ($indexerService instanceof \TYPO3\CMS\Core\Service\AbstractService) {

@@ -154,6 +154,19 @@ class Document extends \Zend_Search_Lucene_Document
     }
 
     /**
+     * Return a flag for the document language
+     *
+     * Fixes the language key "en" to the British flag key "en"
+     *
+     * @return string Document language flag
+     */
+    public function getFlag()
+    {
+        $flag = $this->getLanguage();
+        return ($flag == 'en') ? 'gb' : $flag;
+    }
+
+    /**
      * Return the document timestamp
      *
      * @return string                    Document timestamp
@@ -305,5 +318,3 @@ class Document extends \Zend_Search_Lucene_Document
         return $extDocument;
     }
 }
-
-?>
