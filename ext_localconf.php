@@ -3,7 +3,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  © 2013 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
+ *  © 2016 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
  *
  *  All rights reserved
  *
@@ -55,6 +55,16 @@ $GLOBALS['TYPO3_CONF_VARS']['EXT']['extParams'][$_EXTKEY] = unserialize($_EXTCON
     ),
     array(
         'Lucene' => 'results,notfound',
+    )
+);
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    'Tollwerk.'.$_EXTKEY,
+    'LuceneAutocomplete',
+    array(
+        'Lucene' => 'autocomplete',
+    ),
+    array(
+        'Lucene' => 'autocomplete',
     )
 );
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(

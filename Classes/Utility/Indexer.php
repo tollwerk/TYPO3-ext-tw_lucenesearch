@@ -5,7 +5,7 @@ namespace Tollwerk\TwLucenesearch\Utility;
 /***************************************************************
  *  Copyright notice
  *
- *  © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
+ *  © 2016 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
  *
  *  All rights reserved
  *
@@ -29,10 +29,10 @@ namespace Tollwerk\TwLucenesearch\Utility;
 /**
  * Lucene indexer
  *
- * @package    tw_lucenesearch
- * @copyright  Copyright © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
- * @author    Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
- * @author    Christian Eßl <essl@incert.at>
+ * @package tw_lucenesearch
+ * @copyright Copyright © 2016 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
+ * @author Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
+ * @author Christian Eßl <essl@incert.at>
  */
 class Indexer implements \TYPO3\CMS\Core\SingletonInterface
 {
@@ -336,7 +336,7 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface
         foreach (self::indexConfig($fe, 'reference') as $key => $config) {
             $referenceVariable = $this->_getReferenceVariable($parameters, $key, $config);
 
-            if ($referenceVariable != null) {
+            if ($referenceVariable !== null) {
                 $reference[$key] = $referenceVariable;
             }
         }
@@ -381,10 +381,14 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface
                     $result = $stack[$key];
 
                     // If there are value restrictions and the current value is not valid: Return the default value
-                    if (($result !== null) && is_array($config->constraints) && !in_array($result,
-                            $config->constraints)
-                    ) {
-                        $result = $config->default;
+                    if (($result !== null) && is_array($config->constraints)) {
+                        if (in_array($result, $config->constraints)) {
+                            // Keep type (e.g. constraints is int, result is string)
+                            $constraintsKey = array_search($result, $config->constraints);
+                            $result = $config->constraints[$constraintsKey];
+                        } else {
+                            $result = $config->default;
+                        }
                     }
                 }
 
@@ -395,7 +399,6 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface
 
             // Else: Just return the default value
         } else {
-
             // If there are further sub-keys
             if (is_array($config)) {
                 $result = array();
@@ -812,6 +815,20 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface
                         } else {
                             $pointer[$referenceVarNamePart] = $referenceVar;
                         }
+                    }
+                }
+            }
+            $indexLanguageReference = array_key_exists('index_languageReference', $typoscript) ?
+                trim($typoscript['index_languageReference']) :
+                '';
+            if (strlen($indexLanguageReference) > 0 && array_key_exists($indexLanguageReference, $referenceVars)) {
+                $languageVar = &$referenceVars[$indexLanguageReference];
+                if ($languageVar->default === null) {
+                    if ($languageVar->constraints && count($languageVar->constraints) > 0) {
+                        $constraints = $languageVar->constraints;
+                        $languageVar->default = array_shift($constraints);
+                    } else {
+                        $languageVar->default = '0';
                     }
                 }
             }

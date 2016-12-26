@@ -5,7 +5,7 @@ namespace Tollwerk\TwLucenesearch\ViewHelpers\Arrays;
 /***************************************************************
  *  Copyright notice
  *
- *  © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
+ *  © 2016 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
  *
  *  All rights reserved
  *
@@ -40,9 +40,9 @@ namespace Tollwerk\TwLucenesearch\ViewHelpers\Arrays;
  * Output:
  * The value of the array element with the key {index}
  *
- * @package        tw_lucenesearch
- * @copyright    Copyright © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
- * @author        Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
+ * @package tw_lucenesearch
+ * @copyright Copyright © 2016 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
+ * @author Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
  */
 class IndexViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
 {
@@ -56,8 +56,26 @@ class IndexViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelpe
      */
     public function render(array $array, $index = '')
     {
-        return (strlen($index) && array_key_exists($index, $array)) ? $array[$index] : null;
+        $value = null;
+        if (strlen($index)) {
+            $indexArr = explode('[', $index);
+            foreach ($indexArr as $key => $val) {
+                $indexArr[$key] = str_replace(array('[', ']'), '', $val);
+            }
+
+            if (array_key_exists($indexArr[0], $array)) {
+                $value = $array[$indexArr[0]];
+
+                for ($i = 1; $i < count($indexArr); $i++) {
+                    if (array_key_exists($indexArr[$i], $value)) {
+                        $value = $value[$indexArr[$i]];
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+
+        return $value;
     }
 }
-
-?>

@@ -5,7 +5,7 @@ namespace Tollwerk\TwLucenesearch\ViewHelpers\Index;
 /***************************************************************
  *  Copyright notice
  *
- *  © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
+ *  © 2016 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
  *
  *  All rights reserved
  *
@@ -38,9 +38,9 @@ namespace Tollwerk\TwLucenesearch\ViewHelpers\Index;
  * Output:
  * None (there lucene indexer will write appropriate timestamp meta tags into the source code)
  *
- * @package        tw_lucenesearch
- * @copyright    Copyright © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
- * @author        Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
+ * @package tw_lucenesearch
+ * @copyright Copyright © 2016 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
+ * @author Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
  */
 class TimestampViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
 {

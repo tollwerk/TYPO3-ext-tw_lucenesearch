@@ -5,7 +5,7 @@ namespace Tollwerk\TwLucenesearch\Domain\Model;
 /***************************************************************
  *  Copyright notice
  *
- *  © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
+ *  © 2016 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
  *
  *  All rights reserved
  *
@@ -31,9 +31,9 @@ require_once 'Zend/Search/Lucene/Document.php';
 /**
  * Extended Zend lucene document
  *
- * @package        tw_lucenesearch
- * @copyright    Copyright © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
- * @author        Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
+ * @package tw_lucenesearch
+ * @copyright Copyright © 2016 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
+ * @author Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
  */
 class Document extends \Zend_Search_Lucene_Document
 {
@@ -151,6 +151,19 @@ class Document extends \Zend_Search_Lucene_Document
     public function getLanguageUtf8()
     {
         return $this->getFieldUtf8Value('language');
+    }
+
+    /**
+     * Return a flag for the document language
+     *
+     * Fixes the language key "en" to the British flag key "en"
+     *
+     * @return string Document language flag
+     */
+    public function getFlag()
+    {
+        $flag = $this->getLanguage();
+        return ($flag == 'en') ? 'gb' : $flag;
     }
 
     /**
@@ -305,5 +318,3 @@ class Document extends \Zend_Search_Lucene_Document
         return $extDocument;
     }
 }
-
-?>

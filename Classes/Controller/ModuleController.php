@@ -5,7 +5,7 @@ namespace Tollwerk\TwLucenesearch\Controller;
 /***************************************************************
  *  Copyright notice
  *
- *  © 2013 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
+ *  © 2016 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
  *
  *  All rights reserved
  *
@@ -29,9 +29,9 @@ namespace Tollwerk\TwLucenesearch\Controller;
 /**
  * Lucene backend module controller
  *
- * @package        tw_lucenesearch
- * @copyright    Copyright © 2014 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
- * @author        Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
+ * @package tw_lucenesearch
+ * @copyright Copyright © 2016 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
+ * @author Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
  */
 class ModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
@@ -80,6 +80,8 @@ class ModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 
         $this->_pageUid = intval(\TYPO3\CMS\Core\Utility\GeneralUtility::_GP('id'));
         $config = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+
+        /** @var \Tollwerk\TwLucenesearch\Utility\Indexer $indexer */
         $indexer = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tollwerk\\TwLucenesearch\\Utility\\Indexer');
         $this->_pageConfig = $indexer::indexConfigTS($config['config.']);
     }
