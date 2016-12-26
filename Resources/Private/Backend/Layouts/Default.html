@@ -4,9 +4,9 @@
             <div class="typo3-docheader-functions">
                 <div class="left">
                     <f:be.menus.actionMenu>
-                        <f:be.menus.actionMenuItem label="{f:translate(key: 'mod.actions.page')}" controller="Module" action="page" />                             
+                        <f:be.menus.actionMenuItem label="{f:translate(key: 'mod.actions.page')}" controller="Module" action="page" />
                         <f:be.menus.actionMenuItem label="{f:translate(key: 'mod.actions.other')}" controller="Module" action="other" />
-                        <f:be.menus.actionMenuItem label="{f:translate(key: 'mod.actions.index')}" controller="Module" action="index" />  
+                        <f:be.menus.actionMenuItem label="{f:translate(key: 'mod.actions.index')}" controller="Module" action="index" />
                     </f:be.menus.actionMenu>
                 </div>
                 <div class="right">
@@ -16,10 +16,10 @@
             </div>
             <div class="typo3-docheader-buttons"/>
         </div>
-        
+
         <div id="typo3-docbody">
             <div id="typo3-inner-docbody" class="tx_twlucenesearch">
-                <f:flashMessages renderMode="div" />
+                <f:flashMessages />
                 <f:render section="Main" />
             </div>
         </div>

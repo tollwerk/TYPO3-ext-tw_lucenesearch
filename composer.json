@@ -1,0 +1,34 @@
+{
+  "name": "tollwerk/tw-lucenesearch",
+  "type": "typo3-cms-extension",
+  "description": "Simple and lightweight implementation of the Apache Lucene Index as frontend search solution for TYPO3",
+  "homepage": "https://github.com/tollwerk/TYPO3-ext-tw_lucenesearch",
+  "license": "GPL-2.0+",
+  "require": {
+    "typo3/cms": ">=7.0 <7.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Tollwerk\\TwLucenesearch\\": "Classes/"
+    },
+    "classmap": [
+      "Classes/Zend"
+    ]
+  },
+  "replace": {
+    "tw_lucenesearch": "self.version",
+    "typo3-ter/tw_lucenesearch": "self.version"
+  },
+  "authors": [
+    {
+      "name": "Joschi Kuphal",
+      "email": "joschi@tollwerk.de"
+    }
+  ],
+  "extra": {
+    "typo3/cms": {
+      "cms-package-dir": "{$vendor-dir}/typo3/cms",
+      "web-dir": ".Build/Web"
+    }
+  }
+}
