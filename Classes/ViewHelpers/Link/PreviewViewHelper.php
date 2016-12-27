@@ -25,6 +25,7 @@ namespace Tollwerk\TwLucenesearch\ViewHelpers\Link;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use TYPO3\CMS\Fluid\ViewHelpers\Link\PageViewHelper;
 
 /**
  * Index page preview view helper
@@ -44,32 +45,37 @@ namespace Tollwerk\TwLucenesearch\ViewHelpers\Link;
  * @copyright Copyright © 2016 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
  * @author Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
  */
-class PreviewViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Link\PageViewHelper
+class PreviewViewHelper extends PageViewHelper
 {
 
-    /**
-     * Renders a preview link to a particular page
+     /**
+     * Arguments initialization
      *
-     * @param integer|NULL $pageUid target page. See TypoLink destination
+     * @return void
+     */
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+		$this->registerArgument('reference', 'array', 'Specifies some references', true, []);
+    }
+    
+    /**
+     * @param int|NULL $pageUid target page. See TypoLink destination
      * @param array $additionalParams query parameters to be attached to the resulting URI
-     * @param integer $pageType type of the target page. See typolink.parameter
-     * @param boolean $noCache set this to disable caching for the target page. You should not need this.
-     * @param boolean $noCacheHash set this to supress the cHash query parameter created by TypoLink. You should not need this.
+     * @param int $pageType type of the target page. See typolink.parameter
+     * @param bool $noCache set this to disable caching for the target page. You should not need this.
+     * @param bool $noCacheHash set this to suppress the cHash query parameter created by TypoLink. You should not need this.
      * @param string $section the anchor to be added to the URI
-     * @param boolean $linkAccessRestrictedPages If set, links pointing to access restricted pages will still link to the page even though the page cannot be accessed.
-     * @param boolean $absolute If set, the URI of the rendered link is absolute
-     * @param boolean $addQueryString If set, the current query parameters will be kept in the URI
+     * @param bool $linkAccessRestrictedPages If set, links pointing to access restricted pages will still link to the page even though the page cannot be accessed.
+     * @param bool $absolute If set, the URI of the rendered link is absolute
+     * @param bool $addQueryString If set, the current query parameters will be kept in the URI
      * @param array $argumentsToBeExcludedFromQueryString arguments to be removed from the URI. Only active if $addQueryString = TRUE
+     * @param string $addQueryStringMethod Set which parameters will be kept. Only active if $addQueryString = TRUE
      * @return string Rendered page URI
      */
-    /**
-     * Renders a preview link to a particular page
-     *
-     * @param \array $reference Reference parameters
-     * @see \TYPO3\CMS\Fluid\ViewHelpers\Link\PageViewHelper::render()
-     */
-    public function render(array $reference)
+    public function render($pageUid = null, array $additionalParams = [], $pageType = 0, $noCache = false, $noCacheHash = false, $section = '', $linkAccessRestrictedPages = false, $absolute = false, $addQueryString = false, array $argumentsToBeExcludedFromQueryString = [], $addQueryStringMethod = null)
     {
+        $reference = $this->arguments['reference'];
         if (array_key_exists('id', $reference)) {
             $pageUid = $reference['id'];
             unset($reference['id']);
