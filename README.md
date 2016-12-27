@@ -21,6 +21,10 @@ This extension version is compatible with TYPO3 7.5 and above.
 Release history
 ---------------
 
+#### v2.0.1
+
+* Fixed incompatible view helper declaration (#16, #17)
+
 #### v2.0.0
 
 * TYPO3 8 compatibility
@@ -32,8 +36,8 @@ Release history
 * Suitable for composer mode TYPO3
 
 #### v1.5.0
-*	Added autocompletion support for frontend searches ([#6](https://github.com/jkphl/TYPO3-ext-tw_lucenesearch/pull/6))
-*	Added a backend module for index management
+* Added autocompletion support for frontend searches ([#6](https://github.com/jkphl/TYPO3-ext-tw_lucenesearch/pull/6))
+* Added a backend module for index management
 
 Legal
 -----
