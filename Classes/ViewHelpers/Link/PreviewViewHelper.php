@@ -44,11 +44,11 @@ use TYPO3\CMS\Fluid\ViewHelpers\Link\PageViewHelper;
  * @package tw_lucenesearch
  * @copyright Copyright © 2016 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
  * @author Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
+ * @author Steffen Düsel
  */
 class PreviewViewHelper extends PageViewHelper
 {
-
-     /**
+    /**
      * Arguments initialization
      *
      * @return void
@@ -56,9 +56,9 @@ class PreviewViewHelper extends PageViewHelper
     public function initializeArguments()
     {
         parent::initializeArguments();
-		$this->registerArgument('reference', 'array', 'Specifies some references', true, []);
+        $this->registerArgument('reference', 'array', 'Specifies some references', true, []);
     }
-    
+
     /**
      * @param int|NULL $pageUid target page. See TypoLink destination
      * @param array $additionalParams query parameters to be attached to the resulting URI
@@ -73,8 +73,19 @@ class PreviewViewHelper extends PageViewHelper
      * @param string $addQueryStringMethod Set which parameters will be kept. Only active if $addQueryString = TRUE
      * @return string Rendered page URI
      */
-    public function render($pageUid = null, array $additionalParams = [], $pageType = 0, $noCache = false, $noCacheHash = false, $section = '', $linkAccessRestrictedPages = false, $absolute = false, $addQueryString = false, array $argumentsToBeExcludedFromQueryString = [], $addQueryStringMethod = null)
-    {
+    public function render(
+        $pageUid = null,
+        array $additionalParams = [],
+        $pageType = 0,
+        $noCache = false,
+        $noCacheHash = false,
+        $section = '',
+        $linkAccessRestrictedPages = false,
+        $absolute = false,
+        $addQueryString = false,
+        array $argumentsToBeExcludedFromQueryString = [],
+        $addQueryStringMethod = null
+    ) {
         $reference = $this->arguments['reference'];
         if (array_key_exists('id', $reference)) {
             $pageUid = $reference['id'];
@@ -122,5 +133,3 @@ class PreviewViewHelper extends PageViewHelper
         return $result;
     }
 }
-
-?>
