@@ -328,16 +328,11 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function _getPageReference(\TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $fe)
     {
-        $reference = array();
-        $parameters = array(
-            'id' => $fe->id,
-            'type' => $fe->type,
-        );
+        $parameters = array();
         ArrayUtility::mergeRecursiveWithOverrule($parameters, (array)$_GET);
         ArrayUtility::mergeRecursiveWithOverrule($parameters, (array)$_POST);
-        $parameters['id'] = intval($parameters['id']);
-        $parameters['type'] = intval($parameters['type']);
 
+        $reference = array();
         foreach (self::indexConfig($fe, 'reference') as $key => $config) {
             $referenceVariable = $this->_getReferenceVariable($parameters, $key, $config);
 
@@ -345,7 +340,12 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface
                 $reference[$key] = $referenceVariable;
             }
         }
+
+        $reference['id'] = (int)$fe->id;
+        $reference['type'] = (int)$fe->type;
+        $reference['L'] = (int)$fe->sys_language_uid;
         ksort($reference);
+
         return serialize($reference);
     }
 
