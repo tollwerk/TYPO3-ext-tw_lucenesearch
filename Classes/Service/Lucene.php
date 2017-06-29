@@ -543,7 +543,7 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
                     $tokenTerms[] = $token;
                     $isPhrase = ($token->type == \Zend_Search_Lucene_Search_QueryToken::TT_PHRASE);
                     $tokenStr = $isPhrase ? '"'.$token->text.'"' : $token->text;
-                    $tokenStrLength = strlen($tokenStr);
+                    $tokenStrLength = mb_strlen($tokenStr);
 
                     // Apply external rewriters
                     if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['tw_lucenesearch']['term-rewrite-hooks'])) {
@@ -575,8 +575,8 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
                         $tokenRewrite[] = $sfTokenStr;
                     }
                     $tokenRewrite = '('.implode(' OR ', $tokenRewrite).')';
-                    $searchTerm = substr($searchTerm, 0,
-                            $token->position - $tokenStrLength).$tokenRewrite.substr($searchTerm,
+                    $searchTerm = mb_substr($searchTerm, 0,
+                            $token->position - $tokenStrLength).$tokenRewrite.mb_substr($searchTerm,
                             $token->position);
                 }
             }
