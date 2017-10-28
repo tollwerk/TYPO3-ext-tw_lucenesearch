@@ -37,7 +37,7 @@
 				<source>Path to template root (FE):You can alter this in case you want to customize the templates</source>
 			<target state="translated">Pfad zum Template-Verzeichnis (FE):Wählen Sie ein benutzerdefiniertes Template-Verzeichnis, wenn sie die Vorlagen anpassen möchten</target></trans-unit>
 			<trans-unit id="constants.file.templateRootPath.paginate" xml:space="preserve" approved="yes">
-				<source>Path to template root (FE):You can alter this in case you want to customize the pagination widget</source>
+				<source>Path to template root (FE) for paginate widget:You can alter this in case you want to customize the pagination widget</source>
 			<target state="translated">Pfad zum Template-Verzeichnis (FE):Wählen Sie ein benutzerdefiniertes Template-Verzeichnis, wenn sie das Paginierungs-Widget anpassen möchten</target></trans-unit>
 			<trans-unit id="constants.file.partialRootPath" xml:space="preserve" approved="yes">
 				<source>Path to template partials (FE):You can alter this, though the standard plugin doesn't use partials ...</source>
@@ -62,16 +62,13 @@
 			<target state="translated">Indizierung</target></trans-unit>
 			<trans-unit id="constants.indexing.reference" xml:space="preserve" approved="yes">
 				<source>Document reference parameters:Comma separated list of GET variables that should be considered relevant for uniquely identifying and indexing your pages</source>
-			    <target state="translated">Dokumentreferenz-Parameter:Kommaseparierte Liste von GET-Parametern, die benötigt werden, um Ihre Seite eindeutig referenzieren und indizieren zu können</target>
-            </trans-unit>
-			<trans-unit id="constants.indexing.languageReference" xml:space="preserve" approved="yes">
-				<source>Document language reference parameter:GET variable that should be considered relevant for uniquely identifying your language</source>
-			    <target state="translated">Dokumentsprachreferenz-Parameter:GET-Parameter, der benötigt wird, um die Sprache Ihrer Seite eindeutig identifizieren zu können</target>
-            </trans-unit>
+			<target state="translated">Dokumentreferenz-Parameter:Kommaseparierte Liste von GET-Parametern, die benötigt werden, um Ihre Seite eindeutig referenzieren und indizieren zu können</target></trans-unit>
 			<trans-unit id="constants.indexing.timestamp" xml:space="preserve" approved="yes">
 				<source>Inject modification timestamps:Whether to inject modification timestamps into the HTML source code of your pages (several meta tags)</source>
-			    <target state="translated">Modifikationszeitstempel ausgeben:Aktivieren Sie diese Option, um automatisch Modifikationszeitstempel in den Quellcode Ihrer Seiten zu integrieren (mehrere Meta-Elemente)</target>
-            </trans-unit>
+			<target state="translated">Modifikationszeitstempel ausgeben:Aktivieren Sie diese Option, um automatisch Modifikationszeitstempel in den Quellcode Ihrer Seiten zu integrieren (mehrere Meta-Elemente)</target></trans-unit>
+			<trans-unit id="constants.indexing.languageReference" xml:space="preserve" approved="yes">
+				<source>Document language reference parameter:GET variable that should be considered relevant for uniquely identifying your language</source>
+			<target state="translated">Dokumentsprachreferenz-Parameter:GET-Parameter, der benötigt wird, um die Sprache Ihrer Seite eindeutig identifizieren zu können</target></trans-unit>
 			<trans-unit id="constants.search" xml:space="preserve" approved="yes">
 				<source>Search</source>
 			<target state="translated">Suche</target></trans-unit>
@@ -83,7 +80,13 @@
 			<target state="translated">Sprache der Suchergebnisse:Aktivieren Sie diese Option, wenn nur Suchergebnisse geliefert werden sollen, die der aktuellen Frontendsprache entsprechen</target></trans-unit>
 			<trans-unit id="constants.search.types" xml:space="preserve" approved="yes">
 				<source>Search types:Comma separated list of document types to search</source>
-				<target state="translated">Dokumenttypen:Kommaseparierte Liste der zu durchsuchenden Dokumenttypen</target></trans-unit>
+			<target state="translated">Dokumenttypen:Kommaseparierte Liste der zu durchsuchenden Dokumenttypen</target></trans-unit>
+			<trans-unit id="constants.search.types.allow" xml:space="preserve" approved="yes">
+				<source>Allowed page types:Comma separated list of allowed page types (typeNum values)</source>
+			<target state="translated">Erlaubte Seitentypen: Kommaseparierte Liste erlaubter Seitentypen (typeNum-Werte)</target></trans-unit>
+			<trans-unit id="constants.search.types.disallow" xml:space="preserve" approved="yes">
+				<source>Disallowed page types:Comma separated list of disallowed page types (typeNum values; allowed types take precedence)</source>
+			<target state="translated">Unerlaubte Seitentypen: Kommaseparierte Liste unerlaubter Seitentypen (typeNum-Werte; erlaubte Werte haben Vorrang)</target></trans-unit>
 			<trans-unit id="constants.search.highlight" xml:space="preserve" approved="yes">
 				<source>Highlight search terms:Whether to highlight the search terms in the search result list</source>
 			<target state="translated">Suchbegriffe hervorheben:Aktivieren Sie diese Option, um die angegebenen Suchbegriffe in der Ergebnisliste hervorzuheben</target></trans-unit>

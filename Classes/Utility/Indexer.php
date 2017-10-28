@@ -269,23 +269,21 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface
             }
         }
 
-        $disableIndexing = false;
+        $disableIndexingByType = false;
         $allowTypes = self::indexConfig($fe, 'search.allowTypes');
-        if (is_array($allowTypes) && count($allowTypes) > 0) {
+        if (is_array($allowTypes) && count($allowTypes)) {
             if (!in_array($fe->type, $allowTypes)) {
-                $disableIndexing = true;
+                $disableIndexingByType = true;
             }
         } else {
-            $disableTypes = self::indexConfig($fe, 'search.disableTypes');
-            if (is_array($disableTypes) && count($disableTypes) > 0) {
-                if (in_array($fe->type, $disableTypes)) {
-                    $disableIndexing = true;
-                }
+            $disallowTypes = self::indexConfig($fe, 'search.disallowTypes');
+            if (is_array($disallowTypes) && count($disallowTypes) && in_array($fe->type, $disallowTypes)) {
+                $disableIndexingByType = true;
             }
         }
 
         // If the current page should be indexed
-        if (!intval($fe->page['no_search']) && self::indexConfig($fe, 'enable') && !$disableIndexing) {
+        if (!intval($fe->page['no_search']) && self::indexConfig($fe, 'enable') && !$disableIndexingByType) {
             // Instanciate the lucene index service
             /* @var $indexerService \Tollwerk\TwLucenesearch\Service\Lucene */
             $indexerService = GeneralUtility::makeInstanceService('index', 'lucene');
@@ -767,7 +765,7 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface
                 'restrictByLanguage' => true,
                 'searchTypes' => array(),
                 'allowTypes' => array(),
-                'disableTypes' => array(),
+                'disallowTypes' => array(),
                 'searchConfig' => array(
                     (object)array(
                         'field' => true,
@@ -865,17 +863,19 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface
                 if (array_key_exists('restrictByLanguage', $typoscript['search_lucene.'])) {
                     $config['search']->restrictByLanguage = (boolean)intval($typoscript['search_lucene.']['restrictByLanguage']);
                 }
-                if (array_key_exists('allowTypes', $typoscript['search_lucene.'])) {
-                    $config['search']->allowTypes = array_map('intval', explode(',', $typoscript['search_lucene.']['allowTypes']));
-                }
-                if (array_key_exists('disableTypes', $typoscript['search_lucene.'])) {
-                    $config['search']->disableTypes = array_map('intval', explode(',', $typoscript['search_lucene.']['disableTypes']));
-                }
                 if (array_key_exists('searchTypes',
                         $typoscript['search_lucene.']) && strlen(trim($typoscript['search_lucene.']['searchTypes']))
                 ) {
                     $config['search']->searchTypes = array_filter(array_map('trim',
-                        explode(',', $typoscript['search_lucene.']['searchTypes'])));
+                        GeneralUtility::trimExplode(',', $typoscript['search_lucene.']['searchTypes'], true)));
+                }
+                if (array_key_exists('allowTypes', $typoscript['search_lucene.'])) {
+                    $config['search']->allowTypes = array_map('intval',
+                        GeneralUtility::trimExplode(',', $typoscript['search_lucene.']['allowTypes'], true));
+                }
+                if (array_key_exists('disallowTypes', $typoscript['search_lucene.'])) {
+                    $config['search']->disallowTypes = array_map('intval',
+                        GeneralUtility::trimExplode(',', $typoscript['search_lucene.']['disallowTypes'], true));
                 }
                 if (array_key_exists('searchConfig',
                         $typoscript['search_lucene.']) && strlen(trim($typoscript['search_lucene.']['searchConfig']))

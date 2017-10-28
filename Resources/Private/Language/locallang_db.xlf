@@ -53,10 +53,10 @@
 			</trans-unit>
 			<trans-unit id="constants.javascript.searchboxJS" xml:space="preserve">
 				<source>Include searchbox JavaScript:Includes a tiny JavaScript that prints "Your search terms ..." into the standard search box while it is not focused (please see manual for further information). The script relies on jQuery being present (so make sure to check the option above or include jQuery in any other suitable way) and your main PAGE object being called "page".</source>
-			</trans-unit> 
-			<trans-unit id="constants.javascript.autocompleteJS" xml:space="preserve"> 
+			</trans-unit>
+			<trans-unit id="constants.javascript.autocompleteJS" xml:space="preserve">
 				<source>Include autocomplete JavaScript:Includes an autocomplete jQuery library.</source>
-			</trans-unit>  
+			</trans-unit>
 			<trans-unit id="constants.indexing" xml:space="preserve">
 				<source>Indexing</source>
 			</trans-unit>
@@ -80,6 +80,12 @@
 			</trans-unit>
 			<trans-unit id="constants.search.types" xml:space="preserve">
 				<source>Search types:Comma separated list of document types to search</source>
+			</trans-unit>
+			<trans-unit id="constants.search.types.allow" xml:space="preserve">
+				<source>Allowed page types:Comma separated list of allowed page types (typeNum values)</source>
+			</trans-unit>
+			<trans-unit id="constants.search.types.disallow" xml:space="preserve">
+				<source>Disallowed page types:Comma separated list of disallowed page types (typeNum values; allowed types take precedence)</source>
 			</trans-unit>
 			<trans-unit id="constants.search.highlight" xml:space="preserve">
 				<source>Highlight search terms:Whether to highlight the search terms in the search result list</source>

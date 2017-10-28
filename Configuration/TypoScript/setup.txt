@@ -6,6 +6,8 @@ config {
 		restrictByRootlinePids = {$plugin.tx_twlucenesearch.search.rootline}
 		restrictByLanguage = {$plugin.tx_twlucenesearch.search.language}
 		searchTypes = {$plugin.tx_twlucenesearch.search.types}
+		allowTypes = {$plugin.tx_twlucenesearch.search.allow}
+		disallowTypes = {$plugin.tx_twlucenesearch.search.disallow}
 		searchConfig = {$plugin.tx_twlucenesearch.search.config}
 		limits {
 			query = {$plugin.tx_twlucenesearch.search.limits.query}

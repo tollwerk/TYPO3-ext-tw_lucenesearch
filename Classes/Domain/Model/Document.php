@@ -296,7 +296,7 @@ class Document extends \Zend_Search_Lucene_Document
     {
         $referenceParams = $this->getReferenceParameters();
         unset($referenceParams['id']);
-        if (!$referenceParams['type']) {
+        if (empty($referenceParams['type'])) {
             unset($referenceParams['type']);
         }
         return $referenceParams;

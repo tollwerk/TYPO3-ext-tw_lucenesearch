@@ -47,19 +47,23 @@ plugin.tx_twlucenesearch {
 		language = 1
 		# cat=plugin.tx_twlucenesearch/search/c; type=string; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.types
 		types = page
-		# cat=plugin.tx_twlucenesearch/search/d; type=boolean; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.highlight
+		# cat=plugin.tx_twlucenesearch/search/d; type=string; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.types.allow
+		allow =
+		# cat=plugin.tx_twlucenesearch/search/e; type=string; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.types.disallow
+		disallow =
+		# cat=plugin.tx_twlucenesearch/search/f; type=boolean; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.highlight
 		highlight = 1
-		# cat=plugin.tx_twlucenesearch/search/e; type=string; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.config
+		# cat=plugin.tx_twlucenesearch/search/g; type=string; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.config
 		config = title:?*^2, keywords:?*^1.6, abstract:?*~^1.2, bodytext:?*~
-		# cat=plugin.tx_twlucenesearch/search/f; type=int+; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.limits.query
+		# cat=plugin.tx_twlucenesearch/search/h; type=int+; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.limits.query
 		limits.query = 100
-		# cat=plugin.tx_twlucenesearch/search/g; type=int+; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.limits.display
+		# cat=plugin.tx_twlucenesearch/search/i; type=int+; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.limits.display
 		limits.display = 20
-		# cat=plugin.tx_twlucenesearch/search/h; type=int+; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.chars
+		# cat=plugin.tx_twlucenesearch/search/j; type=int+; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.chars
 		chars = 3
-		# cat=plugin.tx_twlucenesearch/search/i; type=int+; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.pid
+		# cat=plugin.tx_twlucenesearch/search/k; type=int+; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.pid
 		pid =
-		# cat=plugin.tx_twlucenesearch/search/j; type=options[GET,POST]; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.method
+		# cat=plugin.tx_twlucenesearch/search/l; type=options[GET,POST]; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.method
 		method = GET
 	}
 }
