@@ -249,7 +249,7 @@ class Document extends \Zend_Search_Lucene_Document
     /**
      * Return the unserialized document reference parameters
      *
-     * @return string                    Document reference parameters
+     * @return array                    Document reference parameters
      */
     public function getReferenceParameters()
     {
@@ -296,6 +296,9 @@ class Document extends \Zend_Search_Lucene_Document
     {
         $referenceParams = $this->getReferenceParameters();
         unset($referenceParams['id']);
+        if (empty($referenceParams['type'])) {
+            unset($referenceParams['type']);
+        }
         return $referenceParams;
     }
 

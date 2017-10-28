@@ -27,6 +27,7 @@ namespace Tollwerk\TwLucenesearch\Service;
  ***************************************************************/
 
 use Tollwerk\TwLucenesearch\Utility\Indexer;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 require_once 'Zend/Search/Lucene.php';
 require_once 'Zend/Search/Lucene/Document.php';
@@ -198,7 +199,7 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
             if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['tw_lucenesearch']['search-rewrite-hooks'])) {
                 $params = array('search' => &$searchTerm, 'pObj' => &$this);
                 foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['tw_lucenesearch']['search-rewrite-hooks'] as $rewriteHook) {
-                    \TYPO3\CMS\Core\Utility\GeneralUtility::callUserFunction($rewriteHook, $params, $this);
+                    GeneralUtility::callUserFunction($rewriteHook, $params, $this);
                 }
             }
 
@@ -543,13 +544,13 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
                     $tokenTerms[] = $token;
                     $isPhrase = ($token->type == \Zend_Search_Lucene_Search_QueryToken::TT_PHRASE);
                     $tokenStr = $isPhrase ? '"'.$token->text.'"' : $token->text;
-                    $tokenStrLength = strlen($tokenStr);
+                    $tokenStrLength = mb_strlen($tokenStr);
 
                     // Apply external rewriters
                     if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['tw_lucenesearch']['term-rewrite-hooks'])) {
                         $params = array('token' => &$token, 'pObj' => &$this);
                         foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['tw_lucenesearch']['term-rewrite-hooks'] as $rewriteHook) {
-                            \TYPO3\CMS\Core\Utility\GeneralUtility::callUserFunction($rewriteHook, $params, $this);
+                            GeneralUtility::callUserFunction($rewriteHook, $params, $this);
                         }
                     }
 
@@ -575,9 +576,8 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
                         $tokenRewrite[] = $sfTokenStr;
                     }
                     $tokenRewrite = '('.implode(' OR ', $tokenRewrite).')';
-                    $searchTerm = substr($searchTerm, 0,
-                            $token->position - $tokenStrLength).$tokenRewrite.substr($searchTerm,
-                            $token->position);
+                    $searchTerm = mb_substr($searchTerm, 0, $token->position - $tokenStrLength)
+                        .$tokenRewrite.mb_substr($searchTerm, $token->position);
                 }
             }
 
