@@ -1,0 +1,43 @@
+<f:be.container
+        pageTitle="Lucenesearch"
+        includeCssFiles="{0: '{f:uri.resource(path: \'Css/module.css\')}'}"
+        includeJsFiles="{0: '{f:uri.resource(path: \'Js/Backend/module.js\')}'}">
+    <div class="module">
+        <div class="module-docheader t3js-module-docheader">
+            <div class="module-docheader-bar module-docheader-bar-navigation t3js-module-docheader-bar t3js-module-docheader-bar-navigation">
+                <div class="module-docheader-bar-column-left">
+                    <f:comment>
+                        <!-- @FIXME TYPO3 8
+                        < f:be.menus.actionMenu>
+                            < f:be.menus.actionMenuItem label="{f:translate(key: 'mod.actions.page')}" controller="Module" action="page" />
+                            < f:be.menus.actionMenuItem label="{f:translate(key: 'mod.actions.other')}" controller="Module" action="other" />
+                            < f:be.menus.actionMenuItem label="{f:translate(key: 'mod.actions.index')}" controller="Module" action="index" />
+                        </ f:be.menus.actionMenu>
+                        -->
+                    </f:comment>
+                </div>
+                <div class="module-docheader-bar-column-right">
+                    <f:be.pagePath />
+                    <f:be.pageInfo />
+                </div>
+            </div>
+            <div class="module-docheader-bar module-docheader-bar-buttons t3js-module-docheader-bar t3js-module-docheader-bar-buttons">
+                <div class="module-docheader-bar-column-left">
+                    <div class="btn-toolbar" role="toolbar" aria-label="">
+                    </div>
+                </div>
+                <div class="module-docheader-bar-column-right">
+                    <div class="btn-toolbar" role="toolbar">
+                        <div class="btn-group">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="module-body t3js-module-body tx_twlucenesearch">
+            <f:flashMessages />
+            <f:render section="Main" />
+        </div>
+    </div>
+</f:be.container>
