@@ -26,6 +26,9 @@ namespace Tollwerk\TwLucenesearch\ViewHelpers\Search;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
+
 /**
  * View helper for highlighting search terms in search results
  *
@@ -46,35 +49,37 @@ namespace Tollwerk\TwLucenesearch\ViewHelpers\Search;
 class HighlightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
 {
     /**
+     * @var bool
+     */
+    protected $escapeOutput = false;
+
+    /**
      * Highlighting document
      *
      * @var \Zend_Search_Lucene_Document_Html
      */
     protected $_doc;
+
     /**
      * Temporary content object
      *
-     * @var    tslib_cObj
+     * @var    ContentObjectRenderer
      */
     protected $contentObject;
-    /**
-     * Backup of the current $GLOBALS['TSFE'] if used in BE mode
-     *
-     * @var    t3lib_fe
-     */
-    protected $tsfeBackup;
+
     /**
      * Extbase configuration
      *
      * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
      */
     protected $configurationManager;
+
     /**
      * Search term cache
      *
      * @var array
      */
-    protected static $_queryTermCache = array();
+    protected static $_queryTermCache = [];
 
     /**
      * Extbase configuration manager dependency injection
@@ -84,7 +89,8 @@ class HighlightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
      */
     public function injectConfigurationManager(
         \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
-    ) {
+    )
+    {
         $this->configurationManager = $configurationManager;
         $this->contentObject = $this->configurationManager->getContentObject();
     }
@@ -93,7 +99,7 @@ class HighlightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
      * Highlighting of terms within a text
      *
      * @param string $text Text
-     * @param string|\Zend_Search_Lucene_Search_Query $search Terms to be highlighted (string or lucene search query)
+     * @param mixed $search Terms to be highlighted (string or lucene search query)
      * @param int $crop Max. number of characters length
      * @param string $append Suffix in case of text being cropped at the end
      * @param string $prepend Prefix in case of text being cropped at the beginning
@@ -108,9 +114,10 @@ class HighlightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
         $append = ' ...',
         $prepend = ' ... ',
         $field = 'bodytext'
-    ) {
+    )
+    {
         $text = trim(strlen(trim($text)) ? $text : $this->renderChildren());
-        $terms = array();
+        $terms = [];
 
         // If there is a reasonable text given
         if (strlen($text)) {
@@ -118,13 +125,11 @@ class HighlightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
             // If a list with search terms have been given ...
             if (is_array($search)) {
                 $terms = $search;
-                usort($terms, array($this, 'sortByLengthDesc'));
-
+                usort($terms, [$this, 'sortByLengthDesc']);
                 // Else: If query hits have been given ...
             } elseif ($search instanceof \Tollwerk\TwLucenesearch\Domain\Model\QueryHits) {
                 $terms = (array)$search->getHighlight($field);
-                usort($terms, array($this, 'sortByLengthDesc'));
-
+                usort($terms, [$this, 'sortByLengthDesc']);
                 // Else: If a lucene search query or a literal search term has been given
             } elseif (($search instanceof \Zend_Search_Lucene_Search_Query) || strlen($search)) {
 
@@ -143,16 +148,16 @@ class HighlightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
 
                         $searchHash = md5("$search");
                         if (!array_key_exists($searchHash, self::$_queryTermCache)) {
-                            self::$_queryTermCache[$searchHash] = array();
+                            self::$_queryTermCache[$searchHash] = [];
                             foreach ($indexerService->getQueryTerms($search) as $termField => $fieldTerms) {
-                                usort($fieldTerms, array($this, 'sortByLengthDesc'));
+                                usort($fieldTerms, [$this, 'sortByLengthDesc']);
                                 self::$_queryTermCache[$searchHash][$termField] = $fieldTerms;
                             }
                         }
 
                         $terms = self::$_queryTermCache[$searchHash];
                         $field = trim($field);
-                        $terms = (strlen($field) && array_key_exists($field, $terms)) ? $terms[$field] : array();
+                        $terms = (strlen($field) && array_key_exists($field, $terms)) ? $terms[$field] : [];
                     }
                 }
             }
@@ -175,7 +180,7 @@ class HighlightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
                 $words = preg_split("%\s+%", $beforeHighlight, 4);
                 if (count($words) > 3) {
                     $beforeHighlight = strrev(implode(' ', array_slice($words, 0, 3)));
-                    $text = $prepend.$beforeHighlight.' '.substr($text, $firstHighlight);
+                    $text = $prepend . $beforeHighlight . ' ' . substr($text, $firstHighlight);
                 }
             }
         }
@@ -187,18 +192,17 @@ class HighlightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
 
         // If the text has to be cropped ...
         if ($crop) {
-
             if (TYPO3_MODE === 'BE') {
-                $this->simulateFrontendEnvironment();
+                \Tollwerk\TwLucenesearch\Utility\FrontendSimulator::simulateFrontendEnvironment(1);
             }
 
             $respectHtml = true;
             $text = $respectHtml ?
-                $this->contentObject->cropHTML($text, $crop.'|'.$append.'|1') :
-                $this->contentObject->crop($text, $crop.'|'.$append.'|1');
+                $this->contentObject->cropHTML($text, $crop . '|' . $append . '|1') :
+                $this->contentObject->crop($text, $crop . '|' . $append . '|1');
 
             if (TYPO3_MODE === 'BE') {
-                $this->resetFrontendEnvironment();
+                \Tollwerk\TwLucenesearch\Utility\FrontendSimulator::resetFrontendEnvironment();
             }
         }
 
@@ -211,11 +215,10 @@ class HighlightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
      * @param array $terms Terms to be highlighted
      * @param string $str Text
      * @param string $crop Max. text length
-     * @param string                                Text with highlighted search terms
+     * @param string
      */
     public function highlight(array $terms, $str, $crop = false)
     {
-
         // Registering the max. text length (if applicable)
         if ($crop === false) {
             $crop = strlen($str);
@@ -223,16 +226,16 @@ class HighlightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
             $crop = min(strlen($str), $crop);
         }
 
+        $emphasized = '';
         // If there are a reasonable text and terms to be highlighted ...
         if (count($terms) && strlen($str)) {
-
             // Removal of redundant text at the end of the text (because it's going to be cropped anyway ...)
             $maxLength = strlen($terms[0]);
             $trailer = substr($str, $crop + $maxLength);
             $str = substr($str, 0, $crop + $maxLength);
 
             // Iterate over all terms and build a highlighting index
-            $emphasizeIndex = array();
+            $emphasizeIndex = [];
             foreach ($terms as $term) {
                 $offset = 0;
                 $length = strlen($term);
@@ -272,7 +275,6 @@ class HighlightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
                         $emphasized .= '<strong>';
                         ++$lastLevel;
                     }
-
                     // Else: Change highlighting level
                 } else {
 
@@ -301,7 +303,7 @@ class HighlightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
             }
 
             // Append remaining text trailer
-            $emphasized .= substr($str, $lastChar + 1).$trailer;
+            $emphasized .= substr($str, $lastChar + 1) . $trailer;
         }
 
         return $emphasized;
@@ -318,6 +320,7 @@ class HighlightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
     {
         $al = strlen($a);
         $bl = strlen($b);
+
         return ($al == $bl) ? 0 : (($al < $bl) ? 1 : -1);
     }
 
@@ -339,8 +342,7 @@ class HighlightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
                 }
             }
         }
+
         return ($pos == strlen($str)) ? false : $pos;
     }
 }
-
-?>
