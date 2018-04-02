@@ -39,9 +39,9 @@ namespace Tollwerk\TwLucenesearch\ViewHelpers\Search;
  * The given bodytext will be returned with highlighted search terms (als implied by the
  * given search query) and cropped to max. 500 characters
  *
- * @package tw_lucenesearch
+ * @package   tw_lucenesearch
  * @copyright Copyright © 2016 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
- * @author Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
+ * @author    Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
  */
 class HighlightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
 {
@@ -80,24 +80,26 @@ class HighlightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
      * Extbase configuration manager dependency injection
      *
      * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager Configuration manager
+     *
      * @return void
      */
     public function injectConfigurationManager(
         \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
     ) {
         $this->configurationManager = $configurationManager;
-        $this->contentObject = $this->configurationManager->getContentObject();
+        $this->contentObject        = $this->configurationManager->getContentObject();
     }
 
     /**
      * Highlighting of terms within a text
      *
-     * @param string $text Text
-     * @param string|\Zend_Search_Lucene_Search_Query $search Terms to be highlighted (string or lucene search query)
-     * @param int $crop Max. number of characters length
-     * @param string $append Suffix in case of text being cropped at the end
+     * @param string $text    Text
+     * @param mixed $search   Terms to be highlighted (string or lucene search query)
+     * @param int $crop       Max. number of characters length
+     * @param string $append  Suffix in case of text being cropped at the end
      * @param string $prepend Prefix in case of text being cropped at the beginning
-     * @param string $field Lucene document field to be used (if the search terms have to be found retroactively)
+     * @param string $field   Lucene document field to be used (if the search terms have to be found retroactively)
+     *
      * @return string                                                Text with highlighting
      * @see http://www.mail-archive.com/fw-general@lists.zend.com/msg09013.html
      */
@@ -109,7 +111,7 @@ class HighlightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
         $prepend = ' ... ',
         $field = 'bodytext'
     ) {
-        $text = trim(strlen(trim($text)) ? $text : $this->renderChildren());
+        $text  = trim(strlen(trim($text)) ? $text : $this->renderChildren());
         $terms = array();
 
         // If there is a reasonable text given
@@ -175,7 +177,7 @@ class HighlightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
                 $words = preg_split("%\s+%", $beforeHighlight, 4);
                 if (count($words) > 3) {
                     $beforeHighlight = strrev(implode(' ', array_slice($words, 0, 3)));
-                    $text = $prepend.$beforeHighlight.' '.substr($text, $firstHighlight);
+                    $text            = $prepend.$beforeHighlight.' '.substr($text, $firstHighlight);
                 }
             }
         }
@@ -193,7 +195,7 @@ class HighlightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
             }
 
             $respectHtml = true;
-            $text = $respectHtml ?
+            $text        = $respectHtml ?
                 $this->contentObject->cropHTML($text, $crop.'|'.$append.'|1') :
                 $this->contentObject->crop($text, $crop.'|'.$append.'|1');
 
@@ -209,7 +211,7 @@ class HighlightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
      * Highlighting
      *
      * @param array $terms Terms to be highlighted
-     * @param string $str Text
+     * @param string $str  Text
      * @param string $crop Max. text length
      * @param string                                Text with highlighted search terms
      */
@@ -228,8 +230,8 @@ class HighlightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
 
             // Removal of redundant text at the end of the text (because it's going to be cropped anyway ...)
             $maxLength = strlen($terms[0]);
-            $trailer = substr($str, $crop + $maxLength);
-            $str = substr($str, 0, $crop + $maxLength);
+            $trailer   = substr($str, $crop + $maxLength);
+            $str       = substr($str, 0, $crop + $maxLength);
 
             // Iterate over all terms and build a highlighting index
             $emphasizeIndex = array();
@@ -252,8 +254,8 @@ class HighlightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
             // Do highlighting
             ksort($emphasizeIndex, SORT_NUMERIC);
             $emphasized = '';
-            $lastLevel = 0;
-            $lastChar = -1;
+            $lastLevel  = 0;
+            $lastChar   = -1;
             foreach ($emphasizeIndex as $char => $level) {
 
                 // If there have been more than one characters between this one and the last match ...
@@ -290,8 +292,8 @@ class HighlightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
                 }
 
                 $emphasized .= $str[$char];
-                $lastChar = $char;
-                $lastLevel = $level;
+                $lastChar   = $char;
+                $lastLevel  = $level;
             }
 
             // Finalize active highlighting (if applicable)
@@ -312,12 +314,14 @@ class HighlightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
      *
      * @param string $a String 1
      * @param string $b String 2
+     *
      * @return int                                    Sorting
      */
     public function sortByLengthDesc($a, $b)
     {
         $al = strlen($a);
         $bl = strlen($b);
+
         return ($al == $bl) ? 0 : (($al < $bl) ? 1 : -1);
     }
 
@@ -325,7 +329,8 @@ class HighlightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
      * Return the position of the first occurence of a term out of a list of terms within a given text
      *
      * @param array $terms Terms
-     * @param string $str Text
+     * @param string $str  Text
+     *
      * @return int                                    First occurence position
      */
     public function firstMatch(array $terms, $str)
@@ -339,6 +344,7 @@ class HighlightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
                 }
             }
         }
+
         return ($pos == strlen($str)) ? false : $pos;
     }
 }
