@@ -1,11 +1,9 @@
 <?php
 
-namespace Tollwerk\TwLucenesearch\ViewHelpers\Arrays;
-
 /***************************************************************
  *  Copyright notice
  *
- *  © 2016 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
+ *  © 2020 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
  *
  *  All rights reserved
  *
@@ -26,6 +24,13 @@ namespace Tollwerk\TwLucenesearch\ViewHelpers\Arrays;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+namespace Tollwerk\TwLucenesearch\ViewHelpers\Arrays;
+
+use Closure;
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
+
 /**
  * Array by index view helper
  *
@@ -40,31 +45,37 @@ namespace Tollwerk\TwLucenesearch\ViewHelpers\Arrays;
  * Output:
  * The value of the array element with the key {index}
  *
- * @package tw_lucenesearch
- * @copyright Copyright © 2016 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
- * @author Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
+ * @package   tw_lucenesearch
+ * @copyright Copyright © 2020 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
+ * @author    Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
  */
-class IndexViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class IndexViewHelper extends AbstractViewHelper
 {
+    use CompileWithRenderStatic;
 
     /**
-     * Return an array element with the given key
+     * Render a resource URL for Fractal, possibly treated with the `path` view helper
      *
-     * @param \array $array Array
-     * @param \string $index Key
-     * @return \mixed                    Array element value
+     * @param array $arguments
+     * @param Closure $renderChildrenClosure
+     * @param RenderingContextInterface $renderingContext
+     *
+     * @return string
      */
-    public function render(array $array, $index = '')
-    {
+    public static function renderStatic(
+        array $arguments,
+        Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    ) {
         $value = null;
-        if (strlen($index)) {
-            $indexArr = explode('[', $index);
+        if (strlen($arguments['index'])) {
+            $indexArr = explode('[', $arguments['index']);
             foreach ($indexArr as $key => $val) {
                 $indexArr[$key] = str_replace(array('[', ']'), '', $val);
             }
 
-            if (array_key_exists($indexArr[0], $array)) {
-                $value = $array[$indexArr[0]];
+            if (array_key_exists($indexArr[0], $arguments['array'])) {
+                $value = $arguments['array'][$indexArr[0]];
 
                 for ($i = 1; $i < count($indexArr); $i++) {
                     if (array_key_exists($indexArr[$i], $value)) {
@@ -77,5 +88,17 @@ class IndexViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelpe
         }
 
         return $value;
+    }
+
+    /**
+     * Initialize arguments
+     *
+     * @api
+     */
+    public function initializeArguments(): void
+    {
+        parent::initializeArguments();
+        $this->registerArgument('array', 'array', 'Array', true);
+        $this->registerArgument('index', 'mixed', 'Index', true);
     }
 }

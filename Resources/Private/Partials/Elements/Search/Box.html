@@ -1,0 +1,23 @@
+<f:comment><!--
+
+    Render the search box
+
+    @param int page                 Searchg result page
+    @param string searchterm        Current search term
+
+--></f:comment>
+<html xmlns:f="https://xsd.helhum.io/ns/typo3/cms-fluid/master/ViewHelpers"
+      xmlns:base="http://typo3.org/ns/Tollwerk/TwBase/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+    <!--TYPO3SEARCH_end-->
+    <f:form pageUid="{page}" action="results" controller="Lucene" pluginName="Lucene" extensionName="TwLucenesearch"
+            method="{settings.formMethod}" additionalAttributes="{autocomplete: 'off'}">
+        <f:form.textfield class="LuceneSearch LuceneSearch--searchterm" type="search"
+                          name="searchterm" value="{searchterm}"
+                          placeholder="{f:translate(key: 'LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang.xlf:search.box.default')}"/>
+        <f:form.button  name="search"                        class="LuceneSearch LuceneSearch--search" type="submit">
+            <f:translate key="LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang.xlf:search.box.now"/>
+        </f:form.button>
+    </f:form>
+    <!--TYPO3SEARCH_begin-->
+</html>

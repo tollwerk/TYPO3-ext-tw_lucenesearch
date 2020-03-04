@@ -1,11 +1,9 @@
 <?php
 
-namespace Tollwerk\TwLucenesearch\Controller;
-
 /***************************************************************
  *  Copyright notice
  *
- *  © 2016 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
+ *  © 2020 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
  *
  *  All rights reserved
  *
@@ -26,39 +24,53 @@ namespace Tollwerk\TwLucenesearch\Controller;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+namespace Tollwerk\TwLucenesearch\Controller;
+
+use Exception;
+use Tollwerk\TwLucenesearch\Domain\Model\Document;
+use Tollwerk\TwLucenesearch\Service\Lucene;
+use Tollwerk\TwLucenesearch\Utility\FrontendSimulator;
+use Tollwerk\TwLucenesearch\Utility\Indexer;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+
 /**
  * Lucene backend module controller
  *
- * @package tw_lucenesearch
- * @copyright Copyright © 2016 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
- * @author Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
+ * @package   tw_lucenesearch
+ * @copyright Copyright © 2020 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
+ * @author    Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
  */
-class ModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+class ModuleController extends ActionController
 {
     /**
      * Index service instance
      *
-     * @var \Tollwerk\TwLucenesearch\Service\Lucene
+     * @var Lucene
      */
-    protected $_indexService = null;
+    protected $indexService = null;
     /**
      * Index exception
      *
-     * @var \Exception
+     * @var Exception
      */
-    protected $_indexException = null;
+    protected $indexException = null;
     /**
      * Current page ID
      *
-     * @var \int
+     * @var int
      */
-    protected $_pageUid = 0;
+    protected $pageUid = 0;
     /**
      * Page specific index configuration
      *
-     * @var \array
+     * @var array
      */
-    protected $_pageConfig = null;
+    protected $pageConfig = null;
 
     /**
      * General initialization
@@ -67,84 +79,83 @@ class ModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      */
     public function initializeAction()
     {
-
         // Instanciating the lucene index service
-        /* @var $indexerService \Tollwerk\TwLucenesearch\Service\Lucene */
+        /* @var $indexerService Lucene */
         try {
-            $this->_indexService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstanceService('index', 'lucene');
+            $this->indexService = GeneralUtility::makeInstanceService('index', 'lucene');
 
             // Else: if no index exists ...
-        } catch (\Exception $e) {
-            $this->_indexException = $e;
+        } catch (Exception $e) {
+            $this->indexException = $e;
         }
 
-        $this->_pageUid = intval(\TYPO3\CMS\Core\Utility\GeneralUtility::_GP('id'));
-        $config = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+        $this->pageUid = intval(GeneralUtility::_GP('id'));
+        $config        = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 
-        /** @var \Tollwerk\TwLucenesearch\Utility\Indexer $indexer */
-        $indexer = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tollwerk\\TwLucenesearch\\Utility\\Indexer');
-        $this->_pageConfig = $indexer::indexConfigTS($config['config.']);
+        /** @var Indexer $indexer */
+        $indexer          = GeneralUtility::makeInstance('Tollwerk\\TwLucenesearch\\Utility\\Indexer');
+        $this->pageConfig = $indexer::indexConfigTS($config['config.']);
     }
 
     /**
      * Manage the Lucene Index in general
      *
-     * @param \string $clear Clear the index
-     * @return \void
+     * @param string $clear Clear the index
+     *
+     * @return void
      * @todo Respect the TypoScript configuration for the current index?
      */
     public function indexAction($clear = null)
     {
-
         // If the index service could be instanciated
-        if (is_object($this->_indexService)) {
+        if (is_object($this->indexService)) {
 
             // If the index should be cleared
             if (($clear !== null) && strlen($clear)) {
 
                 // If the index can be successfully cleared
-                if ($this->_indexService->clear(true)) {
-                    $message = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessage',
-                        \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mod.index.clear.success',
+                if ($this->indexService->clear(true)) {
+                    $message = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessage',
+                        LocalizationUtility::translate('mod.index.clear.success',
                             'tw_lucenesearch'),
                         '', // the header is optional
-                        \TYPO3\CMS\Core\Messaging\FlashMessage::OK
+                        FlashMessage::OK
                     );
 
-                    $this->_indexService->commit();
+                    $this->indexService->commit();
 
                     // Else: Error
                 } else {
-                    $message = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessage',
-                        \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mod.index.clear.error',
+                    $message = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessage',
+                        LocalizationUtility::translate('mod.index.clear.error',
                             'tw_lucenesearch'),
                         '',
-                        \TYPO3\CMS\Core\Messaging\FlashMessage::ERROR
+                        FlashMessage::ERROR
                     );
                 }
 
-                $flashMessageService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\CMS\Core\Messaging\FlashMessageService');
+                $flashMessageService = GeneralUtility::makeInstance('TYPO3\CMS\Core\Messaging\FlashMessageService');
                 $flashMessageService->getMessageQueueByIdentifier('core.template.flashMessages')->enqueue($message);
             }
 
-            $this->view->assign('info', $this->_indexService->indexInfo());
+            $this->view->assign('info', $this->indexService->indexInfo());
 
             // Else: Error
         } else {
             $this->view->assign('info', null);
 
-            $message = ($this->_indexException instanceof \Exception) ?
-                \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessage',
-                    $this->_indexException->getMessage(),
-                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mod.index.error', 'tw_lucenesearch'),
-                    \TYPO3\CMS\Core\Messaging\FlashMessage::ERROR
-                ) : \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessage',
-                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mod.index.error.unknown',
+            $message             = ($this->indexException instanceof Exception) ?
+                GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessage',
+                    $this->indexException->getMessage(),
+                    LocalizationUtility::translate('mod.index.error', 'tw_lucenesearch'),
+                    FlashMessage::ERROR
+                ) : GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessage',
+                    LocalizationUtility::translate('mod.index.error.unknown',
                         'tw_lucenesearch'),
                     '',
-                    \TYPO3\CMS\Core\Messaging\FlashMessage::ERROR
+                    FlashMessage::ERROR
                 );
-            $flashMessageService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\CMS\Core\Messaging\FlashMessageService');
+            $flashMessageService = GeneralUtility::makeInstance('TYPO3\CMS\Core\Messaging\FlashMessageService');
             $flashMessageService->getMessageQueueByIdentifier('core.template.flashMessages')->enqueue($message);
         }
     }
@@ -152,10 +163,11 @@ class ModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     /**
      * Manage the index entries of a particular page
      *
-     * @param \array $documents Document references
-     * @param \string $delete Delete the given documents from the index
-     * @param \string $reindex Re-index the given documents
-     * @return \void
+     * @param array $documents Document references
+     * @param string $delete   Delete the given documents from the index
+     * @param string $reindex  Re-index the given documents
+     *
+     * @return void
      */
     public function pageAction(array $documents = array(), $delete = false, $reindex = false)
     {
@@ -164,24 +176,24 @@ class ModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 
         // Determine the index reference components
         $references = array();
-        foreach ($this->_pageConfig['reference'] as $key => $refConfig) {
+        foreach ($this->pageConfig['reference'] as $key => $refConfig) {
             $refLabel = $key;
             while (!array_key_exists('default', $refConfig)) {
-                $refKey = key($refConfig);
-                $refLabel .= '['.$refKey.']';
+                $refKey    = key($refConfig);
+                $refLabel  .= '['.$refKey.']';
                 $refConfig =& $refConfig[$refKey];
             }
             $references[$key] = $refLabel;
         }
 
         // Determine the TSConfig
-        $default = array(
+        $default      = array(
             'language' => array(
-                'flag' => '',
+                'flag'  => '',
                 'label' => 'Default language'
             )
         );
-        $pageTSConfig = \TYPO3\CMS\Backend\Utility\BackendUtility::getPagesTSconfig($this->_pageUid);
+        $pageTSConfig = BackendUtility::getPagesTSconfig($this->pageUid);
         if (!empty($pageTSConfig['mod.']) && !empty($pageTSConfig['mod.']['SHARED.']) && is_array($pageTSConfig['mod.']['SHARED.'])) {
             if (array_key_exists('defaultLanguageFlag', $pageTSConfig['mod.']['SHARED.'])) {
                 $default['language']['flag'] = $pageTSConfig['mod.']['SHARED.']['defaultLanguageFlag'];
@@ -192,44 +204,88 @@ class ModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         }
 
         // Find all index documents
-        $documents = $this->_indexService->getByTypeId(\Tollwerk\TwLucenesearch\Utility\Indexer::PAGE, $this->_pageUid);
+        $documents = $this->indexService->getByTypeId(Indexer::PAGE, $this->pageUid);
 
         $this->view->assign('documents', $documents);
         $this->view->assign('default', $default);
         $this->view->assign('references', $references);
-        $this->view->assign('config', $this->_pageConfig);
-        $this->view->assign('page', $this->_pageUid);
+        $this->view->assign('config', $this->pageConfig);
+        $this->view->assign('page', $this->pageUid);
     }
 
     /**
-     * Manage the other index entries
+     * Process document updates
      *
-     * @param \array $documents Document references
-     * @param \string $delete Delete the given documents from the index
-     * @return \void
+     * @param array $documents Document references
+     * @param string $delete   Delete the given documents from the index
+     * @param string $reindex  Re-index the given documents
+     *
+     * @return void
      */
-    public function otherAction(array $documents = array(), $delete = false)
+    protected function processUpdates(array $documents = array(), $delete = false, $reindex = false)
     {
-        // Process document updates
-        $this->processUpdates($documents, $delete);
+        // If document references have been submitted
+        if (count($documents)) {
+            $commit  = 0;
+            $delete  = $delete !== false;
+            $reindex = !$delete && ($reindex !== false);
 
-        $documents = array();
 
-        // Run through all registered non-page document types
-        foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['tw_lucenesearch']['nonpage-document-types'] as $nonPageDocumentType) {
-            $documents[$nonPageDocumentType] = $this->_indexService->getByTypeId($nonPageDocumentType);
+            // If documents should be deleted
+            if ($delete || $reindex) {
+                foreach ($documents as $uid => $confirm) {
+                    if (intval($confirm)) {
+                        $hit      = null;
+                        $document = $this->indexService->get($uid, $hit);
+                        if ($document instanceof Document) {
+                            if ($delete) {
+                                $this->indexService->delete($hit);
+                                ++$commit;
+                            } else {
+                                $commit += $this->_reindex($document) * 1;
+                            }
+                        }
+                    }
+                }
+
+                // Success message
+                if ($commit) {
+                    $message = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessage',
+                        sprintf(LocalizationUtility::translate('mod.page.documents.'.($delete ? 'delete' : 'reindex').'.success',
+                            'tw_lucenesearch'), count($documents)),
+                        '', // the header is optional
+                        FlashMessage::OK
+                    );
+
+                    // Else: Info message
+                } else {
+                    $message = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessage',
+                        LocalizationUtility::translate('mod.page.documents.'.($delete ? 'delete' : 'reindex').'.error',
+                            'tw_lucenesearch'),
+                        '', // the header is optional
+                        FlashMessage::WARNING
+                    );
+                }
+
+                $flashMessageService = GeneralUtility::makeInstance('TYPO3\CMS\Core\Messaging\FlashMessageService');
+                $flashMessageService->getMessageQueueByIdentifier('core.template.flashMessages')->enqueue($message);
+            }
+
+            // Commit changes
+            if ($commit) {
+                $this->indexService->commit();
+            }
         }
-
-        $this->view->assign('documents', $documents);
     }
 
     /**
      * Reindex an index document
      *
-     * @param \Tollwerk\TwLucenesearch\Domain\Model\Document $document Document
-     * @return \boolean                                                        Success
+     * @param Document $document Document
+     *
+     * @return boolean                                                        Success
      */
-    protected function _reindex(\Tollwerk\TwLucenesearch\Domain\Model\Document $document)
+    protected function _reindex(Document $document)
     {
 
         // Prepare the reference parameters
@@ -249,7 +305,7 @@ class ModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         $reference['index_force_reindex'] = 1;
 
         // Simulate a frontend environment
-        \Tollwerk\TwLucenesearch\Utility\FrontendSimulator::simulateFrontendEnvironment($pageUid);
+        FrontendSimulator::simulateFrontendEnvironment($pageUid);
 
         // Create the frontend URL
         $uri = $this->uriBuilder
@@ -269,7 +325,7 @@ class ModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         $success = !!strlen($this->_getUrl($uri));
 
         // Reset the frontend environment
-        \Tollwerk\TwLucenesearch\Utility\FrontendSimulator::resetFrontendEnvironment();
+        FrontendSimulator::resetFrontendEnvironment();
 
         return $success;
     }
@@ -277,8 +333,9 @@ class ModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     /**
      * Request an URL via GET (HTTP 1.1)
      *
-     * @param \string $url Remote URL
-     * @return \string                    Response content
+     * @param string $url Remote URL
+     *
+     * @return string                    Response content
      */
     protected function _getUrl($url)
     {
@@ -288,99 +345,59 @@ class ModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
             $curl = curl_init($url);
             curl_setopt_array($curl, array(
                 CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_USERAGENT => 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_3; en-US) AppleWebKit/534.3 (KHTML, like Gecko) Chrome/6.0.466.4 Safari/534.3',
-                CURLOPT_AUTOREFERER => true,
+                CURLOPT_ENCODING       => '',
+                CURLOPT_USERAGENT      => 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_3; en-US) AppleWebKit/534.3 (KHTML, like Gecko) Chrome/6.0.466.4 Safari/534.3',
+                CURLOPT_AUTOREFERER    => true,
                 CURLOPT_CONNECTTIMEOUT => 120,
-                CURLOPT_TIMEOUT => 120,
-                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT        => 120,
+                CURLOPT_MAXREDIRS      => 10,
                 CURLOPT_SSL_VERIFYPEER => false,
                 CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
             ));
             $response = curl_exec($curl);
             curl_close($curl);
 
             // Else: Try via stream wrappers
         } else {
-            $opts = array(
+            $opts     = array(
                 'http' => array(
-                    'method' => 'GET',
+                    'method'           => 'GET',
                     'protocol_version' => 1.1,
-                    'user_agent' => 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_3; en-US) AppleWebKit/534.3 (KHTML, like Gecko) Chrome/6.0.466.4 Safari/534.3',
-                    'max_redirects' => 10,
-                    'timeout' => 120,
-                    'header' => "Accept-language: en\r\n",
+                    'user_agent'       => 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_3; en-US) AppleWebKit/534.3 (KHTML, like Gecko) Chrome/6.0.466.4 Safari/534.3',
+                    'max_redirects'    => 10,
+                    'timeout'          => 120,
+                    'header'           => "Accept-language: en\r\n",
                 )
             );
-            $context = stream_context_create($opts);
+            $context  = stream_context_create($opts);
             $response = @file_get_contents($url, false, $context);
         }
+
         return $response;
     }
 
     /**
-     * Process document updates
+     * Manage the other index entries
      *
-     * @param \array $documents Document references
-     * @param \string $delete Delete the given documents from the index
-     * @param \string $reindex Re-index the given documents
-     * @return \void
+     * @param array $documents Document references
+     * @param string $delete   Delete the given documents from the index
+     *
+     * @return void
      */
-    protected function processUpdates(array $documents = array(), $delete = false, $reindex = false)
+    public function otherAction(array $documents = array(), $delete = false)
     {
-        // If document references have been submitted
-        if (count($documents)) {
-            $commit = 0;
-            $delete = $delete !== false;
-            $reindex = !$delete && ($reindex !== false);
+        // Process document updates
+        $this->processUpdates($documents, $delete);
 
+        $documents = array();
 
-            // If documents should be deleted
-            if ($delete || $reindex) {
-                foreach ($documents as $uid => $confirm) {
-                    if (intval($confirm)) {
-                        $hit = null;
-                        $document = $this->_indexService->get($uid, $hit);
-                        if ($document instanceof \Tollwerk\TwLucenesearch\Domain\Model\Document) {
-                            if ($delete) {
-                                $this->_indexService->delete($hit);
-                                ++$commit;
-                            } else {
-                                $commit += $this->_reindex($document) * 1;
-                            }
-                        }
-                    }
-                }
-
-                // Success message
-                if ($commit) {
-                    $message = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessage',
-                        sprintf(\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mod.page.documents.'.($delete ? 'delete' : 'reindex').'.success',
-                            'tw_lucenesearch'), count($documents)),
-                        '', // the header is optional
-                        \TYPO3\CMS\Core\Messaging\FlashMessage::OK
-                    );
-
-                    // Else: Info message
-                } else {
-                    $message = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessage',
-                        \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mod.page.documents.'.($delete ? 'delete' : 'reindex').'.error',
-                            'tw_lucenesearch'),
-                        '', // the header is optional
-                        \TYPO3\CMS\Core\Messaging\FlashMessage::WARNING
-                    );
-                }
-
-                $flashMessageService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\CMS\Core\Messaging\FlashMessageService');
-                $flashMessageService->getMessageQueueByIdentifier('core.template.flashMessages')->enqueue($message);
-            }
-
-            // Commit changes
-            if ($commit) {
-                $this->_indexService->commit();
-            }
+        // Run through all registered non-page document types
+        foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['tw_lucenesearch']['nonpage-document-types'] as $nonPageDocumentType) {
+            $documents[$nonPageDocumentType] = $this->indexService->getByTypeId($nonPageDocumentType);
         }
+
+        $this->view->assign('documents', $documents);
     }
 }
 

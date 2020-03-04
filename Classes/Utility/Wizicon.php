@@ -5,7 +5,7 @@ namespace Tollwerk\TwLucenesearch;
 /***************************************************************
  *  Copyright notice
  *
- *  © 2016 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
+ *  © 2020 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
  *
  *  All rights reserved
  *
@@ -30,7 +30,7 @@ namespace Tollwerk\TwLucenesearch;
  * New content element wizard icon and description
  *
  * @package tw_lucenesearch
- * @copyright Copyright © 2016 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
+ * @copyright Copyright © 2020 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
  * @author Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
  */
 class Wizicon

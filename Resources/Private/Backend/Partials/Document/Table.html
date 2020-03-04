@@ -90,6 +90,7 @@
                                 </tw:link.preview>
                             </f:else>
                         </f:if>
+                        <f:comment><!--
                         <button type="submit" name="tx_twlucenesearch_web_twlucenesearchlucene[delete]"
                                 onclick="return tw_lucenesearch_deleteDocument('document-{document.uid}')"
                                 title="{f:translate(key: 'mod.page.document.delete')}">
@@ -101,7 +102,7 @@
                                     title="{f:translate(key: 'mod.page.document.reindex')}">
                                 <core:icon identifier="actions-system-refresh"/>
                             </button>
-                        </f:if>
+                        </f:if>--></f:comment>
                     </td>
                 </tr>
             </f:for>
@@ -121,3 +122,4 @@
                disabled="disabled"/>
     </p>
 </form>
+

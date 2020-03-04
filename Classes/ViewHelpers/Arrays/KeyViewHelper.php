@@ -1,11 +1,9 @@
 <?php
 
-namespace Tollwerk\TwLucenesearch\ViewHelpers\Arrays;
-
 /***************************************************************
  *  Copyright notice
  *
- *  © 2016 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
+ *  © 2020 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
  *
  *  All rights reserved
  *
@@ -26,6 +24,13 @@ namespace Tollwerk\TwLucenesearch\ViewHelpers\Arrays;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+namespace Tollwerk\TwLucenesearch\ViewHelpers\Arrays;
+
+use Closure;
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
+
 /**
  * Array key view helper
  *
@@ -40,25 +45,42 @@ namespace Tollwerk\TwLucenesearch\ViewHelpers\Arrays;
  * Output:
  * The key of the array element at position {position}
  *
- * @package tw_lucenesearch
- * @copyright Copyright © 2016 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
- * @author Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
+ * @package   tw_lucenesearch
+ * @copyright Copyright © 2020 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
+ * @author    Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
  */
-class KeyViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class KeyViewHelper extends AbstractViewHelper
 {
+    use CompileWithRenderStatic;
+
+    /**
+     * Initialize arguments
+     *
+     * @api
+     */
+    public function initializeArguments(): void
+    {
+        parent::initializeArguments();
+        $this->registerArgument('array', 'array', 'Array', true);
+        $this->registerArgument('position', 'int', 'Position', true);
+    }
 
     /**
      * Return an array key at a certain position within the array
      *
-     * @param array $array Array
-     * @param int $position Position
-     * @return mixed                    Array key
+     * @param array $arguments
+     * @param Closure $renderChildrenClosure
+     * @param RenderingContextInterface $renderingContext
+     *
+     * @return mixed|null
      */
-    public function render(array $array, $position = 0)
-    {
-        $keys = array_keys($array);
-        return array_key_exists(intval($position), $keys) ? $keys[intval($position)] : null;
+    public static function renderStatic(
+        array $arguments,
+        Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    ) {
+        $keys = array_keys($arguments['array']);
+
+        return array_key_exists(intval($arguments['position']), $keys) ? $keys[intval($arguments['position'])] : null;
     }
 }
-
-?>

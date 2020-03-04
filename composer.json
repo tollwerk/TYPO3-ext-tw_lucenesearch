@@ -5,7 +5,7 @@
   "homepage": "https://github.com/tollwerk/TYPO3-ext-tw_lucenesearch",
   "license": "GPL-2.0+",
   "require": {
-    "typo3/cms": ">=7.5"
+    "typo3/cms-core": "^10.0"
   },
   "autoload": {
     "psr-4": {
@@ -16,8 +16,8 @@
     ]
   },
   "replace": {
-    "tw_lucenesearch": "self.version",
-    "typo3-ter/tw_lucenesearch": "self.version"
+    "tw_lucenesearch": "tollwerk/tw-lucenesearch",
+    "typo3-ter/tw_lucenesearch": "tollwerk/tw-lucenesearch"
   },
   "authors": [
     {

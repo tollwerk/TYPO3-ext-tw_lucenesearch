@@ -1,0 +1,165 @@
+<f:comment><!--
+
+    Render the search box
+
+    @param array settings           Settings
+    @param bool error               Error
+    @param string searchterm        Search term
+    @param int page                 Current / search results page
+    @param array indexInfo          Index statistics
+        @param int count            Number of documents in index
+        @param int buffer           Active buffering
+        @param int factor           Indexing factor
+        @param int memory           Memory
+        @param int string           Index size
+    @param QueryHits hits           Search result hits
+    @param Zend_Search_Lucene_Search_Query_Boolean query        Search query
+    @param int notfound             ?
+    @param string baseUrl           Base URL
+
+--></f:comment>
+<html xmlns:f="https://xsd.helhum.io/ns/typo3/cms-fluid/master/ViewHelpers"
+      xmlns:base="http://typo3.org/ns/Tollwerk/TwBase/ViewHelpers"
+      xmlns:lucene="http://typo3.org/ns/Tollwerk/TwLucenesearch/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+    <!--TYPO3SEARCH_end-->
+    <f:if condition="{error}">
+        <f:then>
+            <f:render section="SearchError" arguments="{searchterm: searchterm}"/>
+        </f:then>
+        <f:else>
+            <f:render section="SearchResults" arguments="{_all}"/>
+        </f:else>
+    </f:if>
+    <!--TYPO3SEARCH_begin-->
+
+    <f:comment><!--
+
+        Render an error message
+
+        @param string searchterm            Search term
+
+    --></f:comment>
+    <f:section name="SearchError">
+        <section class="SearchError">
+            <f:variable name="heading"
+                        value="{f:translate(key: 'search.searchfor', arguments: '{0: \'{f:format.htmlspecialchars(value: searchterm)}\'}')}"/>
+            <base:heading class="SearchError__heading" content="{heading}">
+                <p class="SearchError__message">
+                    <f:translate key="search.results.error"/>
+                </p>
+                <f:render partial="Elements/Search/Box" arguments="{searchterm: searchterm, page: page}"/>
+            </base:heading>
+        </section>
+    </f:section>
+
+    <f:comment><!--
+
+        Render the search results
+
+        @param array settings           Settings
+        @param bool error               Error
+        @param string searchterm        Search term
+        @param int page                 Current / search results page
+        @param array indexInfo          Index statistics
+            @param int count            Number of documents in index
+            @param int buffer           Active buffering
+            @param int factor           Indexing factor
+            @param int memory           Memory
+            @param int string           Index size
+        @param QueryHits hits           Search result hits
+        @param Zend_Search_Lucene_Search_Query_Boolean query        Search query
+        @param int notfound             ?
+        @param string baseUrl           Base URL
+
+    --></f:comment>
+    <f:section name="SearchResults">
+        <section class="SearchResults">
+            <f:variable name="heading"
+                        value="{f:translate(key: 'search.searchfor', arguments: '{0: \'{f:format.htmlspecialchars(value: searchterm)}\'}')}"/>
+            <base:heading class="SearchError__heading" content="{heading}">
+                <f:if condition="{hits}">
+                    <f:then>
+                        <f:widget.paginate objects="{hits}" as="paginatedHits" configuration="{
+                                itemsPerPage: settings.search.limits.display,
+                                insertAbove: 0,
+                                insertBelow: 1,
+                                addQueryStringMethod: 'GET',
+                                argumentsToBeExcludedFromQueryString: '{
+                                    0: \'tx_twlucenesearch_lucene[__referrer][@extension]\'
+                                }'
+                            }">
+                            <p class="SearchResults__message">
+                                <f:translate key="search.results.segment"
+                                             arguments="{0: hits.start, 1: hits.end, 2: hits.count}"/>
+                            </p>
+                            <ol class="SearchResults__list"
+                                start="{lucene:arrays.key(array: paginatedHits, position: 0)}">
+                                <f:for each="{paginatedHits}" as="hit">
+                                    <li class="SearchResult SearchResults__list-item">
+                                        <f:variable name="resultHeading">
+                                            <f:if condition="{hit.document.referenceParameters.url}">
+                                                <f:then>
+                                                    <f:link.external uri="{hit.document.referenceParameters.url}"
+                                                                     defaultScheme=""
+                                                                     class="tx-twlucenesearch-result-url"
+                                                                     target="_blank">
+                                                        {hit.document.title}
+                                                    </f:link.external>
+                                                </f:then>
+                                                <f:else>
+                                                    <f:link.page pageUid="{hit.document.pageUid}"
+                                                                 additionalParams="{hit.document.pageAdditionalParams}"
+                                                                 noCacheHash="1"
+                                                                 class="tx-twlucenesearch-result-url">
+                                                        {hit.document.title}
+                                                    </f:link.page>
+                                                </f:else>
+                                            </f:if>
+                                        </f:variable>
+                                        <base:heading content="{resultHeading -> v:format.trim()}" class="SearchResult__heading">
+                                            <p class="SearchResult__abstract">
+                                                <lucene:search.highlight text="{hit.document.bodytext}" search="{query}"
+                                                                         crop="500"/>
+                                            </p>
+                                            <p class="SearchResult__footer">
+                                                <span><f:translate key="search.result.url"/></span>:
+                                                <f:if condition="{hit.document.referenceParameters.url}">
+                                                    <f:then>
+                                                        <f:link.external uri="{hit.document.referenceParameters.url}"
+                                                                         defaultScheme=""
+                                                                         class="tx-twlucenesearch-result-url"
+                                                                         target="_blank">
+                                                            <f:uri.external uri="{hit.document.referenceParameters.url}"
+                                                                            defaultScheme=""/>
+                                                        </f:link.external>
+                                                    </f:then>
+                                                    <f:else>
+                                                        <f:link.page pageUid="{hit.document.pageUid}"
+                                                                     additionalParams="{hit.document.pageAdditionalParams}"
+                                                                     noCacheHash="1"
+                                                                     class="tx-twlucenesearch-result-url">
+                                                            <f:uri.page pageUid="{hit.document.pageUid}"
+                                                                        additionalParams="{hit.document.pageAdditionalParams}"
+                                                                        noCacheHash="1"/>
+                                                        </f:link.page>
+                                                    </f:else>
+                                                </f:if>
+                                            </p>
+                                        </base:heading>
+                                    </li>
+                                </f:for>
+                            </ol>
+                        </f:widget.paginate>
+                    </f:then>
+                    <f:else>
+                        <p class="SearchResults__message SearchResults__message--empty">
+                            <f:translate key="search.results.none"/>
+                        </p>
+                        <f:render partial="Elements/Search/Box" arguments="{searchterm: searchterm, page: page}"/>
+                    </f:else>
+                </f:if>
+            </base:heading>
+        </section>
+    </f:section>
+</html>

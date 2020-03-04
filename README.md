@@ -42,6 +42,6 @@ Release history
 Legal
 -----
 
-Copyright © 2016 Joschi Kuphal joschi@kuphal.net / @jkphl
+Copyright © 2020 Joschi Kuphal joschi@kuphal.net / @jkphl
 
 Licensed under the terms of the [GPL v2](LICENSE.txt) license.

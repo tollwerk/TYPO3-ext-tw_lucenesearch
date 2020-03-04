@@ -2,10 +2,18 @@
 
 namespace Tollwerk\TwLucenesearch\Controller;
 
+use Tollwerk\TwLucenesearch\Domain\Model\QueryHits;
+use Tollwerk\TwLucenesearch\Service\Lucene;
+use Tollwerk\TwLucenesearch\Utility\Indexer;
+use TYPO3\CMS\Core\Service\AbstractService;
+use TYPO3\CMS\Core\Utility\ArrayUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+
 /***************************************************************
  *  Copyright notice
  *
- *  © 2016 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
+ *  © 2020 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
  *
  *  All rights reserved
  *
@@ -29,114 +37,111 @@ namespace Tollwerk\TwLucenesearch\Controller;
 /**
  * Lucene search controller
  *
- * @package tw_lucenesearch
- * @copyright Copyright © 2016 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
- * @author Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
- * @author Christian Eßl <essl@incert.at>
+ * @package   tw_lucenesearch
+ * @copyright Copyright © 2020 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
+ * @author    Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
+ * @author    Christian Eßl <essl@incert.at>
  */
-class LuceneController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+class LuceneController extends ActionController
 {
     /**
      * Search engine signatures
      *
-     * @var \array
+     * @var array
      */
     protected static $_searchEngineSignatures = array(
-        'daum' => 'q',
-        'eniro' => 'search_word',
-        'naver' => 'query',
-        'pchome' => 'q',
-        'images.google' => 'q',
-        'google' => 'q',
-        'yahoo' => array('p', 'q'),
-        'msn' => 'q',
-        'bing' => 'q',
-        'aol' => array('query', 'q'),
-        'lycos' => array('q', 'query'),
-        'ask' => 'q',
-        'netscape' => 'query',
-        'cnn' => 'query',
-        'about' => 'terms',
-        'mamma' => 'q',
-        'voila' => 'rdata',
-        'virgilio' => 'qs',
-        'live' => 'q',
-        'baidu' => 'wd',
-        'alice' => 'qs',
-        'yandex' => 'text',
-        'najdi' => 'q',
-        'seznam' => 'q',
-        'rakuten' => 'qt',
-        'biglobe' => 'q',
-        'goo.ne' => 'MT',
-        'wp' => 'szukaj',
-        'onet' => 'qt',
-        'yam' => 'k',
-        'kvasir' => 'q',
-        'ozu' => 'q',
-        'terra' => 'query',
-        'rambler' => 'query',
-        'conduit' => 'q',
-        'babylon' => 'q',
+        'daum'           => 'q',
+        'eniro'          => 'search_word',
+        'naver'          => 'query',
+        'pchome'         => 'q',
+        'images.google'  => 'q',
+        'google'         => 'q',
+        'yahoo'          => array('p', 'q'),
+        'msn'            => 'q',
+        'bing'           => 'q',
+        'aol'            => array('query', 'q'),
+        'lycos'          => array('q', 'query'),
+        'ask'            => 'q',
+        'netscape'       => 'query',
+        'cnn'            => 'query',
+        'about'          => 'terms',
+        'mamma'          => 'q',
+        'voila'          => 'rdata',
+        'virgilio'       => 'qs',
+        'live'           => 'q',
+        'baidu'          => 'wd',
+        'alice'          => 'qs',
+        'yandex'         => 'text',
+        'najdi'          => 'q',
+        'seznam'         => 'q',
+        'rakuten'        => 'qt',
+        'biglobe'        => 'q',
+        'goo.ne'         => 'MT',
+        'wp'             => 'szukaj',
+        'onet'           => 'qt',
+        'yam'            => 'k',
+        'kvasir'         => 'q',
+        'ozu'            => 'q',
+        'terra'          => 'query',
+        'rambler'        => 'query',
+        'conduit'        => 'q',
+        'babylon'        => 'q',
         'search-results' => 'q',
-        'avg' => 'q',
-        'comcast' => 'q',
-        'incredimail' => 'q',
-        'startsiden' => 'q'
+        'avg'            => 'q',
+        'comcast'        => 'q',
+        'incredimail'    => 'q',
+        'startsiden'     => 'q'
     );
 
     /**
      * Rendering a search box
      *
-     * @param \string $searchterm Search terms
-     * @param \int $page Search result page ID
-     * @return \void
+     * @param string $searchterm Search terms
+     *
+     * @return void
      */
-    public function searchAction($searchterm = '')
+    public function searchAction(string $searchterm = '')
     {
         $this->view->assign('searchterm', trim($searchterm));
-        $this->view->assign('page',
-            intval($this->settings['defaultResultsPage']) ?
-                intval($this->settings['defaultResultsPage']) :
-                $GLOBALS['TSFE']->id
-        );
+        $this->view->assign('page', intval($this->settings['defaultResultsPage'] ?: $GLOBALS['TSFE']->id));
     }
 
     /**
      * Search & display of search results
      *
-     * @param \string $searchterm Search term(s)
-     * @param \int $pointer Result pointer
-     * @param \boolean $notfound Indicator for 404 based search
-     * @return \void
+     * @param string $searchterm Search term(s)
+     * @param int $pointer       Result pointer
+     * @param boolean $notfound  Indicator for 404 based search
+     *
+     * @return void
      */
-    public function resultsAction($searchterm = '', $pointer = 0, $notfound = false)
+    public function resultsAction(string $searchterm = '', int $pointer = 0, bool $notfound = false)
     {
-        $settings = \Tollwerk\TwLucenesearch\Utility\Indexer::indexConfig($GLOBALS['TSFE']);
-        \TYPO3\CMS\Core\Utility\ArrayUtility::mergeRecursiveWithOverrule(
+        $settings = Indexer::indexConfig($GLOBALS['TSFE']);
+        ArrayUtility::mergeRecursiveWithOverrule(
             $settings,
             is_array($this->settings) ? $this->settings : []
         );
         $this->settings = $settings;
-        $page = intval($this->settings['defaultResultsPage']) ?
+        $page           = intval($this->settings['defaultResultsPage']) ?
             intval($this->settings['defaultResultsPage']) :
             $GLOBALS['TSFE']->id;
-        $indexInfo = null;
-        $hits = array();
-        $error = false;
-        $query = null;
+        $indexInfo      = null;
+        $hits           = [];
+        $error          = false;
+        $query          = null;
 
         // Instantiating the lucene index service
-        /* @var $indexerService \Tollwerk\TwLucenesearch\Service\Lucene */
-        $indexerService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstanceService('index', 'lucene');
-        if ($indexerService instanceof \TYPO3\CMS\Core\Service\AbstractService) {
+        /* @var $indexerService Lucene */
+        $indexerService = GeneralUtility::makeInstanceService('index', 'lucene');
+        if ($indexerService instanceof AbstractService) {
             $indexInfo = $indexerService->indexInfo();
 
             // Run the search
             $hits = $indexerService->find($searchterm, $query);
 
             // If the search didn't complete successful
-            if (!($hits instanceof \Tollwerk\TwLucenesearch\Domain\Model\QueryHits)) {
+            if (!($hits instanceof QueryHits)) {
                 $error = true;
             }
         }
@@ -159,7 +164,7 @@ class LuceneController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      * has occured. The action tries to detect a search engine and search terms in the referrer URL
      * and forwards them to an internal index search.
      *
-     * @return \void
+     * @return void
      */
     public function notfoundAction()
     {
@@ -168,7 +173,7 @@ class LuceneController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         // If there is a referrer URL ...
         if (strlen($referer)) {
             $referer = parse_url($referer);
-            $host = array_key_exists('host', $referer) ? $referer['host'] : null;
+            $host    = array_key_exists('host', $referer) ? $referer['host'] : null;
             parse_str(array_key_exists('query', $referer) ? $referer['query'] : '', $query);
 
             // If host an GET parameters are available ...
@@ -180,7 +185,7 @@ class LuceneController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
                         if ((stripos($host, $seHost) !== false) && array_key_exists($seParam,
                                 $query) && strlen($query[$seParam])
                         ) {
-                            $getParams = array('searchterm' => $query[$seParam], 'pointer' => 0, 'notfound' => true);
+                            $getParams  = array('searchterm' => $query[$seParam], 'pointer' => 0, 'notfound' => true);
                             $uriBuilder = $this->controllerContext->getUriBuilder();
                             $uriBuilder->setArguments(array($uriBuilder->getArgumentPrefix() => $getParams));
                             $this->controllerContext->setUriBuilder($uriBuilder);
@@ -196,8 +201,9 @@ class LuceneController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     /**
      * Autocomplete feature
      *
-     * @param \string $searchterm Search terms
-     * @return \string          JSON encoded autocomplete suggestions
+     * @param string $searchterm Search terms
+     *
+     * @return string          JSON encoded autocomplete suggestions
      */
     public function autocompleteAction($searchterm = '')
     {
@@ -205,9 +211,9 @@ class LuceneController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         $this->response->sendHeaders();
 
         // Instanciating the lucene index service
-        /* @var $indexerService \Tollwerk\TwLucenesearch\Service\Lucene */
-        $indexerService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstanceService('index', 'lucene');
-        $suggestions = ($indexerService instanceof \TYPO3\CMS\Core\Service\AbstractService) ? $indexerService->autocomplete($searchterm) : array();
+        /* @var $indexerService Lucene */
+        $indexerService = GeneralUtility::makeInstanceService('index', 'lucene');
+        $suggestions    = ($indexerService instanceof AbstractService) ? $indexerService->autocomplete($searchterm) : array();
 
         return json_encode($suggestions);
     }

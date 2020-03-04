@@ -5,7 +5,7 @@ namespace Tollwerk\TwLucenesearch\ViewHelpers\Link;
 /***************************************************************
  *  Copyright notice
  *
- *  © 2016 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
+ *  © 2020 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
  *
  *  All rights reserved
  *
@@ -25,6 +25,8 @@ namespace Tollwerk\TwLucenesearch\ViewHelpers\Link;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+
+use Tollwerk\TwBase\Utility\FrontendUriUtility;
 use TYPO3\CMS\Fluid\ViewHelpers\Link\PageViewHelper;
 
 /**
@@ -41,10 +43,10 @@ use TYPO3\CMS\Fluid\ViewHelpers\Link\PageViewHelper;
  * Output:
  * A index preview link for the specified page
  *
- * @package tw_lucenesearch
- * @copyright Copyright © 2016 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
- * @author Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
- * @author Steffen Düsel
+ * @package   tw_lucenesearch
+ * @copyright Copyright © 2020 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
+ * @author    Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
+ * @author    Steffen Düsel
  */
 class PreviewViewHelper extends PageViewHelper
 {
@@ -60,17 +62,23 @@ class PreviewViewHelper extends PageViewHelper
     }
 
     /**
-     * @param int|NULL $pageUid target page. See TypoLink destination
-     * @param array $additionalParams query parameters to be attached to the resulting URI
-     * @param int $pageType type of the target page. See typolink.parameter
-     * @param bool $noCache set this to disable caching for the target page. You should not need this.
-     * @param bool $noCacheHash set this to suppress the cHash query parameter created by TypoLink. You should not need this.
-     * @param string $section the anchor to be added to the URI
-     * @param bool $linkAccessRestrictedPages If set, links pointing to access restricted pages will still link to the page even though the page cannot be accessed.
-     * @param bool $absolute If set, the URI of the rendered link is absolute
-     * @param bool $addQueryString If set, the current query parameters will be kept in the URI
-     * @param array $argumentsToBeExcludedFromQueryString arguments to be removed from the URI. Only active if $addQueryString = TRUE
-     * @param string $addQueryStringMethod Set which parameters will be kept. Only active if $addQueryString = TRUE
+     * @param int|NULL $pageUid                           target page. See TypoLink destination
+     * @param array $additionalParams                     query parameters to be attached to the resulting URI
+     * @param int $pageType                               type of the target page. See typolink.parameter
+     * @param bool $noCache                               set this to disable caching for the target page. You should
+     *                                                    not need this.
+     * @param bool $noCacheHash                           set this to suppress the cHash query parameter created by
+     *                                                    TypoLink. You should not need this.
+     * @param string $section                             the anchor to be added to the URI
+     * @param bool $linkAccessRestrictedPages             If set, links pointing to access restricted pages will still
+     *                                                    link to the page even though the page cannot be accessed.
+     * @param bool $absolute                              If set, the URI of the rendered link is absolute
+     * @param bool $addQueryString                        If set, the current query parameters will be kept in the URI
+     * @param array $argumentsToBeExcludedFromQueryString arguments to be removed from the URI. Only active if
+     *                                                    $addQueryString = TRUE
+     * @param string $addQueryStringMethod                Set which parameters will be kept. Only active if
+     *                                                    $addQueryString = TRUE
+     *
      * @return string Rendered page URI
      */
     public function render(
@@ -101,33 +109,13 @@ class PreviewViewHelper extends PageViewHelper
         }
         $reference['index_content_only'] = 1;
 
-        if (TYPO3_MODE === 'BE') {
-            \Tollwerk\TwLucenesearch\Utility\FrontendSimulator::simulateFrontendEnvironment($pageUid);
-        }
-
-        $uriBuilder = $this->controllerContext->getUriBuilder();
-        $uri = $uriBuilder
-            ->reset()
-            ->setTargetPageUid($pageUid)
-            ->setTargetPageType($pageType)
-            ->setNoCache(true)
-            ->setUseCacheHash(false)
-            ->setLinkAccessRestrictedPages(true)
-            ->setArguments($reference)
-            ->setCreateAbsoluteUri(true)
-            ->setAddQueryString(false)
-            ->setArgumentsToBeExcludedFromQueryString(array())
-            ->buildFrontendUri();
+        $uri = FrontendUriUtility::build($pageUid, $reference, $pageType);
         if (strlen($uri)) {
             $this->tag->addAttribute('href', $uri);
             $this->tag->setContent($this->renderChildren());
             $result = $this->tag->render();
         } else {
             $result = $this->renderChildren();
-        }
-
-        if (TYPO3_MODE === 'BE') {
-            \Tollwerk\TwLucenesearch\Utility\FrontendSimulator::resetFrontendEnvironment();
         }
 
         return $result;

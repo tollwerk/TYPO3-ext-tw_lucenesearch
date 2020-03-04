@@ -1,1 +1,13 @@
-<f:render partial="Searchbox" arguments="{searchterm: searchterm, page: page}"/>
+<f:comment><!--
+
+    Render the search box
+
+    @param int page                 Searchg result page
+    @param string searchterm        Current search term
+
+--></f:comment>
+<html xmlns:f="https://xsd.helhum.io/ns/typo3/cms-fluid/master/ViewHelpers"
+      xmlns:base="http://typo3.org/ns/Tollwerk/TwBase/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+    <f:render partial="Elements/Search/Box" arguments="{searchterm: searchterm, page: page}"/>
+</html>
