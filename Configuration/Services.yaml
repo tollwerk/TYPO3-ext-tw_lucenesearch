@@ -1,0 +1,10 @@
+services:
+    cache.lucene:
+        class: TYPO3\CMS\Core\Cache\Frontend\FrontendInterface
+        factory: ['@TYPO3\CMS\Core\Cache\CacheManager', 'getCache']
+        arguments: ['lucene']
+
+    Tollwerk\TwLucenesearch\Utility\CacheUtility:
+        public: true
+        arguments:
+            $cache: '@cache.lucene'

@@ -76,8 +76,6 @@ call_user_func(
         // Indexing hook registration
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-output'][] = \Tollwerk\TwLucenesearch\Utility\Indexer::class.'->intPages';
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-all'][]    = \Tollwerk\TwLucenesearch\Utility\Indexer::class.'->noIntPages';
-//        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-output'][] = 'EXT:tw_lucenesearch/Classes/Utility/Indexer.php:&Tollwerk\\TwLucenesearch\\Utility\\Indexer->intPages';
-//        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-all'][]    = 'EXT:tw_lucenesearch/Classes/Utility/Indexer.php:&Tollwerk\\TwLucenesearch\\Utility\\Indexer->noIntPages';
 
         // Rewriting hook provision
         if (!array_key_exists('tw_lucenesearch', $GLOBALS['TYPO3_CONF_VARS']['EXTCONF'])) {
@@ -105,6 +103,18 @@ call_user_func(
         $GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = 'tx_twlucenesearch_lucene[action]';
         $GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = 'tx_twlucenesearch_lucene[controller]';
         $GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = 'tx_twlucenesearch_lucene[@widget_0][currentPage]';
+
+        // Register custom caching
+        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['lucene'] = [
+            'frontend' => \TYPO3\CMS\Core\Cache\Frontend\VariableFrontend::class,
+            'backend'  => \TYPO3\CMS\Core\Cache\Backend\Typo3DatabaseBackend::class,
+            'options'  => [
+                'compression' => true
+            ],
+            'groups'   => ['pages']
+        ];
+
+        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['clearCachePostProc'][] = \Tollwerk\TwLucenesearch\Utility\CacheUtility::class.'->unregisterIndexed';
     },
     'tw_lucenesearch'
 );

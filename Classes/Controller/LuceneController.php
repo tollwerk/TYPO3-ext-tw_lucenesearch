@@ -8,7 +8,11 @@ use Tollwerk\TwLucenesearch\Utility\Indexer;
 use TYPO3\CMS\Core\Service\AbstractService;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
+use TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
+use Zend_Search_Lucene_Exception;
 
 /***************************************************************
  *  Copyright notice
@@ -114,6 +118,7 @@ class LuceneController extends ActionController
      * @param boolean $notfound  Indicator for 404 based search
      *
      * @return void
+     * @throws Zend_Search_Lucene_Exception
      */
     public function resultsAction(string $searchterm = '', int $pointer = 0, bool $notfound = false)
     {
@@ -165,6 +170,7 @@ class LuceneController extends ActionController
      * and forwards them to an internal index search.
      *
      * @return void
+     * @throws StopActionException
      */
     public function notfoundAction()
     {
@@ -204,6 +210,7 @@ class LuceneController extends ActionController
      * @param string $searchterm Search terms
      *
      * @return string          JSON encoded autocomplete suggestions
+     * @throws Zend_Search_Lucene_Exception
      */
     public function autocompleteAction($searchterm = '')
     {
@@ -216,5 +223,20 @@ class LuceneController extends ActionController
         $suggestions    = ($indexerService instanceof AbstractService) ? $indexerService->autocomplete($searchterm) : array();
 
         return json_encode($suggestions);
+    }
+
+    /**
+     * Return the lucene search configuration
+     *
+     * @return string Reference parameters
+     * @throws InvalidConfigurationTypeException
+     */
+    public function configAction()
+    {
+        $config  = $this->objectManager->get(ConfigurationManager::class)
+                                       ->getConfiguration(ConfigurationManager::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+        $indexer = GeneralUtility::makeInstance(Indexer::class);
+
+        return json_encode($indexer::indexConfigTS($config['config.']));
     }
 }

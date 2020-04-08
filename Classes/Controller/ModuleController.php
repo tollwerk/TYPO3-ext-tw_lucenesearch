@@ -27,6 +27,8 @@
 namespace Tollwerk\TwLucenesearch\Controller;
 
 use Exception;
+use Tollwerk\TwBase\Utility\FrontendUriUtility;
+use Tollwerk\TwGeo\Utility\CurlUtility;
 use Tollwerk\TwLucenesearch\Domain\Model\Document;
 use Tollwerk\TwLucenesearch\Service\Lucene;
 use Tollwerk\TwLucenesearch\Utility\FrontendSimulator;
@@ -37,6 +39,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use Zend_Search_Lucene_Exception;
 
 /**
  * Lucene backend module controller
@@ -90,11 +93,17 @@ class ModuleController extends ActionController
         }
 
         $this->pageUid = intval(GeneralUtility::_GP('id'));
-        $config        = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+        $configUri     = FrontendUriUtility::build($this->pageUid, [], 1750);
+        $configJson    = CurlUtility::httpRequest(GeneralUtility::getIndpEnv('TYPO3_REQUEST_HOST').$configUri);
+        $config        = json_decode($configJson, JSON_OBJECT_AS_ARRAY);
 
-        /** @var Indexer $indexer */
-        $indexer          = GeneralUtility::makeInstance('Tollwerk\\TwLucenesearch\\Utility\\Indexer');
-        $this->pageConfig = $indexer::indexConfigTS($config['config.']);
+        if (empty($config)) {
+            $setup   = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+            $indexer = GeneralUtility::makeInstance(Indexer::class);
+            $config  = $indexer::indexConfigTS($setup['config.']);
+        }
+
+        $this->pageConfig = $config;
     }
 
     /**
@@ -103,6 +112,7 @@ class ModuleController extends ActionController
      * @param string $clear Clear the index
      *
      * @return void
+     * @throws Zend_Search_Lucene_Exception
      * @todo Respect the TypoScript configuration for the current index?
      */
     public function indexAction($clear = null)
@@ -161,38 +171,49 @@ class ModuleController extends ActionController
     }
 
     /**
+     * Create a list of flattened reference parameters
+     *
+     * @param array $params  Multidimensional parameter list
+     * @param string $prefix Prefix
+     * @param array $all     All parameters
+     */
+    protected function flattenReferenceParams(array $params, string $prefix, array &$all): void
+    {
+        foreach ($params as $key => $refConfig) {
+            $refPrefix = ($prefix ? $prefix.'['.$key.']' : $key);
+            if (array_key_exists('default', $refConfig)) {
+                $all[$refPrefix] = $key;
+            } else {
+                $this->flattenReferenceParams($refConfig, $refPrefix, $all);
+            }
+        }
+    }
+
+    /**
      * Manage the index entries of a particular page
      *
      * @param array $documents Document references
-     * @param string $delete   Delete the given documents from the index
-     * @param string $reindex  Re-index the given documents
+     * @param bool $delete     Delete the given documents from the index
+     * @param bool $reindex    Re-index the given documents
      *
      * @return void
+     * @throws Zend_Search_Lucene_Exception
      */
     public function pageAction(array $documents = array(), $delete = false, $reindex = false)
     {
         // Process document updates
         $this->processUpdates($documents, $delete, $reindex);
 
-        // Determine the index reference components
-        $references = array();
-        foreach ($this->pageConfig['reference'] as $key => $refConfig) {
-            $refLabel = $key;
-            while (!array_key_exists('default', $refConfig)) {
-                $refKey    = key($refConfig);
-                $refLabel  .= '['.$refKey.']';
-                $refConfig =& $refConfig[$refKey];
-            }
-            $references[$key] = $refLabel;
-        }
+        $references = [];
+        $this->flattenReferenceParams($this->pageConfig['reference'], '', $references);
 
         // Determine the TSConfig
-        $default      = array(
-            'language' => array(
+        $default      = [
+            'language' => [
                 'flag'  => '',
                 'label' => 'Default language'
-            )
-        );
+            ]
+        ];
         $pageTSConfig = BackendUtility::getPagesTSconfig($this->pageUid);
         if (!empty($pageTSConfig['mod.']) && !empty($pageTSConfig['mod.']['SHARED.']) && is_array($pageTSConfig['mod.']['SHARED.'])) {
             if (array_key_exists('defaultLanguageFlag', $pageTSConfig['mod.']['SHARED.'])) {
@@ -217,10 +238,11 @@ class ModuleController extends ActionController
      * Process document updates
      *
      * @param array $documents Document references
-     * @param string $delete   Delete the given documents from the index
-     * @param string $reindex  Re-index the given documents
+     * @param bool $delete     Delete the given documents from the index
+     * @param bool $reindex    Re-index the given documents
      *
      * @return void
+     * @throws Zend_Search_Lucene_Exception
      */
     protected function processUpdates(array $documents = array(), $delete = false, $reindex = false)
     {

@@ -113,6 +113,7 @@ class Lucene extends AbstractService implements SingletonInterface
      * Return some information about the index
      *
      * @return stdClass                                                Index information
+     * @throws Zend_Search_Lucene_Exception
      */
     public function indexInfo()
     {
@@ -136,7 +137,6 @@ class Lucene extends AbstractService implements SingletonInterface
      */
     protected function _index()
     {
-
         // One-time instanciation or creation of the lucene index
         if ($this->_index === null) {
 

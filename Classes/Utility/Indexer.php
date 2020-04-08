@@ -258,6 +258,7 @@ class Indexer implements SingletonInterface
      * @param object $that  Parent object
      *
      * @return void
+     * @throws \Zend_Search_Lucene_Exception
      */
     public function intPages(&$params, &$that)
     {
@@ -277,6 +278,7 @@ class Indexer implements SingletonInterface
      * @param TypoScriptFrontendController $fe Frontend engine
      *
      * @return void
+     * @throws \Zend_Search_Lucene_Exception
      */
     protected function indexTSFE(TypoScriptFrontendController $fe)
     {
@@ -316,8 +318,18 @@ class Indexer implements SingletonInterface
             }
         }
 
+        // Construct unique page reference
+        $reference = $this->getPageReference($fe);
+
+        // Get the cache utility
+        $cacheUtility = GeneralUtility::makeInstance(CacheUtility::class);
+
         // If the current page should be indexed
-        if (!intval($fe->page['no_search']) && self::indexConfig($fe, 'enable') && !$disableIndexingByType) {
+        if (!intval($fe->page['no_search'])
+            && self::indexConfig($fe, 'enable')
+            && !$disableIndexingByType
+            && $cacheUtility->needsIndexing(self::PAGE, $reference)
+        ) {
             // Instanciate the lucene index service
             /* @var $indexerService Lucene */
             $indexerService = GeneralUtility::makeInstanceService('index', 'lucene');
@@ -325,9 +337,6 @@ class Indexer implements SingletonInterface
                 /** @var ServerRequest $request */
                 $request         = $GLOBALS['TYPO3_REQUEST'];
                 $queryParameters = $request->getQueryParams();
-
-                // Construct unique page reference
-                $reference = $this->getPageReference($fe);
 
                 // Retrieve timestamp of the current page
                 $timestamp = $this->getPageTimestamp($fe);
@@ -353,8 +362,8 @@ class Indexer implements SingletonInterface
                 // Instantiate the index document
                 /** @var SiteLanguage $siteLanguage */
                 $siteLanguage = $request->getAttribute('language');
-                $bodytext = $this->getPageBodytext($fe);
-                $document = $this->createDocument(array(
+                $bodytext     = $this->getPageBodytext($fe);
+                $fields       = [
                     'type'      => self::PAGE,
                     'id'        => strval($fe->id),
                     'language'  => $siteLanguage->getTwoLetterIsoCode(),
@@ -365,9 +374,18 @@ class Indexer implements SingletonInterface
                     'keywords'  => $this->getPageKeywords($fe),
                     'bodytext'  => $bodytext,
                     'timestamp' => $timestamp,
-                ));
+                ];
+                $document     = $this->createDocument($fields);
                 $indexerService->add($document);
                 $indexerService->commit();
+
+                // Register as cached
+                $cacheUtility->registerIndexed(
+                    self::PAGE,
+                    $reference,
+                    [$fe->id, $fe->page['_PAGES_OVERLAY_UID'] ?? 0],
+                    md5(serialize($fields))
+                );
             }
         }
     }
@@ -1019,6 +1037,7 @@ class Indexer implements SingletonInterface
      * @param object $that  Parent object
      *
      * @return void
+     * @throws \Zend_Search_Lucene_Exception
      */
     public function noIntPages(&$params, &$that)
     {
