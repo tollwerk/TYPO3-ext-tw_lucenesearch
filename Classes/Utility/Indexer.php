@@ -525,7 +525,7 @@ class Indexer implements SingletonInterface
                         'boost' => null
                     ]
                 ],
-                'limits'                 => (object)['query' => 100, 'display' => 20],
+                'limits'                 => (object)['query' => 100, 'display' => 20, 'pages' => 10],
                 'minCharacters'          => 3,
                 'highlightMatches'       => false,
             ],

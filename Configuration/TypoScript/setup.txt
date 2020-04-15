@@ -13,6 +13,7 @@ config {
         limits {
             query = {$plugin.tx_twlucenesearch.search.limits.query}
             display = {$plugin.tx_twlucenesearch.search.limits.display}
+            pages = {$plugin.tx_twlucenesearch.search.limits.pages}
         }
 
         minCharacters = {$plugin.tx_twlucenesearch.search.chars}

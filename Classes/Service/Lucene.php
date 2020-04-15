@@ -330,12 +330,16 @@ class Lucene extends AbstractService implements SingletonInterface
      * @param string $searchTerm                     Search terms
      * @param Zend_Search_Lucene_Search_Query $query Final index search
      *
-     * @return QueryHits        Query hits
+     * @return array|QueryHits[]        Query hits
+     * @throws Exception
      */
-    public function find($searchTerm, &$query = null)
-    {
+    public function find(
+        string $searchTerm,
+        Zend_Search_Lucene_Search_Query &$query = null,
+        int $limit = null
+    ) {
         $searchTerm = trim($searchTerm);
-        $hits       = array();
+        $hits       = [];
 
         // If there are meaningful search terms
         if (strlen($searchTerm)) {
@@ -354,6 +358,12 @@ class Lucene extends AbstractService implements SingletonInterface
             $tokenTerms = [];
             $searchTerm = $this->_rewriteQueryTerms($searchTerm, $tokenTerms);
 
+            // If a result limit has been specified
+            if ($limit !== null) {
+                $currentResultSetLimit = Zend_Search_Lucene::getResultSetLimit();
+                Zend_Search_Lucene::setResultSetLimit($limit);
+            }
+
             try {
                 $highlight = intval(Indexer::indexConfig($GLOBALS['TSFE'], 'search.highlightMatches'));
 
@@ -366,6 +376,11 @@ class Lucene extends AbstractService implements SingletonInterface
                 // In case of errors: Invalidate the query hits
             } catch (Zend_Search_Lucene_Exception $e) {
                 $hits = null;
+            }
+
+            // If a result limit has been specified: Reset the original limit
+            if ($limit !== null) {
+                Zend_Search_Lucene::setResultSetLimit($currentResultSetLimit);
             }
         }
 

@@ -102,6 +102,9 @@
 			<trans-unit id="constants.search.limits.display" xml:space="preserve" approved="yes">
 				<source>Max. displayed results:Set the maximum of matching search results that are displayed at once</source>
 			<target state="translated">Max. Anzahl Suchergebnisse:Geben Sie die maximale Anzahl gleichzeitig dargestellter Ergebnistreffer an</target></trans-unit>
+			<trans-unit id="constants.search.limits.pages" xml:space="preserve" approved="yes">
+				<source>Max. displayed result pages:Set the maximum of matching search result pages</source>
+			<target state="translated">Max. Anzahl Suchergebnisseiten:Geben Sie die maximale Anzahl von Suchergebnisseiten an</target></trans-unit>
 			<trans-unit id="constants.search.chars" xml:space="preserve" approved="yes">
                 <source>Character limit:Number of minimum chars to trigger a search</source>
             <target state="translated">Zeichenlimit:Minimale Zeichenanzahl für Suchvorgänge</target></trans-unit>

@@ -129,8 +129,9 @@ class LuceneController extends ActionController
         );
         $this->settings = $settings;
         $page           = intval($this->settings['defaultResultsPage']) ?
-            intval($this->settings['defaultResultsPage']) :
-            $GLOBALS['TSFE']->id;
+            intval($this->settings['defaultResultsPage']) : $GLOBALS['TSFE']->id;
+        $limit          = intval($this->settings['search']->limits->pages ?? 10) *
+                          intval($this->settings['search']->limits->display ?? 20);
         $indexInfo      = null;
         $hits           = [];
         $error          = false;
@@ -143,7 +144,7 @@ class LuceneController extends ActionController
             $indexInfo = $indexerService->indexInfo();
 
             // Run the search
-            $hits = $indexerService->find($searchterm, $query);
+            $hits = $indexerService->find($searchterm, $query, $limit);
 
             // If the search didn't complete successful
             if (!($hits instanceof QueryHits)) {

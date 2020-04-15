@@ -102,6 +102,9 @@
 			<trans-unit id="constants.search.limits.display" xml:space="preserve">
 				<source>Max. displayed results:Set the maximum of matching search results that are displayed at once</source>
 			</trans-unit>
+			<trans-unit id="constants.search.limits.pages" xml:space="preserve">
+				<source>Max. displayed result pages:Set the maximum of matching search result pages</source>
+			</trans-unit>
 			<trans-unit id="constants.search.chars" xml:space="preserve">
                 <source>Character limit:Number of minimum chars to trigger a search</source>
             </trans-unit>

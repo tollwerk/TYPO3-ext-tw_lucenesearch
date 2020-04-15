@@ -61,11 +61,13 @@ plugin.tx_twlucenesearch {
 		limits.query = 100
 		# cat=plugin.tx_twlucenesearch/search/i; type=int+; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.limits.display
 		limits.display = 20
-		# cat=plugin.tx_twlucenesearch/search/j; type=int+; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.chars
+		# cat=plugin.tx_twlucenesearch/search/j; type=int+; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.limits.pages
+		limits.pages = 10
+		# cat=plugin.tx_twlucenesearch/search/k; type=int+; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.chars
 		chars = 3
-		# cat=plugin.tx_twlucenesearch/search/k; type=int+; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.pid
+		# cat=plugin.tx_twlucenesearch/search/l; type=int+; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.pid
 		pid =
-		# cat=plugin.tx_twlucenesearch/search/l; type=options[GET,POST]; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.method
+		# cat=plugin.tx_twlucenesearch/search/m; type=options[GET,POST]; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.search.method
 		method = GET
 	}
 }
