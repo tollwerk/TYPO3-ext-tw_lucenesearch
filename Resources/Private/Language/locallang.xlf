@@ -37,6 +37,9 @@ Do you want to retry with other search terms?</source>
 			<trans-unit id="search.paginate.prev">
 				<source>previous</source>
 			</trans-unit>
+			<trans-unit id="mod.format.date">
+				<source>m/d/Y</source>
+			</trans-unit>
 			<trans-unit id="mod.actions.index">
 				<source>Index overview</source>
 			</trans-unit>
@@ -88,6 +91,12 @@ Do you want to retry with other search terms?</source>
 			<trans-unit id="mod.index.clear.error">
 				<source>The search index could not be cleared due to an unknown error!</source>
 			</trans-unit>
+            <trans-unit id="mod.page.noindex.header">
+                <source>Not indexable</source>
+            </trans-unit>
+            <trans-unit id="mod.page.noindex.description">
+                <source>Indexing of this page was disabled in the page settings.</source>
+            </trans-unit>
 			<trans-unit id="mod.page.documents.none">
 				<source>There are no index documents for this page. Pages get indexed when they are visited in the frontend (or crawled by a crawler).</source>
 			</trans-unit>
@@ -137,13 +146,13 @@ Do you want to retry with other search terms?</source>
 				<source>Reference</source>
 			</trans-unit>
 			<trans-unit id="mod.page.header.timestamp">
-				<source>Last modification</source>
+				<source>Modified</source>
 			</trans-unit>
-			<trans-unit id="mod.page.header.bodytext">
-				<source>Bodytext</source>
+			<trans-unit id="mod.page.header.index">
+				<source>Index</source>
 			</trans-unit>
-			<trans-unit id="mod.page.header.bodytext.live">
-				<source>Live view</source>
+			<trans-unit id="mod.page.header.index.preview">
+				<source>Content</source>
 			</trans-unit>
 			<trans-unit id="mod.page.header.keywords">
 				<source>Keywords</source>

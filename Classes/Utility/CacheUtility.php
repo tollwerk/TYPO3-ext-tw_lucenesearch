@@ -101,9 +101,9 @@ class CacheUtility implements SingletonInterface
      * Unregister a cached document
      *
      * @param array $params            Parameter
-     * @param DataHandler $dataHandler Data handler
+     * @param DataHandler|null $dataHandler Data handler
      */
-    public function unregisterIndexed(array $params, DataHandler $dataHandler)
+    public function unregisterIndexed(array $params, DataHandler $dataHandler = null): void
     {
         if (!empty($params['table'])) {
             if ($params['table'] == 'pages') {

@@ -60,6 +60,9 @@
 			<trans-unit id="constants.indexing" xml:space="preserve" approved="yes">
 				<source>Indexing</source>
 			<target state="translated">Indizierung</target></trans-unit>
+			<trans-unit id="constants.indexing.enable" xml:space="preserve" approved="yes">
+				<source>Enable indexing</source>
+			<target state="translated">Indizierung aktivieren</target></trans-unit>
 			<trans-unit id="constants.indexing.reference" xml:space="preserve" approved="yes">
 				<source>Document reference parameters:Comma separated list of GET variables that should be considered relevant for uniquely identifying and indexing your pages</source>
 			<target state="translated">Dokumentreferenz-Parameter:Kommaseparierte Liste von GET-Parametern, die benötigt werden, um Ihre Seite eindeutig referenzieren und indizieren zu können</target></trans-unit>

@@ -60,6 +60,9 @@
 			<trans-unit id="constants.indexing" xml:space="preserve">
 				<source>Indexing</source>
 			</trans-unit>
+			<trans-unit id="constants.indexing.enable" xml:space="preserve">
+				<source>Enable indexing</source>
+			</trans-unit>
 			<trans-unit id="constants.indexing.reference" xml:space="preserve">
 				<source>Document reference parameters:Comma separated list of GET variables that should be considered relevant for uniquely identifying and indexing your pages</source>
 			</trans-unit>

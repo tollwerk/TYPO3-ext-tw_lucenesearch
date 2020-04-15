@@ -31,6 +31,7 @@ use Tollwerk\TwBase\Utility\FrontendUriUtility;
 use Tollwerk\TwGeo\Utility\CurlUtility;
 use Tollwerk\TwLucenesearch\Domain\Model\Document;
 use Tollwerk\TwLucenesearch\Service\Lucene;
+use Tollwerk\TwLucenesearch\Utility\CacheUtility;
 use Tollwerk\TwLucenesearch\Utility\FrontendSimulator;
 use Tollwerk\TwLucenesearch\Utility\Indexer;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
@@ -199,7 +200,7 @@ class ModuleController extends ActionController
      * @return void
      * @throws Zend_Search_Lucene_Exception
      */
-    public function pageAction(array $documents = array(), $delete = false, $reindex = false)
+    public function pageAction(array $documents = [], $delete = false, $reindex = false)
     {
         // Process document updates
         $this->processUpdates($documents, $delete, $reindex);
@@ -225,13 +226,15 @@ class ModuleController extends ActionController
         }
 
         // Find all index documents
-        $documents = $this->indexService->getByTypeId(Indexer::PAGE, $this->pageUid);
+        $documents           = $this->indexService->getByTypeId(Indexer::PAGE, $this->pageUid);
+        $currentPageNoSearch = BackendUtility::getRecord('pages', $this->pageUid, 'no_search');
 
         $this->view->assign('documents', $documents);
         $this->view->assign('default', $default);
         $this->view->assign('references', $references);
         $this->view->assign('config', $this->pageConfig);
         $this->view->assign('page', $this->pageUid);
+        $this->view->assign('noSearch', empty($currentPageNoSearch) ? false : current($currentPageNoSearch));
     }
 
     /**
@@ -252,9 +255,10 @@ class ModuleController extends ActionController
             $delete  = $delete !== false;
             $reindex = !$delete && ($reindex !== false);
 
-
             // If documents should be deleted
             if ($delete || $reindex) {
+                /** @var CacheUtility $cacheUtility */
+                $cacheUtility = $this->objectManager->get(CacheUtility::class);
                 foreach ($documents as $uid => $confirm) {
                     if (intval($confirm)) {
                         $hit      = null;
@@ -262,6 +266,7 @@ class ModuleController extends ActionController
                         if ($document instanceof Document) {
                             if ($delete) {
                                 $this->indexService->delete($hit);
+                                $cacheUtility->unregisterIndexed(['table' => 'pages', 'uid' => $this->pageUid]);
                                 ++$commit;
                             } else {
                                 $commit += $this->_reindex($document) * 1;
@@ -272,7 +277,8 @@ class ModuleController extends ActionController
 
                 // Success message
                 if ($commit) {
-                    $message = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessage',
+                    $message = GeneralUtility::makeInstance(
+                        FlashMessage::class,
                         sprintf(LocalizationUtility::translate('mod.page.documents.'.($delete ? 'delete' : 'reindex').'.success',
                             'tw_lucenesearch'), count($documents)),
                         '', // the header is optional
@@ -281,7 +287,8 @@ class ModuleController extends ActionController
 
                     // Else: Info message
                 } else {
-                    $message = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessage',
+                    $message = GeneralUtility::makeInstance(
+                        FlashMessage::class,
                         LocalizationUtility::translate('mod.page.documents.'.($delete ? 'delete' : 'reindex').'.error',
                             'tw_lucenesearch'),
                         '', // the header is optional

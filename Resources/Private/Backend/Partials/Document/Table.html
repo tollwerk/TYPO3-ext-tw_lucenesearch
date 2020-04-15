@@ -1,6 +1,7 @@
 {namespace tw=Tollwerk\TwLucenesearch\ViewHelpers}
 {namespace core = TYPO3\CMS\Core\ViewHelpers}
 <form method="post">
+    <f:variable name="format" value="{f:translate(key: 'mod.format.date')}"/>
     <table class="table table-striped table-hover typo3-page-pages documents">
         <thead>
             <tr>
@@ -18,15 +19,12 @@
                     <f:translate key="mod.page.header.timestamp"/>
                 </th>
                 <th rowspan="2">
-                    <f:translate key="mod.page.header.bodytext"/>
-                </th>
-                <th rowspan="2">
                     <f:translate key="mod.page.header.keywords"/>
                 </th>
                 <th rowspan="2" class="abstract">
                     <f:translate key="mod.page.header.abstract"/>
                 </th>
-                <th rowspan="2"> </th>
+                <th rowspan="2">&nbsp;</th>
             </tr>
             <tr class="reference">
                 <f:for each="{references}" as="reference" key="id">
@@ -54,7 +52,8 @@
                         </f:if>
                     </td>
                     <td>
-                        {document.title}
+                        <tw:link.preview reference="{document.referenceParameters}" target="_blank">{document.title}
+                        </tw:link.preview>
                     </td>
                     <f:for each="{references}" as="reference" key="id">
                         <td>
@@ -63,11 +62,9 @@
                     </f:for>
                     <td class="nowrap">
                         <time datetime="{f:format.date(date: '@{document.timestamp}', format: 'c')}">
-                            <f:format.date format="r">@{document.timestamp}</f:format.date>
+                            <abbr title="{document.timestamp -> f:format.date(format: 'r')}">{document.timestamp ->
+                                f:format.date(format: format)}</abbr>
                         </time>
-                    </td>
-                    <td>
-                        <f:translate key="mod.page.header.bodytext.live"/>
                     </td>
                     <td title="{document.keywords}" class="title">
                         {document.keywords -> f:format.crop(maxCharacters: 100)}
@@ -84,7 +81,8 @@
                                 </a>
                             </f:then>
                             <f:else>
-                                <tw:link.preview reference="{document.referenceParameters}" target="_blank"
+                                <tw:link.preview reference="{document.referenceParameters}" indexOnly="1"
+                                                 target="_blank"
                                                  title="{f:translate(key: 'mod.page.document.preview')}">
                                     <core:icon identifier="actions-document-view"/>
                                 </tw:link.preview>

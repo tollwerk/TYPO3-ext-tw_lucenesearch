@@ -32,11 +32,13 @@ plugin.tx_twlucenesearch {
 	}
 
 	index {
-		# cat=plugin.tx_twlucenesearch/indexing/a; type=string; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.indexing.reference
+		# cat=plugin.tx_twlucenesearch/indexing/a; type=boolean; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.indexing.enable
+		enable = 0
+		# cat=plugin.tx_twlucenesearch/indexing/b; type=string; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.indexing.reference
 		reference = id
-		# cat=plugin.tx_twlucenesearch/indexing/b; type=boolean; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.indexing.timestamp
+		# cat=plugin.tx_twlucenesearch/indexing/c; type=boolean; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.indexing.timestamp
 		timestamp = 1
-		# cat=plugin.tx_twlucenesearch/indexing/b; type=string; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.indexing.languageReference
+		# cat=plugin.tx_twlucenesearch/indexing/d; type=string; label=LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:constants.indexing.languageReference
 		languageReference = L
 	}
 

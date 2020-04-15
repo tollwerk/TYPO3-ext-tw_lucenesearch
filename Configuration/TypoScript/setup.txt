@@ -1,4 +1,5 @@
 config {
+    index_enable = {$plugin.tx_twlucenesearch.index.enable}
     index_reference = {$plugin.tx_twlucenesearch.index.reference}
     index_languageReference = {$plugin.tx_twlucenesearch.index.languageReference}
     index_injectTimestamp = {$plugin.tx_twlucenesearch.index.timestamp}

@@ -27,6 +27,8 @@ namespace Tollwerk\TwLucenesearch\ViewHelpers\Link;
  ***************************************************************/
 
 use Tollwerk\TwBase\Utility\FrontendUriUtility;
+use TYPO3\CMS\Core\Error\Http\ServiceUnavailableException;
+use TYPO3\CMS\Core\Exception\SiteNotFoundException;
 use TYPO3\CMS\Fluid\ViewHelpers\Link\PageViewHelper;
 
 /**
@@ -59,6 +61,7 @@ class PreviewViewHelper extends PageViewHelper
     {
         parent::initializeArguments();
         $this->registerArgument('reference', 'array', 'Specifies some references', true, []);
+        $this->registerArgument('indexOnly', 'bool', 'Show indexed content only', false);
     }
 
     /**
@@ -80,6 +83,8 @@ class PreviewViewHelper extends PageViewHelper
      *                                                    $addQueryString = TRUE
      *
      * @return string Rendered page URI
+     * @throws ServiceUnavailableException
+     * @throws SiteNotFoundException
      */
     public function render(
         $pageUid = null,
@@ -107,7 +112,9 @@ class PreviewViewHelper extends PageViewHelper
         } else {
             $pageType = 0;
         }
-        $reference['index_content_only'] = 1;
+        if (boolval($this->arguments['indexOnly'])) {
+            $reference['index_content_only'] = 1;
+        }
 
         $uri = FrontendUriUtility::build($pageUid, $reference, $pageType);
         if (strlen($uri)) {

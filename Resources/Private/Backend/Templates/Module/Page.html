@@ -1,13 +1,22 @@
 {namespace tw=Tollwerk\TwLucenesearch\ViewHelpers}
-<f:layout name="Default" />
+<f:layout name="Default"/>
 <f:section name="Main">
-    <h2 class="be_header"><f:translate key="mod.header.page"/></h2>
+    <h2 class="be_header">
+        <f:translate key="mod.header.page"/>
+    </h2>
+    <f:if condition="{noSearch}">
+        <f:be.infobox title="{f:translate(key: 'mod.page.noindex.header')}" state="1">
+            <f:translate key="mod.page.noindex.description"/>
+        </f:be.infobox>
+    </f:if>
     <f:if condition="{documents}">
         <f:then>
             <f:render partial="Document/Table.html" arguments="{_all}"/>
         </f:then>
         <f:else>
-            <p><f:translate key="mod.page.documents.none"/></p>
+            <p>
+                <f:translate key="mod.page.documents.none"/>
+            </p>
         </f:else>
     </f:if>
 </f:section>
