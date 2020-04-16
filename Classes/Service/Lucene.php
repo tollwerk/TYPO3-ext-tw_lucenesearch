@@ -242,7 +242,8 @@ class Lucene extends AbstractService implements SingletonInterface
      *
      * @param Document $document Document
      *
-     * @return boolean                                                Success
+     * @return void Success
+     * @throws Zend_Search_Lucene_Exception
      */
     public function add(Document $document)
     {
@@ -250,12 +251,13 @@ class Lucene extends AbstractService implements SingletonInterface
     }
 
     /**
-     * Fetch a document from the index
+     * Fetch a single document from the index
      *
      * @param string $uid                             Unique document ID
      * @param Zend_Search_Lucene_Search_QueryHit $hit Query hit for the requested document
      *
      * @return Document        Requested document
+     * @throws Zend_Search_Lucene_Exception
      */
     public function get($uid, &$hit = null)
     {
@@ -269,6 +271,26 @@ class Lucene extends AbstractService implements SingletonInterface
 
             return null;
         }
+    }
+
+    /**
+     * Delete all documents with a particular UID
+     *
+     * @param string $uid Unique document ID
+     *
+     * @return int Number of deleted documents
+     * @throws Zend_Search_Lucene_Exception
+     */
+    public function deleteByUid($uid): int
+    {
+        $deleted   = 0;
+        $refIDTerm = new Zend_Search_Lucene_Index_Term($uid, 'uid');
+        foreach ($this->_index()->termDocs($refIDTerm) as $hit) {
+            $this->delete($hit);
+            ++$deleted;
+        }
+
+        return $deleted;
     }
 
     /**

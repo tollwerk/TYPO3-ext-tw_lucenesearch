@@ -316,7 +316,6 @@ class ModuleController extends ActionController
      */
     protected function _reindex(Document $document)
     {
-
         // Prepare the reference parameters
         $reference = $document->getReferenceParameters();
         if (array_key_exists('id', $reference)) {
@@ -410,9 +409,10 @@ class ModuleController extends ActionController
      * Manage the other index entries
      *
      * @param array $documents Document references
-     * @param string $delete   Delete the given documents from the index
+     * @param bool $delete     Delete the given documents from the index
      *
      * @return void
+     * @throws Zend_Search_Lucene_Exception
      */
     public function otherAction(array $documents = array(), $delete = false)
     {
@@ -428,6 +428,18 @@ class ModuleController extends ActionController
 
         $this->view->assign('documents', $documents);
     }
-}
 
-?>
+    /**
+     * Debug a particular index document
+     *
+     * @param string $uid Document ID
+     */
+    public function debugAction(string $uid)
+    {
+        $hit      = null;
+        $document = $this->indexService->get($uid, $hit);
+        $this->view->assign('document', $document);
+        header('Content-Type: text/plain');
+        die($this->view->render());
+    }
+}

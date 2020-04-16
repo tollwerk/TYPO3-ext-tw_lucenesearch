@@ -39,7 +39,6 @@ use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 use TYPO3\CMS\Core\TypoScript\TemplateService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
-use Zend_Search_Lucene_Document;
 use Zend_Search_Lucene_Field;
 use Zend_Search_Lucene_Search_Query_Fuzzy;
 
@@ -324,40 +323,22 @@ class Indexer implements SingletonInterface
         // Get the cache utility
         $cacheUtility = GeneralUtility::makeInstance(CacheUtility::class);
 
+        /** @var ServerRequest $request */
+        $request         = $GLOBALS['TYPO3_REQUEST'];
+        $queryParameters = $request->getQueryParams();
+
         // If the current page should be indexed
         if (!intval($fe->page['no_search'])
             && self::indexConfig($fe, 'enable')
             && !$disableIndexingByType
-            && $cacheUtility->needsIndexing(self::PAGE, $reference)
+            && ($cacheUtility->needsIndexing(self::PAGE, $reference) || !empty($queryParameters['index_force_reindex']))
         ) {
             // Instanciate the lucene index service
             /* @var $indexerService Lucene */
             $indexerService = GeneralUtility::makeInstanceService('index', 'lucene');
             if ($indexerService instanceof AbstractService) {
-                /** @var ServerRequest $request */
-                $request         = $GLOBALS['TYPO3_REQUEST'];
-                $queryParameters = $request->getQueryParams();
-
                 // Retrieve timestamp of the current page
-                $timestamp = $this->getPageTimestamp($fe);
-
-                // Try to fetch a predecessor of the current page from the index
-                $hit      = null;
-                $document = $indexerService->get(self::documentUid(strval($fe->id), self::PAGE, $reference), $hit);
-
-                // If there exists a predecessor ...
-                if ($document instanceof Zend_Search_Lucene_Document) {
-                    // If a timestamp could be retrieved for the current page and there have been no changes: Stop
-                    if ((!$this->debug || !empty($queryParameters['index_force_reindex'])) &&
-                        $timestamp && ($timestamp <= intval($document->getField('timestamp')->value))
-                    ) {
-                        return;
-
-                        // Else: Deletion of the predecessor
-                    } else {
-                        $indexerService->delete($hit);
-                    }
-                }
+                $deleted = $indexerService->deleteByUid(self::documentUid(strval($fe->id), self::PAGE, $reference));
 
                 // Instantiate the index document
                 /** @var SiteLanguage $siteLanguage */
@@ -373,7 +354,7 @@ class Indexer implements SingletonInterface
                     'abstract'  => $this->getPageAbstract($fe, $bodytext),
                     'keywords'  => $this->getPageKeywords($fe),
                     'bodytext'  => $bodytext,
-                    'timestamp' => $timestamp,
+                    'timestamp' => $this->getPageTimestamp($fe),
                 ];
                 $document     = $this->createDocument($fields);
                 $indexerService->add($document);

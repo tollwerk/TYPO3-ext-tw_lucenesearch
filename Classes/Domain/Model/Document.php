@@ -1,7 +1,5 @@
 <?php
 
-namespace Tollwerk\TwLucenesearch\Domain\Model;
-
 /***************************************************************
  *  Copyright notice
  *
@@ -26,21 +24,39 @@ namespace Tollwerk\TwLucenesearch\Domain\Model;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+namespace Tollwerk\TwLucenesearch\Domain\Model;
+
+use Zend_Search_Lucene_Document;
+use Zend_Search_Lucene_Search_QueryParser;
+use Zend_Search_Lucene_Search_QueryParserException;
+
 require_once 'Zend/Search/Lucene/Document.php';
 
 /**
  * Extended Zend lucene document
  *
- * @package tw_lucenesearch
+ * @package   tw_lucenesearch
  * @copyright Copyright © 2020 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
- * @author Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
+ * @author    Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
  */
-class Document extends \Zend_Search_Lucene_Document
+class Document extends Zend_Search_Lucene_Document
 {
+    /**
+     * Cast a standard Zend lucene document as extended instance
+     *
+     * @param Zend_Search_Lucene_Document $document Standard Zend lucene document
+     *
+     * @return Document        Extended lucene document
+     */
+    public static function cast(Zend_Search_Lucene_Document $document)
+    {
+        $extDocument = new self();
+        foreach (get_object_vars($document) as $key => $value) {
+            $extDocument->$key = $value;
+        }
 
-    /************************************************************************************************
-     * PUBLIC METHODS
-     ***********************************************************************************************/
+        return $extDocument;
+    }
 
     /**
      * Return the document ID
@@ -103,16 +119,6 @@ class Document extends \Zend_Search_Lucene_Document
     }
 
     /**
-     * Return the document text
-     *
-     * @return string                    Document text
-     */
-    public function getBodytext()
-    {
-        return $this->getFieldValue('bodytext');
-    }
-
-    /**
      * Return the document text (UTF-8)
      *
      * @return string                    Document text (UTF-8)
@@ -125,22 +131,26 @@ class Document extends \Zend_Search_Lucene_Document
     /**
      * Return the document text with highlighted search terms
      *
-     * @return string                    Document text with highlighted search terms
+     * @param string $terms Highlight terms
+     *
+     * @return string Document text with highlighted search terms
+     * @throws Zend_Search_Lucene_Search_QueryParserException
      */
-    public function getHighlightedBodytext()
+    public function getHighlightedBodytext(string $terms)
     {
         require_once 'Zend/Search/Lucene/Search/QueryParser.php';
-        return \Zend_Search_Lucene_Search_QueryParser::parse('jagd')->highlightMatches($this->getBodytext());
+
+        return Zend_Search_Lucene_Search_QueryParser::parse($terms)->highlightMatches($this->getBodytext());
     }
 
     /**
-     * Return the document language
+     * Return the document text
      *
-     * @return string                    Document language
+     * @return string                    Document text
      */
-    public function getLanguage()
+    public function getBodytext()
     {
-        return $this->getFieldValue('language');
+        return $this->getFieldValue('bodytext');
     }
 
     /**
@@ -163,7 +173,18 @@ class Document extends \Zend_Search_Lucene_Document
     public function getFlag()
     {
         $flag = $this->getLanguage();
+
         return ($flag == 'en') ? 'gb' : $flag;
+    }
+
+    /**
+     * Return the document language
+     *
+     * @return string                    Document language
+     */
+    public function getLanguage()
+    {
+        return $this->getFieldValue('language');
     }
 
     /**
@@ -247,16 +268,6 @@ class Document extends \Zend_Search_Lucene_Document
     }
 
     /**
-     * Return the unserialized document reference parameters
-     *
-     * @return array                    Document reference parameters
-     */
-    public function getReferenceParameters()
-    {
-        return unserialize($this->getFieldValue('reference'));
-    }
-
-    /**
      * Return the document rootline
      *
      * @return string                    Document rootline
@@ -284,7 +295,18 @@ class Document extends \Zend_Search_Lucene_Document
     public function getPageUid()
     {
         $referenceParams = $this->getReferenceParameters();
+
         return array_key_exists('id', $referenceParams) ? intval($referenceParams['id']) : 0;
+    }
+
+    /**
+     * Return the unserialized document reference parameters
+     *
+     * @return array                    Document reference parameters
+     */
+    public function getReferenceParameters()
+    {
+        return unserialize($this->getFieldValue('reference'));
     }
 
     /**
@@ -299,25 +321,7 @@ class Document extends \Zend_Search_Lucene_Document
         if (empty($referenceParams['type'])) {
             unset($referenceParams['type']);
         }
+
         return $referenceParams;
-    }
-
-    /************************************************************************************************
-     * STATIC METHODS
-     ***********************************************************************************************/
-
-    /**
-     * Cast a standard Zend lucene document as extended instance
-     *
-     * @param \Zend_Search_Lucene_Document $document Standard Zend lucene document
-     * @return \Tollwerk\TwLucenesearch\Domain\Model\Document        Extended lucene document
-     */
-    public static function cast(\Zend_Search_Lucene_Document $document)
-    {
-        $extDocument = new self();
-        foreach (get_object_vars($document) as $key => $value) {
-            $extDocument->$key = $value;
-        }
-        return $extDocument;
     }
 }

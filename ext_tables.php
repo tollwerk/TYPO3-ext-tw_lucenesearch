@@ -92,7 +92,7 @@ call_user_func(
                 'lucene', // Name of the module
                 '', // Position of the module
                 [            // Allowed controller action combinations
-                    \Tollwerk\TwLucenesearch\Controller\ModuleController::class => 'page,other,index',
+                    \Tollwerk\TwLucenesearch\Controller\ModuleController::class => 'page,other,index,debug',
                 ],
                 [          // Additional configuration
                     'access' => 'user,group',

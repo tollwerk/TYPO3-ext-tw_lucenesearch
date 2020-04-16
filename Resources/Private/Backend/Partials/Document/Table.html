@@ -73,6 +73,9 @@
                         {document.abstract -> f:format.crop(maxCharacters: 100)}
                     </td>
                     <td class="actions">
+                        <f:link.action action="debug" arguments="{uid: document.uid}" target="_blank">
+                            <core:icon identifier="apps-toolbar-menu-search"/>
+                        </f:link.action>
                         <f:if condition="{document.referenceParameters.url}">
                             <f:then>
                                 <a href="{document.referenceParameters.url -> f:format.htmlspecialchars()}"
