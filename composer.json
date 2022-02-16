@@ -15,10 +15,6 @@
       "Classes/Zend"
     ]
   },
-  "replace": {
-    "tw_lucenesearch": "self.version",
-    "typo3-ter/tw_lucenesearch": "self.version"
-  },
   "authors": [
     {
       "name": "Joschi Kuphal",
