@@ -23,6 +23,7 @@
   ],
   "extra": {
     "typo3/cms": {
+      "extension-key": "tw_lucenesearch",
       "cms-package-dir": "{$vendor-dir}/typo3/cms",
       "web-dir": ".Build/Web"
     }
