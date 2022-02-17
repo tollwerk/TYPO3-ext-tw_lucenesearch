@@ -2,6 +2,8 @@
 
 namespace Tollwerk\TwLucenesearch\ViewHelpers\Search;
 
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -43,7 +45,7 @@ namespace Tollwerk\TwLucenesearch\ViewHelpers\Search;
  * @copyright Copyright © 2016 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
  * @author    Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
  */
-class HighlightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class HighlightViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper
 {
     /**
      * Highlighting document
@@ -91,44 +93,47 @@ class HighlightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
     }
 
     /**
-     * Highlighting of terms within a text
+     * Initialize arguments
      *
-     * @param string $text    Text
-     * @param mixed $search   Terms to be highlighted (string or lucene search query)
-     * @param int $crop       Max. number of characters length
-     * @param string $append  Suffix in case of text being cropped at the end
-     * @param string $prepend Prefix in case of text being cropped at the beginning
-     * @param string $field   Lucene document field to be used (if the search terms have to be found retroactively)
-     *
-     * @return string                                                Text with highlighting
-     * @see http://www.mail-archive.com/fw-general@lists.zend.com/msg09013.html
+     * @return void
      */
-    public function render(
-        $text = null,
-        $search = null,
-        $crop = null,
-        $append = ' ...',
-        $prepend = ' ... ',
-        $field = 'bodytext'
-    ) {
-        $text  = trim(strlen(trim($text)) ? $text : $this->renderChildren());
+    public function initializeArguments()
+    {
+        $this->registerArgument('text', 'string', 'Text');
+        $this->registerArgument('search', 'mixed', 'Terms to be highlighted (string or lucene search query)');
+        $this->registerArgument('crop', 'integer', 'Max. number of characters length');
+        $this->registerArgument('append', 'string', 'Prefix in case of text being cropped at the beginning');
+        $this->registerArgument('prepend', 'string', 'Max. number of characters length');
+        $this->registerArgument('field', 'string', 'Lucene document field to be used (if the search terms have to be found retroactively)');
+    }
+
+    /**
+     * Highlighting of terms within a text
+     * @param array $arguments
+     * @param \Closure $renderChildrenClosure
+     * @param RenderingContextInterface $renderingContext
+     * @return mixed
+     */
+    public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
+    {
+        $text  = trim(strlen(trim($arguments['text'])) ? $arguments['text'] : self::renderChildren());
         $terms = array();
 
         // If there is a reasonable text given
         if (strlen($text)) {
 
             // If a list with search terms have been given ...
-            if (is_array($search)) {
-                $terms = $search;
-                usort($terms, array($this, 'sortByLengthDesc'));
+            if (is_array($arguments['search'])) {
+                $terms = $arguments['search'];
+                usort($terms, array(self(), 'sortByLengthDesc'));
 
                 // Else: If query hits have been given ...
-            } elseif ($search instanceof \Tollwerk\TwLucenesearch\Domain\Model\QueryHits) {
-                $terms = (array)$search->getHighlight($field);
-                usort($terms, array($this, 'sortByLengthDesc'));
+            } elseif ($arguments['search'] instanceof \Tollwerk\TwLucenesearch\Domain\Model\QueryHits) {
+                $terms = (array)$search->getHighlight($arguments['field']);
+                usort($terms, array(self(), 'sortByLengthDesc'));
 
                 // Else: If a lucene search query or a literal search term has been given
-            } elseif (($search instanceof \Zend_Search_Lucene_Search_Query) || strlen($search)) {
+            } elseif (($arguments['search'] instanceof \Zend_Search_Lucene_Search_Query) || strlen($arguments['search'])) {
 
                 // Instanciation of the lucene index service
                 /* @var $indexerService \Tollwerk\TwLucenesearch\Service\Lucene */
@@ -136,24 +141,24 @@ class HighlightViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
                 if ($indexerService instanceof \TYPO3\CMS\Core\Service\AbstractService) {
 
                     // Converting search term to lucene search query if necessary
-                    if (!($search instanceof \Zend_Search_Lucene_Search_Query)) {
-                        $search = $indexerService->query($search);
+                    if (!($arguments['search'] instanceof \Zend_Search_Lucene_Search_Query)) {
+                        $search = $indexerService->query($arguments['search']);
                     }
 
                     // If there is a valid lucene search query available
-                    if ($search instanceof \Zend_Search_Lucene_Search_Query) {
+                    if ($arguments['search'] instanceof \Zend_Search_Lucene_Search_Query) {
 
                         $searchHash = md5("$search");
                         if (!array_key_exists($searchHash, self::$_queryTermCache)) {
                             self::$_queryTermCache[$searchHash] = array();
                             foreach ($indexerService->getQueryTerms($search) as $termField => $fieldTerms) {
-                                usort($fieldTerms, array($this, 'sortByLengthDesc'));
+                                usort($fieldTerms, array(self(), 'sortByLengthDesc'));
                                 self::$_queryTermCache[$searchHash][$termField] = $fieldTerms;
                             }
                         }
 
                         $terms = self::$_queryTermCache[$searchHash];
-                        $field = trim($field);
+                        $field = trim($arguments['field']);
                         $terms = (strlen($field) && array_key_exists($field, $terms)) ? $terms[$field] : array();
                     }
                 }

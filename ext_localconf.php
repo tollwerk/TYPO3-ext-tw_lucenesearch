@@ -41,47 +41,47 @@ $GLOBALS['TYPO3_CONF_VARS']['EXT']['extParams'][$_EXTKEY] = unserialize($_EXTCON
         'quality' => 50,
         'os' => '',
         'exec' => '',
-        'classFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY).'Classes/Service/Lucene.php',
+        'classFile' => 'EXT:tw_lucenesearch/Classes/Service/Lucene.php',
         'className' => 'Tollwerk\\TwLucenesearch\\Service\\Lucene',
     )
 );
 
 // Search plugin configuration
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-    'Tollwerk.'.$_EXTKEY,
+    'TwLucenesearch',
     'Lucene',
     array(
-        'Lucene' => 'search,results,notfound',
+        Tollwerk\TwLucenesearch\Controller\LuceneController::class => 'results,search,notfound',
     ),
     array(
-        'Lucene' => 'results,notfound',
+        Tollwerk\TwLucenesearch\Controller\LuceneController::class => 'results,notfound',
     )
 );
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-    'Tollwerk.'.$_EXTKEY,
+    'TwLucenesearch',
     'LuceneAutocomplete',
     array(
-        'Lucene' => 'autocomplete',
+        Tollwerk\TwLucenesearch\Controller\LuceneController::class => 'autocomplete',
     ),
     array(
-        'Lucene' => 'autocomplete',
+        Tollwerk\TwLucenesearch\Controller\LuceneController::class => 'autocomplete',
     )
 );
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-    'Tollwerk.'.$_EXTKEY,
+    'TwLucenesearch',
     'LuceneCE',
     array(
-        'Lucene' => 'search,results,notfound',
+        Tollwerk\TwLucenesearch\Controller\LuceneController::class => 'search,results,notfound',
     ),
     array(
-        'Lucene' => 'results,notfound',
+        Tollwerk\TwLucenesearch\Controller\LuceneController::class => 'results,notfound',
     ),
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
 );
 
 // Adding the "Classes" directory to the include path
 set_include_path(implode(PATH_SEPARATOR,
-    array_unique(array_merge(array(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY, 'Classes')),
+    array_unique(array_merge(array(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('tw_lucenesearch', 'Classes')),
         explode(PATH_SEPARATOR, get_include_path())))));
 
 // Indexing hook registration
@@ -111,5 +111,4 @@ if (!array_key_exists('nonpage-document-types',
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['tw_lucenesearch']['nonpage-document-types'] = array();
 }
 
-// Enables eID calls for the autocomplete feature (like /index.php?eID=eidautocomplete)
 $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['eidautocomplete'] = 'EXT:tw_lucenesearch/Classes/Utility/EidAutocomplete.php';

@@ -1,35 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <T3DataStructure>
-	<meta>
-		<langDisable>1</langDisable>
-	</meta>
-	<ROOT>
-		<TCEforms>
-			<sheetTitle>LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:feplugin.flex.behavior</sheetTitle>
-		</TCEforms>
-		<type>array</type>
-		<el>
-			<switchableControllerActions>
+	<sheets>
+		<sDEF>
+			<ROOT>
 				<TCEforms>
-					<label>LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:feplugin.flex.display</label>
-					<config>
-						<type>select</type>
-						<items>
-							<numIndex index="0">
-								<numIndex index="0">LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:feplugin.flex.search</numIndex>
-								<numIndex index="1">Lucene->search</numIndex>
-							</numIndex>
-							<numIndex index="1">
-								<numIndex index="0">LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:feplugin.flex.results</numIndex>
-								<numIndex index="1">Lucene->results</numIndex>
-							</numIndex>
-							<numIndex index="2">
-								<numIndex index="0">LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:feplugin.flex.notfound</numIndex>
-								<numIndex index="1">Lucene->notfound</numIndex>
-							</numIndex>
-						</items>
-					</config>
+					<sheetTitle>LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:feplugin.flex.behavior</sheetTitle>
 				</TCEforms>
-			</switchableControllerActions>
-		</el>
-	</ROOT>
+
+				<type>array</type>
+				<el>
+					<settings.block>
+						<TCEforms>
+							<label>
+								LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:feplugin.flex.behavior
+							</label>
+
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items>
+									<numIndex index="0">
+										<numIndex index="0">
+											LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:feplugin.flex.search
+										</numIndex>
+										<numIndex index="1">Lucene->search</numIndex>
+									</numIndex>
+									<numIndex index="1">
+										<numIndex index="0">
+											LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:feplugin.flex.results
+										</numIndex>
+										<numIndex index="1">Lucene->results</numIndex>
+									</numIndex>
+									<numIndex index="2">
+										<numIndex index="0">
+											LLL:EXT:tw_lucenesearch/Resources/Private/Language/locallang_db.xlf:feplugin.flex.notfound
+										</numIndex>
+										<numIndex index="1">Lucene->notfound</numIndex>
+									</numIndex>
+								</items>
+							</config>
+						</TCEforms>
+					</settings.block>
+				</el>
+			</ROOT>
+		</sDEF>
+	</sheets>
 </T3DataStructure>

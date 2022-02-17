@@ -164,15 +164,19 @@ class ModuleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 
         // Determine the index reference components
         $references = array();
+
+        /*
         foreach ($this->_pageConfig['reference'] as $key => $refConfig) {
             $refLabel = $key;
+
             while (!array_key_exists('default', $refConfig)) {
                 $refKey = key($refConfig);
-                $refLabel .= '['.$refKey.']';
+                $refLabel .= '[' . $refKey . ']';
                 $refConfig =& $refConfig[$refKey];
             }
             $references[$key] = $refLabel;
         }
+        */
 
         // Determine the TSConfig
         $default = array(

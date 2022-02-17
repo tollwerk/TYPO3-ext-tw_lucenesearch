@@ -94,6 +94,7 @@ class LuceneController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      */
     public function searchAction($searchterm = '')
     {
+
         $this->view->assign('searchterm', trim($searchterm));
         $this->view->assign('page',
             intval($this->settings['defaultResultsPage']) ?

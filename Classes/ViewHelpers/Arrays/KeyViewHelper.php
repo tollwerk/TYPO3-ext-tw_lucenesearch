@@ -2,6 +2,8 @@
 
 namespace Tollwerk\TwLucenesearch\ViewHelpers\Arrays;
 
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -44,20 +46,32 @@ namespace Tollwerk\TwLucenesearch\ViewHelpers\Arrays;
  * @copyright Copyright © 2016 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
  * @author Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
  */
-class KeyViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class KeyViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper
 {
+    /**
+     * Initialize arguments
+     *
+     * @return void
+    */
+    public function initializeArguments()
+    {
+        $this->registerArgument('array', 'array', 'Array');
+        $this->registerArgument('position', 'integer', 'Position');
+    }
+
 
     /**
      * Return an array key at a certain position within the array
-     *
-     * @param array $array Array
-     * @param int $position Position
-     * @return mixed                    Array key
+     * @param array $arguments
+     * @param \Closure $renderChildrenClosure
+     * @param RenderingContextInterface $renderingContext
+     * @return mixed
      */
-    public function render(array $array, $position = 0)
+    public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
     {
-        $keys = array_keys($array);
-        return array_key_exists(intval($position), $keys) ? $keys[intval($position)] : null;
+        $keys = array_keys($arguments['array']);
+
+        return array_key_exists(intval($arguments['position']), $keys) ? $keys[intval($arguments['position'])] : null;
     }
 }
 

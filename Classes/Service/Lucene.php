@@ -28,6 +28,7 @@ namespace Tollwerk\TwLucenesearch\Service;
 
 use Tollwerk\TwLucenesearch\Utility\Indexer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Core\Environment;
 
 require_once 'Zend/Search/Lucene.php';
 require_once 'Zend/Search/Lucene/Document.php';
@@ -78,8 +79,10 @@ class Lucene extends \TYPO3\CMS\Core\Service\AbstractService implements \TYPO3\C
      */
     public function __construct()
     {
-        $this->_indexDirectory = PATH_site.trim($GLOBALS['TYPO3_CONF_VARS']['EXT']['extParams']['tw_lucenesearch']['indexDirectory'],
-                DIRECTORY_SEPARATOR);
+        $this->_indexDirectory = Environment::getPublicPath() . trim(
+            $GLOBALS['TYPO3_CONF_VARS']['EXT']['extParams']['tw_lucenesearch']['indexDirectory'],
+            DIRECTORY_SEPARATOR
+            );
     }
 
     /**

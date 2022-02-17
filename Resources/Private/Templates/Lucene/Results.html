@@ -16,47 +16,47 @@
 			</h2>
 			<f:if condition="{hits}">
 				<f:then>
-					<f:widget.paginate objects="{hits}" as="paginatedHits" configuration="{itemsPerPage: settings.search.limits.display, insertAbove: 0, insertBelow: 1, addQueryStringMethod: 'POST,GET'}">
-						<h3><f:translate key="search.results.segment" arguments="{0: hits.start, 1: hits.end, 2: hits.count}"/></h3>
-						<ol class="tx-twlucenesearch-results" start="{tw:arrays.key(array: paginatedHits, position: 0)}">
-							<f:for each="{paginatedHits}" as="hit">
-								<li class="tx-twlucenesearch-result">
-									<h3 class="tx-twlucenesearch-result-title">
-                    <f:if condition="{hit.document.referenceParameters.url}">
-                      <f:then>
-                        <f:link.external uri="{hit.document.referenceParameters.url}" defaultScheme="" class="tx-twlucenesearch-result-url" target="_blank">
-                          {hit.document.title}
-                        </f:link.external>
-                      </f:then>
-                      <f:else>
-                        <f:link.page pageUid="{hit.document.pageUid}" additionalParams="{hit.document.pageAdditionalParams}" noCacheHash="1" class="tx-twlucenesearch-result-url">
-                          {hit.document.title}
-                        </f:link.page>
-                      </f:else>
-                    </f:if>
-									</h3>
-									<p class="tx-twlucenesearch-abstract">
-										<tw:search.highlight text="{hit.document.bodytext}" search="{query}" crop="500"/>
-									</p>
-									<div class="tx-twlucenesearch-footer">
-										<span><f:translate key="search.result.url"/></span>:
-                    <f:if condition="{hit.document.referenceParameters.url}">
-                      <f:then>
-                        <f:link.external uri="{hit.document.referenceParameters.url}" defaultScheme="" class="tx-twlucenesearch-result-url" target="_blank">
-                          <f:uri.external uri="{hit.document.referenceParameters.url}" defaultScheme=""/>
-                        </f:link.external>
-                      </f:then>
-                      <f:else>
-                        <f:link.page pageUid="{hit.document.pageUid}" additionalParams="{hit.document.pageAdditionalParams}" noCacheHash="1" class="tx-twlucenesearch-result-url">
-                          <f:uri.page pageUid="{hit.document.pageUid}" additionalParams="{hit.document.pageAdditionalParams}" noCacheHash="1"/>
-                        </f:link.page>
-                      </f:else>
-                    </f:if>
-									</div>
-								</li>
-							</f:for>
-						</ol>
-					</f:widget.paginate>
+
+					<h3><f:translate key="search.results.segment" arguments="{0: hits.start, 1: hits.end, 2: hits.count}"/></h3>
+					<ol class="tx-twlucenesearch-results" start="{tw:arrays.key(array: paginatedHits, position: 0)}">
+						<f:for each="{hits}" as="hit">
+							<li class="tx-twlucenesearch-result">
+								<h3 class="tx-twlucenesearch-result-title">
+								<f:if condition="{hit.document.referenceParameters.url}">
+								  <f:then>
+									<f:link.external uri="{hit.document.referenceParameters.url}" defaultScheme="" class="tx-twlucenesearch-result-url" target="_blank">
+									  {hit.document.title}
+									</f:link.external>
+								  </f:then>
+								  <f:else>
+									<f:link.page pageUid="{hit.document.pageUid}" additionalParams="{hit.document.pageAdditionalParams}" class="tx-twlucenesearch-result-url">
+									  {hit.document.title}
+									</f:link.page>
+								  </f:else>
+								</f:if>
+								</h3>
+								<p class="tx-twlucenesearch-abstract">
+									<tw:search.highlight text="{hit.document.bodytext}" search="{query}" crop="500"/>
+								</p>
+								<div class="tx-twlucenesearch-footer">
+									<span><f:translate key="search.result.url"/></span>:
+									<f:if condition="{hit.document.referenceParameters.url}">
+									  <f:then>
+										<f:link.external uri="{hit.document.referenceParameters.url}" defaultScheme="" class="tx-twlucenesearch-result-url" target="_blank">
+										  <f:uri.external uri="{hit.document.referenceParameters.url}" defaultScheme=""/>
+										</f:link.external>
+									  </f:then>
+									  <f:else>
+										<f:link.page pageUid="{hit.document.pageUid}" additionalParams="{hit.document.pageAdditionalParams}" class="tx-twlucenesearch-result-url">
+										  <f:uri.page pageUid="{hit.document.pageUid}" additionalParams="{hit.document.pageAdditionalParams}" />
+										</f:link.page>
+									  </f:else>
+									</f:if>
+								</div>
+							</li>
+						</f:for>
+					</ol>
+
 				</f:then>
 				<f:else>
 					<p><f:translate key="search.results.none"/></p>
