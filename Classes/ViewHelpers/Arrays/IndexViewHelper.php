@@ -2,6 +2,8 @@
 
 namespace Tollwerk\TwLucenesearch\ViewHelpers\Arrays;
 
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -44,34 +46,45 @@ namespace Tollwerk\TwLucenesearch\ViewHelpers\Arrays;
  * @copyright Copyright © 2016 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH (http://tollwerk.de)
  * @author Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>
  */
-class IndexViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class IndexViewHelper extends AbstractViewHelper
 {
 
     /**
-     * Return an array element with the given key
+     * Arguments initialization
      *
-     * @param \array $array Array
-     * @param \string $index Key
-     * @return \mixed                    Array element value
+     * @return void
      */
-    public function render(array $array, $index = '')
+    public function initializeArguments(): void
+    {
+        $this->registerArgument('array', 'array', 'Array', false, []);
+        $this->registerArgument('index', 'string', 'Index', false, null);
+    }
+
+    /**
+     * Render the heading
+     *
+     * @return string Value
+     */
+    public function render()
     {
         $value = null;
-        if (strlen($index)) {
-            $indexArr = explode('[', $index);
+        if (strlen($this->arguments['index'])) {
+            $indexArr = explode('[', $this->arguments['index']);
             foreach ($indexArr as $key => $val) {
                 $indexArr[$key] = str_replace(array('[', ']'), '', $val);
             }
 
-            if (array_key_exists($indexArr[0], $array)) {
-                $value = $array[$indexArr[0]];
+            if (array_key_exists($indexArr[0], $this->arguments['array'])) {
+                $value = $this->arguments['array'][$indexArr[0]];
 
-                for ($i = 1; $i < count($indexArr); $i++) {
-                    if (array_key_exists($indexArr[$i], $value)) {
-                        $value = $value[$indexArr[$i]];
-                    } else {
+                $countIndex = count($indexArr);
+
+                for ($i = 1; $i < $countIndex; $i++) {
+                    if (!array_key_exists($indexArr[$i], $value)) {
                         break;
                     }
+
+                    $value = $value[$indexArr[$i]];
                 }
             }
         }

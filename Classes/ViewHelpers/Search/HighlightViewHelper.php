@@ -3,6 +3,8 @@
 namespace Tollwerk\TwLucenesearch\ViewHelpers\Search;
 
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use Tollwerk\TwLucenesearch\Service\Lucene;
 
 /***************************************************************
  *  Copyright notice
@@ -129,15 +131,15 @@ class HighlightViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractView
 
                 // Else: If query hits have been given ...
             } elseif ($arguments['search'] instanceof \Tollwerk\TwLucenesearch\Domain\Model\QueryHits) {
-                $terms = (array)$search->getHighlight($arguments['field']);
+                $terms = (array)$arguments['search']->getHighlight($arguments['field']);
                 usort($terms, array(self(), 'sortByLengthDesc'));
 
                 // Else: If a lucene search query or a literal search term has been given
             } elseif (($arguments['search'] instanceof \Zend_Search_Lucene_Search_Query) || strlen($arguments['search'])) {
 
                 // Instanciation of the lucene index service
-                /* @var $indexerService \Tollwerk\TwLucenesearch\Service\Lucene */
-                $indexerService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstanceService('index', 'lucene');
+                /* @var $indexerService Lucene */
+                $indexerService = GeneralUtility::makeInstanceService('index', 'lucene');
                 if ($indexerService instanceof \TYPO3\CMS\Core\Service\AbstractService) {
 
                     // Converting search term to lucene search query if necessary

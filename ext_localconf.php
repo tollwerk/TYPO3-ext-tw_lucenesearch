@@ -85,8 +85,8 @@ set_include_path(implode(PATH_SEPARATOR,
         explode(PATH_SEPARATOR, get_include_path())))));
 
 // Indexing hook registration
-$TYPO3_CONF_VARS['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-output'][] = 'EXT:tw_lucenesearch/Classes/Utility/Indexer.php:&Tollwerk\\TwLucenesearch\\Utility\\Indexer->intPages';
-$TYPO3_CONF_VARS['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-all'][] = 'EXT:tw_lucenesearch/Classes/Utility/Indexer.php:&Tollwerk\\TwLucenesearch\\Utility\\Indexer->noIntPages';
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-cached'][] = Tollwerk\TwLucenesearch\Utility\Indexer::class . '->intPages';
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-cached'][] = Tollwerk\TwLucenesearch\Utility\Indexer::class . '->noIntPages';
 
 // Rewriting hook provision
 if (!array_key_exists('tw_lucenesearch', $GLOBALS['TYPO3_CONF_VARS']['EXTCONF'])) {

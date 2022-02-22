@@ -575,7 +575,8 @@ class Indexer implements \TYPO3\CMS\Core\SingletonInterface
             $abstract = trim($fe->page['abstract']);
         }
 
-        return $this->_csObj->strtrunc('utf-8', $abstract, 255);
+        //return $this->_csObj->strtrunc('utf-8', $abstract, 255);
+        return $abstract;
     }
 
     /**

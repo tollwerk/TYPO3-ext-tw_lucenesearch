@@ -54,7 +54,7 @@ $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['twlucenesear
     'FILE:EXT:tw_lucenesearch/Configuration/FlexForms/ControllerActions.xml',
 );
 
-$GLOBALS['TCA']['tt_content']['types']['twlucenesearch_lucenece'] = $TCA['tt_content']['types']['list'];
+$GLOBALS['TCA']['tt_content']['types']['twlucenesearch_lucenece'] = $GLOBALS['TCA']['tt_content']['types']['list'];
 $GLOBALS['TCA']['tt_content']['types']['twlucenesearch_lucenece']['showitem'] = "
     --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.general;general,
 	--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.header;header,rowDescription,

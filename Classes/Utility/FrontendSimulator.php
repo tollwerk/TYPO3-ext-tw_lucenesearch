@@ -26,6 +26,11 @@ namespace Tollwerk\TwLucenesearch\Utility;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
+use TYPO3\CMS\Core\TypoScript\TemplateService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\TimeTracker\TimeTracker;
+
 /**
  * Frontend simulator
  *
@@ -60,13 +65,12 @@ class FrontendSimulator
         self::$_tsfeBackup = isset($GLOBALS['TSFE']) ? $GLOBALS['TSFE'] : null;
         self::$_httpHostBackup = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : null;
 
-        $GLOBALS['TSFE'] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Frontend\\Controller\\TypoScriptFrontendController',
-            $GLOBALS['TYPO3_CONF_VARS'], $pid, 0, true);
-        $GLOBALS['TT'] = new \TYPO3\CMS\Core\TimeTracker\NullTimeTracker();
+        $GLOBALS['TSFE'] = GeneralUtility::makeInstance(TypoScriptFrontendController::class, $GLOBALS['TYPO3_CONF_VARS'], $pid, 0, true);
+        $GLOBALS['TT'] = new TimeTracker(false);
 
-        /* @var $tsfe \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController */
+        /* @var $tsfe TypoScriptFrontendController */
         $tsfe =& $GLOBALS['TSFE'];
-        $tsfe->tmpl = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\TypoScript\\TemplateService');
+        $tsfe->tmpl = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(TemplateService::class);
         $tsfe->tmpl->init();
         $tsfe->initFEuser();
         // 		$tsfe->fe_user->fetchGroupData();

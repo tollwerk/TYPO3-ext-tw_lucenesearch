@@ -26,6 +26,7 @@ namespace Tollwerk\TwLucenesearch\ViewHelpers\Link;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use TYPO3\CMS\Fluid\ViewHelpers\Link\PageViewHelper;
+use Tollwerk\TwLucenesearch\Utility\FrontendSimulator;
 
 /**
  * Index page preview view helper
@@ -87,22 +88,23 @@ class PreviewViewHelper extends PageViewHelper
         $addQueryStringMethod = null
     ) {
         $reference = $this->arguments['reference'];
+
+        $pageUid = 0;
         if (array_key_exists('id', $reference)) {
             $pageUid = $reference['id'];
             unset($reference['id']);
-        } else {
-            $pageUid = 0;
         }
+
+        $pageType = 0;
         if (array_key_exists('type', $reference)) {
             $pageType = $reference['type'];
             unset($reference['type']);
-        } else {
-            $pageType = 0;
         }
+
         $reference['index_content_only'] = 1;
 
         if (TYPO3_MODE === 'BE') {
-            \Tollwerk\TwLucenesearch\Utility\FrontendSimulator::simulateFrontendEnvironment($pageUid);
+            FrontendSimulator::simulateFrontendEnvironment($pageUid);
         }
 
         $uriBuilder = $this->controllerContext->getUriBuilder();
@@ -127,7 +129,7 @@ class PreviewViewHelper extends PageViewHelper
         }
 
         if (TYPO3_MODE === 'BE') {
-            \Tollwerk\TwLucenesearch\Utility\FrontendSimulator::resetFrontendEnvironment();
+            FrontendSimulator::resetFrontendEnvironment();
         }
 
         return $result;
